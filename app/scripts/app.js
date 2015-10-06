@@ -28,10 +28,10 @@ angular
         templateUrl: 'views/productos.html',
         controller: 'prodCtrl'
       })
-        .when('/phones/:phoneId', {
+      /*  .when('/phones/:phoneId', {
         templateUrl: 'views/InfoProd.html',
         controller: 'prodDetCtrl'
-      })
+      })*/
       .otherwise({
         redirectTo: '/phones'
       });

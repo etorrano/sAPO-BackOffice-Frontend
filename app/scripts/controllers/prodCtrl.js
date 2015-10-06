@@ -4,5 +4,7 @@
 angular.module('sApobackOfficeFrontendApp')
     .controller('prodCtrl', ['$scope', 'productos',
         function($scope, productos) {
-            $scope.phones = productos.get({id:1});
+            $scope.phones = productos.getProductos();
         }]);
+
+
