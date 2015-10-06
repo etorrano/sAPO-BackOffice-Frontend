@@ -2,11 +2,7 @@
  * Created by emi on 06/10/15.
  */
 angular.module('sApobackOfficeFrontendApp')
-    .controller('prodCtrl', ['$scope', '$http',
-    function ($scope, $http) {
-        $http.get('productos/phones.json').success(function(data) {
-            $scope.phones = data;
-        });
-
-        $scope.orderProp = 'age';
-    }]);
+    .controller('prodCtrl', ['$scope', 'productos',
+        function($scope, productos) {
+            $scope.phones = productos.get({id:1});
+        }]);
