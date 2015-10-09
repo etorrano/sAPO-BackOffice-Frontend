@@ -4,7 +4,7 @@
 angular.module('sApobackOfficeFrontendApp')
     .controller('prodDetCtrl', ['$scope', '$routeParams', 'Phone',
         function($scope, $routeParams, $http) {
-            $http.get('productos/' + $routeParams.phoneId + '.json').success(function(data) {
+            $http.get(/*'productos/' + $routeParams.phoneId + '.json'*/).success(function(data) {
                 $scope.phone = data;
             });
         }]);

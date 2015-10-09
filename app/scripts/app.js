@@ -26,7 +26,7 @@ angular
       })
         .when('/phones', {
         templateUrl: 'views/productos.html',
-        controller: 'prodCtrl'
+        controller: 'CtrlListarProductos'
       })
       /*  .when('/phones/:phoneId', {
         templateUrl: 'views/InfoProd.html',
