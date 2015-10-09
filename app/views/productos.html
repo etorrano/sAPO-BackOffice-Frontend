@@ -1,25 +1,7 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
-            <!--Sidebar content-->
+<ul class="menu2">
+    <li><a href="#/producto">Listar</a></li>
+    <li><a href="#/user-list">Crear</a></li>
+    <li><a href="#/user-detail/1">Modificar</a></li>
+    <li><a href="#/user-creation">Borrar</a></li>
+</ul>
 
-            Search: <input ng-model="query">
-            Sort by:
-            <select ng-model="orderProp">
-                <option value="name">Alphabetical</option>
-                <option value="age">Newest</option>
-            </select>
-
-        </div>
-        <div class="col-md-10">
-            <!--Body content-->
-
-            <ul class="phones">
-                <li ng-repeat="phone in phones" class="thumbnail">
-                    <p>{{phone.id}}</p>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-</div>

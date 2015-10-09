@@ -19,20 +19,22 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
-        .when('/phones', {
+      .when('/productos', {
         templateUrl: 'views/productos.html',
+        controller: 'CtrlListarProductos',
+        controllerAs: 'prod'
+      })
+        .when('/producto', {
+        templateUrl: 'views/producto.html',
         controller: 'CtrlListarProductos'
       })
       /*  .when('/phones/:phoneId', {
         templateUrl: 'views/InfoProd.html',
         controller: 'prodDetCtrl'
       })*/
+      .when('/user-detail/:id', {templateUrl: 'partials/user-detail.html', controller: 'CtrlActProd'})
+      .when('/user-creation', {templateUrl: 'partials/user-creation.html', controller: 'CtrlCrearProd'})
       .otherwise({
-        redirectTo: '/phones'
+        redirectTo: '/producto'
       });
   });

@@ -28,4 +28,34 @@ angular.module('sApobackOfficeFrontendApp')
             return deferred.promise;
         };
 
+        this.crearProducto = function(id) {
+            var deferred = $q.defer();
+            Producto.getProducto({ id: id }, {}, function (producto) {
+                deferred.resolve(producto);
+            }, function (error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        };
+
+        this.actualizarProducto = function(id) {
+            var deferred = $q.defer();
+            Producto.getProducto({ id: id }, {}, function (producto) {
+                deferred.resolve(producto);
+            }, function (error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        };
+
+        this.eliminarProducto = function(id) {
+            var deferred = $q.defer();
+            Producto.getProducto({ id: id }, {}, function (producto) {
+                deferred.resolve(producto);
+            }, function (error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        };
+
     }]);

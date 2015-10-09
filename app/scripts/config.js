@@ -15,6 +15,8 @@ angular.module('sApobackOfficeFrontendApp')
         return {
             request: function (config) {
                 config.headers['Ocp-Apim-Subscription-Key'] = REST_API.OCP_KEY;
+                /*config.withCredentials = true;*/
+                config.contentType = 'application/json; charset=utf-8'
                 return config;
             },
         };
