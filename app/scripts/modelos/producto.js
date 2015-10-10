@@ -8,7 +8,7 @@ angular.module('sApobackOfficeFrontendApp')
         var API_REST_URL = REST_API.BASE_URL;
 
         return $resource(API_REST_URL + ':recurso/:modulo/:submodulo/:id', { id: '@id' }, {
-            crearProducto   : { method: 'POST', params: { recurso: 'productos'}},
+            crearProducto   : { method: 'POST', params: { recurso: 'productos', modulo: 'create'}},
             getProducto     : { method: 'GET', params: { recurso: 'productos' },  isArray: false },
             getProductos    : { method: 'GET', params: { recurso: 'productos' },  isArray: true },
             actualizarProducto   : { method: 'PUT', params: { recurso: 'productos'}},

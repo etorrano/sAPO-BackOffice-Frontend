@@ -32,8 +32,8 @@ angular
         templateUrl: 'views/InfoProd.html',
         controller: 'prodDetCtrl'
       })*/
-      .when('/user-detail/:id', {templateUrl: 'partials/user-detail.html', controller: 'CtrlActProd'})
-      .when('/user-creation', {templateUrl: 'partials/user-creation.html', controller: 'CtrlCrearProd'})
+      .when('/user-detail/:id', {templateUrl: 'views/user-detail.html', controller: 'CtrlActProd'})
+      .when('/user-creation', {templateUrl: 'views/user-creation.html', controller: 'CtrlCrearProd'})
       .otherwise({
         redirectTo: '/producto'
       });
