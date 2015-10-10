@@ -30,7 +30,7 @@ angular.module('sApobackOfficeFrontendApp')
 
         this.crearProducto = function(id) {
             var deferred = $q.defer();
-            Producto.getProducto({ id: id }, {}, function (producto) {
+            Producto.crearProducto({ id: id }, {}, function (producto) {
                 deferred.resolve(producto);
             }, function (error) {
                 deferred.reject(error);
@@ -40,7 +40,7 @@ angular.module('sApobackOfficeFrontendApp')
 
         this.actualizarProducto = function(id) {
             var deferred = $q.defer();
-            Producto.getProducto({ id: id }, {}, function (producto) {
+            Producto.actualizarProducto({ id: id }, {}, function (producto) {
                 deferred.resolve(producto);
             }, function (error) {
                 deferred.reject(error);
@@ -50,7 +50,7 @@ angular.module('sApobackOfficeFrontendApp')
 
         this.eliminarProducto = function(id) {
             var deferred = $q.defer();
-            Producto.getProducto({ id: id }, {}, function (producto) {
+            Producto.eliminarProducto({ id: id }, {}, function (producto) {
                 deferred.resolve(producto);
             }, function (error) {
                 deferred.reject(error);
