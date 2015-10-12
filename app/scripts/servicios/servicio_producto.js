@@ -5,11 +5,12 @@ angular.module('sApobackOfficeFrontendApp')
     .service('ServicioProducto', ['$q', 'Producto', function ($q, Producto) {
 
         this.init = function () {};
-
+        console.log("En ServicioProducto");
         this.getProducto = function(id) {
             var deferred = $q.defer();
-            Producto.getProducto({ id: id }, {}, function (producto) {
-                deferred.resolve(producto);
+            console.log("Get producto con id:" + id);
+            Producto.getProducto({ id: 1 }, {}, function (productos) {
+                deferred.resolve(productos);
             }, function (error) {
                 deferred.reject(error);
             });
@@ -38,9 +39,10 @@ angular.module('sApobackOfficeFrontendApp')
             return deferred.promise;
         };
 
-        this.actualizarProducto = function(id) {
+        this.actualizarProducto = function(productos) {
             var deferred = $q.defer();
-            Producto.actualizarProducto({ id: id }, {}, function (producto) {
+            Producto.actualizarProducto({ id: 1 }, {}, function (productos) {
+                console.log("actualizando producto con id: " + producto.id);
                 deferred.resolve(producto);
             }, function (error) {
                 deferred.reject(error);

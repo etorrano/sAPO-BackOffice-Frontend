@@ -12,32 +12,44 @@ angular.module('sApobackOfficeFrontendApp')
     this.init();
 }])
 
-.controller('CtrlListarProductos', ['$scope', 'ServicioProducto', function($scope, ServicioProducto) {
+.controller('CtrlListarProductos', ['$scope', 'ServicioProducto', '$routeParams', '$location',function($scope, ServicioProducto, $routeParams, $location) {
+        $scope.actualizarProducto = function (userId) {
+            $location.path('/user-detail/' + userId);
+        };
         ServicioProducto.getProductos().then(function(productos) {
         $scope.phones = productos;
+
     });
 
-}]);
+}])
+/*
+.controller('CtrlActProd', ['$scope', 'ServicioProducto', function($scope, ServicioProducto) {
+    ServicioProducto.actualizarProducto($scope.producto.id);
+    console.log("En CtrlActProd actualizando producto con id: " + $scope.producto.id);
 
-app.controller('CtrlActProd', ['$scope', '$routeParams', 'Producto', '$location',
-    function ($scope, $routeParams, UserFactory, $location) {
-
-        // ng-click 'actualizarProducto':
+}])
+*/
+.controller('CtrlActProd', ['$scope', 'ServicioProducto', '$routeParams', '$location',function($scope, ServicioProducto, $routeParams, $location) {
+        console.log("En CtrlActProd con id: " + $routeParams.id);
+        // callback for ng-click 'updateUser':
         $scope.actualizarProducto = function () {
-            Producto.actualizarProducto()($scope.producto);
-            $location.path('/user-list');
+            console.log("En CtrlActProd actualizando producto con id: " + $scope.phone.id);
+           ServicioProducto.actualizarProducto($scope.phone);
+           // $location.path('/user-list');
         };
-
         // ng-click 'cancel':
         $scope.cancel = function () {
             $location.path('/user-list');
         };
 
-        $scope.producto = Producto.getProducto({id: $routeParams.id});
-    }]);
+        ServicioProducto.getProducto({id: $routeParams.id}).then(function(productos) {
+            $scope.productos = productos;
 
-app.controller('CtrlCrearProd', ['$scope', 'Producto', '$location',
-    function ($scope, UsersFactory, $location) {
+        });
+    }])
+
+.controller('CtrlCrearProd', ['$scope', 'Producto', '$location',
+    function ($scope, Producto, $location) {
 
         // ng-click 'crear nuevo usuario':
         $scope.crearProducto = function () {
