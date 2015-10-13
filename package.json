@@ -41,5 +41,21 @@
   "dependencies": {
     "express": "^4.13.3",
     "gzippo": "^0.2.0"
-  }
+  },
+  "description": "This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular) version 0.12.1.",
+  "version": "1.0.0",
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etorrano/sAPO-BackOffice-Frontend.git"
+  },
+  "author": "etorrano",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/etorrano/sAPO-BackOffice-Frontend/issues"
+  },
+  "homepage": "https://github.com/etorrano/sAPO-BackOffice-Frontend#readme"
 }
