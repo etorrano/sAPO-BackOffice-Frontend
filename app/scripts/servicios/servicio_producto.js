@@ -41,9 +41,9 @@ angular.module('sApobackOfficeFrontendApp')
 
         this.actualizarProducto = function(productos) {
             var deferred = $q.defer();
-            Producto.actualizarProducto({ id: 1 }, {}, function (productos) {
-                console.log("actualizando producto con id: " + producto.id);
-                deferred.resolve(producto);
+            Producto.actualizarProducto({}, productos , function (productos) {
+                console.log("En Servicios actualizando producto con id: " + productos.id+ productos.nombre + productos.descripcion);
+                deferred.resolve(productos);
             }, function (error) {
                 deferred.reject(error);
             });

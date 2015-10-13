@@ -32,9 +32,9 @@ angular.module('sApobackOfficeFrontendApp')
 .controller('CtrlActProd', ['$scope', 'ServicioProducto', '$routeParams', '$location',function($scope, ServicioProducto, $routeParams, $location) {
         console.log("En CtrlActProd con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
-        $scope.actualizarProducto = function () {
-            console.log("En CtrlActProd actualizando producto con id: " + $scope.phone.id);
-           ServicioProducto.actualizarProducto($scope.phone);
+        $scope.actualizarProducto = function (productos) {
+            console.log("En CtrlActProd actualizando producto con id: " + $scope.productos.id + $scope.productos.nombre + $scope.productos.descripcion);
+           ServicioProducto.actualizarProducto($scope.productos);
            // $location.path('/user-list');
         };
         // ng-click 'cancel':
