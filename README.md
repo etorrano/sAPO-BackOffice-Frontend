@@ -12,35 +12,41 @@ sudo apt-get install npm nodejs-legacy
 
 #### Si se precisa una versión más reciente obtnerla de la siguiente manera:
 ##### nodejs
+```
 curl -sL https://deb.nodesource.com/setup_0.12 | sudo -E bash -
 sudo apt-get install -y nodejs
+```
 
 #### npm
+```
 npm install -g npm
+```
 
-#Instalar Yeoman
-
+### Instalar Yeoman
+```
 npm install -g yo bower
+```
 
-#Install angularJS generator
-
+### Instalar generador angularJS
+```
 npm install -g generator-angular
+```
 
-#Generate angularJS application
-
+## Generar aplicación angularJS
+```
 yo angular
+```
 
-#Iniciar servidor
-grunt serve
+## Compilar y ejecutar
 
-#Si sale error de compass, instalar:
+Ejecutar `grunt` para compilar y `grunt serve` para verlo en el navegador.
+
+### Si sale error de compass, instalar:
+```
 npm install grunt-contrib-compass --save-dev -g
 gem install compass --pre
+```
 
-## Build & development
+## Verificación
 
-Run `grunt` for building and `grunt serve` for preview.
-
-## Testing
-
-Running `grunt test` will run the unit tests with karma.
+Con `grunt test` ejecuta los test unitarios con karma.
