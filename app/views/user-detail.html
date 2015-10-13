@@ -17,6 +17,20 @@
             </div>
         </div>
         <div class="control-group">
+            <label class="control-label" for="inputLastName">Categoria:</label>
+
+            <div class="controls">
+                <input type="text" id="inputLastName" ng-model="productos.categoria"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputLastName">Genérico:</label>
+
+            <div class="controls">
+                <input type="text" id="inputLastName" ng-model="productos.isgenerico"/>
+            </div>
+        </div>
+        <div class="control-group">
             <div class="controls">
                 <a ng-click="cancel()" class="btn btn-small">cancel</a>
                 <a ng-click="actualizarProducto()" class="btn btn-small btn-primary">update user</a>
