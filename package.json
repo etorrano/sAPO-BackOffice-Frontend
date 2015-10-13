@@ -88,5 +88,8 @@
   "bugs": {
     "url": "https://github.com/etorrano/sAPO-BackOffice-Frontend/issues"
   },
-  "homepage": "https://github.com/etorrano/sAPO-BackOffice-Frontend#readme"
+  "homepage": "https://github.com/etorrano/sAPO-BackOffice-Frontend#readme",
+  "keywords": [
+    "sapo"
+  ]
 }
