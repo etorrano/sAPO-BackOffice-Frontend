@@ -1,7 +1,7 @@
 # sAPO-BackOffice-Frontend
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.12.1.
+Éste proyecto fue generado con [yo angular generator](https://github.com/yeoman/generator-angular)
+versión 0.12.1.
 
 ## Instalar dependencias
 
@@ -10,7 +10,7 @@ version 0.12.1.
 sudo apt-get install npm nodejs-legacy
 ```
 
-#### Si se precisa una versión más reciente obtnerla de la siguiente manera:
+#### Si se precisa una versión más reciente obtenerla de la siguiente manera:
 ##### nodejs
 ```
 curl -sL https://deb.nodesource.com/setup_0.12 | sudo -E bash -
