@@ -31,9 +31,9 @@ angular.module('sApobackOfficeFrontendApp')
 
         this.crearProducto = function(producto) {
             var deferred = $q.defer();
-            Producto.crearProducto({ id: producto.id }, producto, function (producto) {
-                console.log("En Servicios creando producto con id: " + producto.id+ producto.nombre + producto.descripcion);
-                deferred.resolve(producto);
+            console.log("En Servicios creando producto con datos: " + producto.nombre + producto.descripcion);
+            Producto.crearProducto({}, producto, function (producto) {
+               deferred.resolve(producto);
             }, function (error) {
                 deferred.reject(error);
             });
@@ -53,8 +53,8 @@ angular.module('sApobackOfficeFrontendApp')
 
         this.eliminarProducto = function(id) {
             var deferred = $q.defer();
-            Producto.eliminarProducto({ id: id }, {}, function (producto) {
-                deferred.resolve(producto);
+            Producto.eliminarProducto({ id: id }, {}, function (id) {
+                deferred.resolve(id);
             }, function (error) {
                 deferred.reject(error);
             });

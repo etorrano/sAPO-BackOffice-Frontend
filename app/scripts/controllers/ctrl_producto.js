@@ -13,14 +13,25 @@ angular.module('sApobackOfficeFrontendApp')
 }])
 
 .controller('CtrlListarProductos', ['$scope', 'ServicioProducto', '$routeParams', '$location',function($scope, ServicioProducto, $routeParams, $location) {
+        console.log("En CtrlListarProductos");
         $scope.actualizarProducto = function (userId) {
+            console.log("Redireccionando a CtrlActProd para actualizar producto con id: " + userId);
             $location.path('/user-detail/' + userId);
         };
         ServicioProducto.getProductos().then(function(productos) {
         $scope.phones = productos;
          });
         $scope.crearProducto = function () {
+            console.log("Redireccionando a CtrlActProd para crear producto");
             $location.path('/user-creation');
+        };
+
+        $scope.eliminarProducto = function (userId) {
+            console.log("Borrando producto con id: " + userId);
+            ServicioProducto.eliminarProducto(userId);
+            ServicioProducto.getProductos().then(function(productos) {
+                $scope.phones = productos;
+            });
         };
 
 }])
@@ -53,10 +64,10 @@ angular.module('sApobackOfficeFrontendApp')
 
 .controller('CtrlCrearProd', ['$scope', 'ServicioProducto', '$routeParams', '$location',
     function ($scope, ServicioProducto, $routeParams, $location) {
-
         // ng-click 'crear nuevo usuario':
         $scope.crearProducto = function (productos) {
-            console.log("En CtrlCrearProd creando producto con id: " + $scope.productos.id + $scope.productos.nombre + $scope.productos.descripcion);
+            //$scope.productos.id = 101;
+            console.log("En CtrlCrearProd creando producto con id: " + $scope.productos.nombre + $scope.productos.descripcion);
             ServicioProducto.crearProducto($scope.productos);
             $location.path('/user-list');
         };
