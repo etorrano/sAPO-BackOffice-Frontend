@@ -24,9 +24,13 @@ angular
         controller: 'CtrlListarProductos',
         controllerAs: 'prod'
       })
-        .when('/producto', {
+        .when('/producto/:id', {
         templateUrl: 'views/producto.html',
-        controller: 'CtrlListarProductos'
+        controller: 'CtrlListarProducto'
+      })
+      when('/producto/:nomprod', {
+        templateUrl: 'templates/user.html',
+        controller: 'UserController'
       })
       /*  .when('/phones/:phoneId', {
         templateUrl: 'views/InfoProd.html',
@@ -37,6 +41,6 @@ angular
       .when('/user-detail/:id', {templateUrl: 'views/user-detail.html', controller: 'CtrlActProd'})
       .when('/user-creation', {templateUrl: 'views/user-creation.html', controller: 'CtrlCrearProd'})
       .otherwise({
-        redirectTo: '/user-list'
+        redirectTo: '/producto'
       });
   });

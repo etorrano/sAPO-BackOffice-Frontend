@@ -12,6 +12,15 @@ angular.module('sApobackOfficeFrontendApp')
     this.init();
 }])
 
+.controller('CtrlListarProducto', ['$scope', 'ServicioProducto', '$routeParams', '$location',function($scope, ServicioProducto, $routeParams, $location) {
+    console.log("En CtrlListarProductos");
+    ServicioProducto.getProducto({id: $routeParams.id}).then(function(producto) {
+        $scope.phone = producto;
+
+    });
+
+}])
+
 .controller('CtrlListarProductos', ['$scope', 'ServicioProducto', '$routeParams', '$location',function($scope, ServicioProducto, $routeParams, $location) {
         console.log("En CtrlListarProductos");
         $scope.actualizarProducto = function (userId) {
@@ -29,9 +38,11 @@ angular.module('sApobackOfficeFrontendApp')
         $scope.eliminarProducto = function (userId) {
             console.log("Borrando producto con id: " + userId);
             ServicioProducto.eliminarProducto(userId);
-            ServicioProducto.getProductos().then(function(productos) {
+            $location.path('/');
+            /*ServicioProducto.getProductos().then(function(productos) {
                 $scope.phones = productos;
-            });
+            });*/
+
         };
 
 }])
