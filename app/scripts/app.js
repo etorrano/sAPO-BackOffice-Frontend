@@ -20,17 +20,13 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/productos', {
-        templateUrl: 'views/productos.html',
+        templateUrl: 'views/producto.html',
         controller: 'CtrlListarProductos',
         controllerAs: 'prod'
       })
         .when('/producto/:id', {
         templateUrl: 'views/producto.html',
         controller: 'CtrlListarProducto'
-      })
-      when('/producto/:nomprod', {
-        templateUrl: 'templates/user.html',
-        controller: 'UserController'
       })
       /*  .when('/phones/:phoneId', {
         templateUrl: 'views/InfoProd.html',
@@ -40,6 +36,11 @@ angular
 
       .when('/user-detail/:id', {templateUrl: 'views/user-detail.html', controller: 'CtrlActProd'})
       .when('/user-creation', {templateUrl: 'views/user-creation.html', controller: 'CtrlCrearProd'})
+
+      .when('/producto/:nomprod', {
+        templateUrl: 'templates/user.html',
+        controller: 'UserController'
+      })
       .otherwise({
         redirectTo: '/producto'
       });

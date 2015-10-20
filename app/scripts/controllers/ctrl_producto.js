@@ -25,7 +25,13 @@ angular.module('sApobackOfficeFrontendApp')
         console.log("En CtrlListarProductos");
         $scope.actualizarProducto = function (userId) {
             console.log("Redireccionando a CtrlActProd para actualizar producto con id: " + userId);
-            $location.path('/user-detail/' + userId);
+            //$location.path('/user-detail/' + userId);
+
+            ServicioProducto.getProductos().then(function(productos) {
+                $scope.phones = productos;
+
+                $location.path('/productos/' + productos.nombre);
+            });
         };
         ServicioProducto.getProductos().then(function(productos) {
         $scope.phones = productos;
