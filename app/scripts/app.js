@@ -32,16 +32,16 @@ angular
         templateUrl: 'views/InfoProd.html',
         controller: 'prodDetCtrl'
       })*/
-      .when('/user-list', {templateUrl: 'views/user-list.html', controller: 'CtrlListarProductos'})
+      .when('/productos', {templateUrl: 'views/user-list.html', controller: 'CtrlListarProductos'})
 
       .when('/user-detail/:id', {templateUrl: 'views/user-detail.html', controller: 'CtrlActProd'})
       .when('/user-creation', {templateUrl: 'views/user-creation.html', controller: 'CtrlCrearProd'})
-
+/*
       .when('/producto/:nomprod', {
         templateUrl: 'templates/user.html',
         controller: 'UserController'
-      })
+      })*/
       .otherwise({
-        redirectTo: '/producto'
+        redirectTo: '/productos'
       });
   });
