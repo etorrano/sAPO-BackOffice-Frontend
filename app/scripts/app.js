@@ -170,7 +170,7 @@ angular
         controllerAs: 'prod'
       })
         .when('/templates', {
-          templateUrl: 'views/listar-templates.html',
+          templateUrl: 'views/templates-listar.html',
           controller: 'CtrlListarTemplates'
         })
         .when('/producto/:id', {
