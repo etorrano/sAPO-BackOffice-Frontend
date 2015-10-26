@@ -26,6 +26,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="styles/adminlte/skins/_all-skins.min.css">
     <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
 
+    <!-- ngTable
+
+    <link rel="stylesheet" href="https://cdn.rawgit.com/esvit/ng-table/v1.0.0/dist/ng-table.min.css">
+    -->
+      <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css">
+      <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css">
+
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/demo.css">
     <link rel="stylesheet" href="styles/bootstrap.css">
@@ -64,7 +71,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="index.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>A</b>LT</span>
           <!-- logo for regular state and mobile devices -->
@@ -422,14 +429,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script src="scripts/controllers/ctrl_template.js"></script>
     <script src="scripts/controllers/ctrl_producto.js"></script>
+
+    <script src="scripts/controllers/ctrl_categoria.js"></script>
+
     <script src="scripts/controllers/prodDetCtrl.js"></script>
     <script src="scripts/servicios/servicio_producto.js"></script>
 
     <script src="scripts/servicios/servicio_template.js"></script>
+    <script src="scripts/servicios/servicio_categoria.js"></script>
+
+    <script src="scripts/modelos/categoria.js"></script>
     <script src="scripts/modelos/producto.js"></script>
 
     <script src="scripts/modelos/template.js"></script>
-
+    <script src="scripts/listar.js"></script>
     <script type="text/javascript" src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
 
 
@@ -440,6 +453,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- FastClick -->
     <script src="plugins/fastclick/fastclick.min.js"></script>
 
+    <!-- ngTable
+
+    <script src="https://cdn.rawgit.com/esvit/ng-table/v1.0.0/dist/ng-table.js"></script>
+    -->
+
+
+    <script src="bower_components/ng-table/dist/ng-table.js"></script>
+
+    <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
          Both of these plugins are recommended to enhance the
          user experience. Slimscroll is required when using the

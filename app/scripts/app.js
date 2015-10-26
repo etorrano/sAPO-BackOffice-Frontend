@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.tree'
+    'ui.tree',
+    'ngTable'
   ])
     .value('fbURL', 'https://angular-ui-tree.firebaseio.com/demo/groups/')
     .factory('Groups', ['$http', '$resource', 'REST_API', function($http, $resource, REST_API) {
@@ -193,6 +194,14 @@ angular
         templateUrl: 'templates/user.html',
         controller: 'UserController'
       })*/
+        .when('/templates-crear', {
+          templateUrl : "views/listar.html",
+          controller : "paginationCtrl"
+        })
+        .when('/edit', {
+          templateUrl : "views/edit.html",
+          controller : "editCtrl"
+        })
       .otherwise({
         redirectTo: '/'
       });

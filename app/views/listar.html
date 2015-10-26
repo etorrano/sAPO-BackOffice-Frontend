@@ -1,0 +1,26 @@
+<div >
+
+  <p><strong>Page:</strong> {{tableParams.page()}}
+  <p><strong>Count per page:</strong> {{tableParams.count()}}
+  {{checkboxes.items}}
+  <table ng-table="tableParams" class="table">
+    <tr ng-repeat="book in $data">
+      <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
+        <input type="checkbox" ng-model="checkboxes.items[book.id]" />
+      </td>
+      <td data-title="'ID'" width="200">
+        <span >{{book.id}}</span>
+      </td>
+      <td data-title="'Autor'" width="200">
+        <span >{{book.nombre}}</span>
+      </td>
+      <td data-title="'Título'" width="200">
+        <span >{{book.descripcion}}</span>
+      </td>
+    </tr>
+  </table>
+
+  <div class="controls">
+    <a ng-click="continuar()" class="btn btn-small">Continuar</a>
+  </div>
+</div>
