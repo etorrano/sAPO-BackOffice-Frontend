@@ -22,9 +22,9 @@ angular
     .value('fbURL', 'https://angular-ui-tree.firebaseio.com/demo/groups/')
     .factory('Groups', ['$http', '$resource', 'REST_API', function($http, $resource, REST_API) {
       var API_REST_URL = REST_API.BASE_URL;
-      console.log("En modelo Template");
+      console.log("En modelo Catlate");
       return $resource(API_REST_URL + ':recurso/:modulo/:submodulo/:id', {}, {
-        crearTemplate   : { method: 'POST', params: { recurso: 'templates', modulo: 'create'}},
+        crearCatlate   : { method: 'POST', params: { recurso: 'templates', modulo: 'create'}},
         getTemplate     : { method: 'GET', params: { recurso: 'templates' ,id: '@id'},  isArray: false },
         getTemplates    : { method: 'GET', params: { recurso: 'templates' },  isArray: true },
         actualizarTemplate   : { method: 'PUT', params: { recurso: 'templates',id: '@id'}},
@@ -195,9 +195,27 @@ angular
         controller: 'UserController'
       })*/
         .when('/templates-crear', {
-          templateUrl : "views/listar.html",
-          controller : "paginationCtrl"
+          templateUrl : "views/templates-crear.html",
+          controller : "CtrlCrearTemp"
         })
+        .when('/templates-listar', {
+          templateUrl : "views/templates-listar.html",
+          controller : "CtrlListarTemplates"
+        })
+
+        .when('/templates-actualizar/:id', {templateUrl: 'views/templates-actualizar.html', controller: 'CtrlActTemp'})
+
+        .when('/categorias-crear', {
+            templateUrl : "views/categorias-crear.html",
+            controller : "CtrlCrearCat"
+        })
+        .when('/categorias-listar', {
+            templateUrl : "views/categorias-listar.html",
+            controller : "CtrlListarCategorias"
+        })
+
+        .when('/categorias-actualizar/:id', {templateUrl: 'views/categorias-actualizar.html', controller: 'CtrlActCat'})
+
         .when('/edit', {
           templateUrl : "views/edit.html",
           controller : "editCtrl"

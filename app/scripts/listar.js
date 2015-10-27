@@ -2,7 +2,7 @@
  * Created by emi on 26/10/15.
  */
 angular.module('sApobackOfficeFrontendApp')
-.service('dataService', ['$http', '$q', function($http, $q)
+.service('dataService', ['$http','$q', function($http, $q)
 {
     var obj = {},
         deferred = $q.defer(),
@@ -23,13 +23,14 @@ angular.module('sApobackOfficeFrontendApp')
     return obj;
 }])
 
-.controller('paginationCtrl', function($scope, ngTableParams, ServicioCategoria)
+.controller('paginationCtrl', function($scope, $filter, ngTableParams, ServicioCategoria)
 {   var categorias = [];
     ServicioCategoria.getCategorias().then(function(results)
     {
-        angular.forEach(results, function(categoria) {
-            categorias
-        });
+        categorias = results;
+       /* angular.forEach(results, function(categoria) {
+            categorias = results;
+        });*/
         $scope.tableParams = new ngTableParams(
             {
                 page: 1,          // primera página a mostrar
@@ -44,6 +45,7 @@ angular.module('sApobackOfficeFrontendApp')
             }
         );
     });
+
     $scope.checkboxes = { 'checked': false, items: {} };
 
     // watch for check all checkbox
@@ -72,14 +74,31 @@ angular.module('sApobackOfficeFrontendApp')
         // grayed checkbox
         angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
     }, true);
-
+/*
+    $scope.seleccionar = function () {
+        $scope.seleccionados = $filter('filter')($scope.books, {checked: true});
+        console.log("seleccionado "+ $scope.seleccionados);
+    }*/
     $scope.continuar = function()
     {
         var cats=[];
-        angular.forEach($scope.checkboxes.items, function(item) {
-            cats.push($scope.books[$scope.checkboxes.items.indexOf(item)]);
+        // loop through all checkboxes
+        angular.forEach(categorias, function(item, key) {
+            console.log("Verificar categorias seleccionadas");
+            if($scope.checkboxes.items[item.id]) {
+                console.log("seleccionado "+ item.id + item);
+                cats.push(item); // push checked items to array
+            }
         });
-        console.log(cat);
+        $scope.cats=cats;
+       /* var cats=[];
+        angular.forEach($scope.checkboxes.items, function(item) {
+
+            console.log("En listar item " + item);
+            console.log("En listar id item " + $scope.checkboxes.items.indexOf(item));
+            cats.push($scope.books[$scope.checkboxes.indexOf(item)]);
+        });*/
+       // console.log(cats);
     }
 })
 

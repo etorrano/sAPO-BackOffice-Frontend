@@ -1,39 +1,39 @@
 <div class="container">
-    <h1>Actualizar Producto</h1>
+    <h1>Actualizar Template</h1>
 
     <form novalidate="novalidate" class="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="inputFirstName">Nombre:</label>
 
             <div class="controls">
-                <input type="text" id="inputFirstName" ng-model="productos.nombre"/>
+                <input type="text" id="inputFirstName" ng-model="categorias.nombre"/>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="inputLastName">Descripcion:</label>
 
             <div class="controls">
-                <input type="text" id="inputLastName" ng-model="productos.descripcion"/>
+                <input type="text" id="inputLastName" ng-model="categorias.descripcion"/>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="inputLastName">Categoria:</label>
 
             <div class="controls">
-                <input type="text" id="inputLastName" ng-model="productos.categoria"/>
+                <input type="text" id="inputLastName" ng-model="categorias.categoria"/>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="inputLastName">Genérico:</label>
 
             <div class="controls">
-                <input type="text" id="inputLastName" ng-model="productos.isgenerico"/>
+                <input type="text" id="inputLastName" ng-model="categorias.isgenerico"/>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
                 <a ng-click="cancel()" class="btn btn-small btn-primary">Cancelar</a>
-                <a ng-click="actualizarProducto()" class="btn btn-small btn-primary">Actualizar</a>
+                <a ng-click="actualizarCategoria()" class="btn btn-small btn-primary">Actualizar</a>
             </div>
         </div>
     </form>

@@ -25,12 +25,10 @@ angular.module('sApobackOfficeFrontendApp')
         console.log("En CtrlListarProductos");
         $scope.actualizarProducto = function (userId) {
             console.log("Redireccionando a CtrlActProd para actualizar producto con id: " + userId);
-            //$location.path('/user-detail/' + userId);
+            $location.path('/productos-actualizar/' + userId);
 
             ServicioProducto.getProductos().then(function(productos) {
                 $scope.phones = productos;
-
-                $location.path('/productos/' + productos.nombre);
             });
         };
         ServicioProducto.getProductos().then(function(productos) {
@@ -38,13 +36,13 @@ angular.module('sApobackOfficeFrontendApp')
          });
         $scope.crearProducto = function () {
             console.log("Redireccionando a CtrlActProd para crear producto");
-            $location.path('/user-creation');
+            $location.path('/productos-crear');
         };
 
         $scope.eliminarProducto = function (userId) {
             console.log("Borrando producto con id: " + userId);
             ServicioProducto.eliminarProducto(userId);
-            $location.path('/');
+            $location.path('/productos-listar');
             /*ServicioProducto.getProductos().then(function(productos) {
                 $scope.phones = productos;
             });*/
@@ -65,11 +63,11 @@ angular.module('sApobackOfficeFrontendApp')
         $scope.actualizarProducto = function (productos) {
            console.log("En CtrlActProd actualizando producto con id: " + $scope.productos.id + $scope.productos.nombre + $scope.productos.descripcion);
            ServicioProducto.actualizarProducto($scope.productos);
-           $location.path('/user-list');
+           $location.path('/productos-listar');
         };
         // ng-click 'cancel':
         $scope.cancel = function () {
-            $location.path('/user-list');
+            $location.path('/productos-listar');
         };
 
 
@@ -86,6 +84,6 @@ angular.module('sApobackOfficeFrontendApp')
             //$scope.productos.id = 101;
             console.log("En CtrlCrearProd creando producto con id: " + $scope.productos.nombre + $scope.productos.descripcion);
             ServicioProducto.crearProducto($scope.productos);
-            $location.path('/user-list');
+            $location.path('/productos-listar');
         };
     }]);
