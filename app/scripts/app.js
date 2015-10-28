@@ -220,7 +220,10 @@ angular
           templateUrl : "views/edit.html",
           controller : "editCtrl"
         })
+        .when('/principal', {
+          templateUrl : "views/principal.html"
+        })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/principal'
       });
   });
