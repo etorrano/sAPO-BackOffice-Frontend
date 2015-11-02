@@ -168,26 +168,33 @@ angular
       .when('/productos', {
         templateUrl: 'views/producto.html',
         controller: 'CtrlListarProductos',
-        controllerAs: 'prod'
+        controllerAs: 'prod',
+            access: { requiredLogin: true }
       })
         .when('/templates', {
           templateUrl: 'views/templates-listar.html',
-          controller: 'CtrlListarTemplates'
+          controller: 'CtrlListarTemplates',
+            access: { requiredLogin: true }
         })
         .when('/producto/:id', {
         templateUrl: 'views/producto.html',
-        controller: 'CtrlListarProducto'
+        controller: 'CtrlListarProducto',
+            access: { requiredLogin: true }
       })
       /*  .when('/phones/:phoneId', {
         templateUrl: 'views/InfoProd.html',
         controller: 'prodDetCtrl'
       })*/
-      .when('/productos-listar', {templateUrl: 'views/productos-listar.html', controller: 'CtrlListarProductos'})
+      .when('/productos-listar', {templateUrl: 'views/productos-listar.html', controller: 'CtrlListarProductos',
+            access: { requiredLogin: true }})
 
-      .when('/productos-actualizar/:id', {templateUrl: 'views/productos-actualizar.html', controller: 'CtrlActProd'})
-      .when('/productos-crear', {templateUrl: 'views/productos-crear.html', controller: 'CtrlCrearProd'})
+      .when('/productos-actualizar/:id', {templateUrl: 'views/productos-actualizar.html', controller: 'CtrlActProd',
+            access: { requiredLogin: true }})
+      .when('/productos-crear', {templateUrl: 'views/productos-crear.html', controller: 'CtrlCrearProd',
+            access: { requiredLogin: true }})
 
-        .when('/demo', {templateUrl: 'views/tree.html', controller: 'groupsCtrl'})
+        .when('/demo', {templateUrl: 'views/tree.html', controller: 'groupsCtrl',
+            access: { requiredLogin: true }})
         .when('/dash', {templateUrl: 'starterbkp.html'})
 /*
       .when('/producto/:nomprod', {
@@ -196,34 +203,65 @@ angular
       })*/
         .when('/templates-crear', {
           templateUrl : "views/templates-crear.html",
-          controller : "CtrlCrearTemp"
+          controller : "CtrlCrearTemp",
+            access: { requiredLogin: true }
         })
         .when('/templates-listar', {
           templateUrl : "views/templates-listar.html",
-          controller : "CtrlListarTemplates"
+          controller : "CtrlListarTemplates",
+            access: { requiredLogin: true }
         })
 
-        .when('/templates-actualizar/:id', {templateUrl: 'views/templates-actualizar.html', controller: 'CtrlActTemp'})
+        .when('/templates-actualizar/:id', {templateUrl: 'views/templates-actualizar.html', controller: 'CtrlActTemp',
+            access: { requiredLogin: true }})
 
         .when('/categorias-crear', {
             templateUrl : "views/categorias-crear.html",
-            controller : "CtrlCrearCat"
+            controller : "CtrlCrearCat",
+            access: { requiredLogin: true }
         })
         .when('/categorias-listar', {
             templateUrl : "views/categorias-listar.html",
-            controller : "CtrlListarCategorias"
+            controller : "CtrlListarCategorias",
+            access: { requiredLogin: true }
         })
 
-        .when('/categorias-actualizar/:id', {templateUrl: 'views/categorias-actualizar.html', controller: 'CtrlActCat'})
+        .when('/categorias-actualizar/:id', {
+          templateUrl: 'views/categorias-actualizar.html',
+          controller: 'CtrlActCat',
+          access: { requiredLogin: true }
+        })
 
         .when('/edit', {
           templateUrl : "views/edit.html",
-          controller : "editCtrl"
+          controller : "editCtrl",
+            access: { requiredLogin: true }
         })
-        .when('/principal', {
-          templateUrl : "views/principal.html"
+        .when('/admin/login', {
+            templateUrl: 'views/login.html',
+            controller: 'UsuarioAdminCtrl',
+            access: { requiredLogin: false }
+        })
+        .when('/admin/logout', {
+            templateUrl: 'views/logout.html',
+            controller: 'UsuarioAdminCtrl',
+            access: { requiredLogin: true }
+        })
+        .when('/', {
+          templateUrl : "views/principal.html",
+          access: { requiredLogin: true }
         })
       .otherwise({
-        redirectTo: '/principal'
+        redirectTo: '/'
       });
-  });
+  })
+
+.run(function($rootScope, $location, ServicioAutenticacionAdmin) {
+    $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+        console.log("Verificar autorización");
+        if (nextRoute.access.requiredLogin && !ServicioAutenticacionAdmin.conectado) {
+            console.log("Usuario no conectado");
+            $location.path("/admin/login");
+        }
+    });
+});
