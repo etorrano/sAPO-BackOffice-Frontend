@@ -249,7 +249,7 @@ angular
         })
         .when('/', {
           templateUrl : "views/principal.html",
-          access: { requiredLogin: true }
+          access: { requiredLogin: false }
         })
       .otherwise({
         redirectTo: '/'
