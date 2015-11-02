@@ -14,7 +14,7 @@ angular.module('sApobackOfficeFrontendApp')
     return {
         iniciarSesion: function(usuario, contrasenia) {
             console.log("Iniciar Sesion");
-            return $http.post(API_REST_URL + '/login', {usuario: usuario, contrasenia: contrasenia});
+            return $http.post(API_REST_URL + '/administradores/login', {user: usuario, password: contrasenia});
         },
         cerrarSesion: function() {
             console.log("Cerrar Sesion");

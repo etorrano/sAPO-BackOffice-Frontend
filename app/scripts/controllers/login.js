@@ -8,19 +8,19 @@ angular.module('sApobackOfficeFrontendApp')
         //Admin User Controller (login, logout)
         $scope.iniciarSesion = function iniciarSesion(usuario, contrasenia) {
             console.log("Login: " +usuario+contrasenia);
-            ServicioAutenticacionAdmin.conectado = true;
-            $location.path("/");
-            /*if (usuario !== undefined && contrasenia !== undefined) {
+/*            ServicioAutenticacionAdmin.conectado = true;
+            $location.path("/");*/
+            if (usuario !== undefined && contrasenia !== undefined) {
 
                 ServicioUsuarioAdmin.iniciarSesion(usuario, contrasenia).success(function(data) {
                     ServicioAutenticacionAdmin.conectado = true;
                     $window.sessionStorage.token = data.token;
-                    $location.path("/admin");
+                    $location.path("/");
                 }).error(function(status, data) {
                     console.log(status);
                     console.log(data);
                 });
-            }*/
+            }
         }
 
         $scope.cerrarSesion = function cerrarSesion() {
