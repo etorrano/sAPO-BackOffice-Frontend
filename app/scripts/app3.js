@@ -7,23 +7,23 @@
       $routeProvider
         .when('/basic-example', {
           controller: 'BasicExampleCtrl',
-          templateUrl: 'views/basic-example.html'
+          templateUrl: '../views/prueba/basic-example.html'
         })
         .when('/cloning', {
           controller: 'CloningCtrl',
-          templateUrl: 'views/cloning.html'
+          templateUrl: '../views/prueba/cloning.html'
         })
         .when('/connected-trees', {
           controller: 'ConnectedTreesCtrl',
-          templateUrl: 'views/connected-trees.html'
+          templateUrl: '../views/prueba/connected-trees.html'
         })
         .when('/filter-nodes', {
           controller: 'FilterNodesCtrl',
-          templateUrl: 'views/filter-nodes.html'
+          templateUrl: '../views/prueba/filter-nodes.html'
         })
         .when('/nodrop', {
           controller: 'BasicExampleCtrl',
-          templateUrl: 'views/nodrop.html'
+          templateUrl: '../views/prueba/nodrop.html'
         })
         .otherwise({
           redirectTo: '/basic-example'
