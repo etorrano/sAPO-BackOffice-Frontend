@@ -12,7 +12,7 @@ angular.module('sApobackOfficeFrontendApp')
 
 }])
 
-.controller('CtrlListarAdministradores', ['$scope', 'ServicioAdministrador', '$routeParams', '$location',function($scope, ServicioAdministrador, $routeParams, $location) {
+.controller('CtrlListarAdministradores', ['$scope', 'ServicioAdministrador', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioAdministrador, $routeParams, $location,  $filter, ngTableParams) {
         console.log("En CtrlListarAdministradores");
         $scope.actualizar = function (userId) {
             console.log("Redireccionando a CtrlActAdmin para actualizar administrador con id: " + userId);
@@ -22,22 +22,34 @@ angular.module('sApobackOfficeFrontendApp')
                 $scope.administradores = administradores;
             });
         };
+        /*
         ServicioAdministrador.getLista().then(function(administradores) {
         $scope.administradores = administradores;
-         });
-        $scope.crear = function () {
-            console.log("Redireccionando a CtrlActAdmin para crear administrador");
-            $location.path('/administradores-crear');
-        };
+         });*/
+        ServicioAdministrador.getLista().then(function(results)
+        {
+            /* angular.forEach(results, function(producto) {
+             productos = results;
+             });*/
+            $scope.tableParams = new ngTableParams(
+                {
+                    page: 1,          // primera página a mostrar
+                    count: 5          // registros por página
+                },
+                {
+                    total: results.length, // resultados en total
+                    getData: function($defer, params)
+                    {
+                        $defer.resolve(results.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                    }
+                }
+            );
+        });
 
-        $scope.eliminarAdministrador = function (userId) {
+        $scope.eliminar = function (userId) {
             console.log("Borrando administrador con id: " + userId);
-            ServicioAdministrador.eliminarAdministrador(userId);
+            ServicioAdministrador.eliminar(userId);
             $location.path('/administradores-listar');
-            /*ServicioAdministrador.getLista().then(function(administradores) {
-                $scope.administradores = administradores;
-            });*/
-
         };
 
 }])
