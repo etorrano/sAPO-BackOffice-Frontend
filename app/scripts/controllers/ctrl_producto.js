@@ -16,7 +16,6 @@ angular.module('sApobackOfficeFrontendApp')
     console.log("En CtrlListarProductos");
     ServicioProducto.getProducto({id: $routeParams.id}).then(function(producto) {
         $scope.phone = producto;
-
     });
 
 }])

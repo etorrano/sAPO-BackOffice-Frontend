@@ -14,10 +14,8 @@
       <!-- build:css(.) styles/vendor.css -->
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css" />
-      <link rel="stylesheet" href="bower_components/AdminLTE/bootstrap/css/bootstrap.min.css">
-      <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/AdminLTE.min.css">
-      <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/skins/_all-skins.min.css">
-      <link rel="stylesheet" href="bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
+      <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/AdminLTE.css" />
+      <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
       <!-- endbower -->
       <!-- endbuild -->
       <!-- build:css(.tmp) styles/main.css -->
@@ -25,8 +23,17 @@
       <link rel="stylesheet" href="styles/main.css">
       <link rel="stylesheet" href="styles/demo.css">
       <link rel="stylesheet" href="styles/bootstrap.css">
+      <link rel="stylesheet" href="styles/adminlte/skins/_all-skins.min.css">
+      <link rel="stylesheet" href="styles/adminlte/bootstrap/bootstrap.min.css">
+      <link rel="stylesheet" href="styles/adminlte/plugins/datatables/dataTables.bootstrap.css">
+      <link rel="stylesheet" href="styles/adminlte/AdminLTE.min.css">
+      <link rel="stylesheet" href="styles/adminlte/skins/skin-blue.min.css">
+      <link rel="stylesheet" href="styles/ng-table.css">
     <!-- endbuild -->
 
+
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- REQUIRED JS SCRIPTS -->
 
       <!-- build:js(.) scripts/vendor.js -->
@@ -41,6 +48,7 @@
       <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script src="bower_components/angular-touch/angular-touch.js"></script>
       <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
+      <script src="bower_components/AdminLTE/dist/js/app.js"></script>
       <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
       <!-- endbower -->
       <!-- endbuild -->
@@ -91,7 +99,7 @@
 
   </head>
   <body ng-app="sApobackOfficeFrontendApp" class="hold-transition skin-blue sidebar-mini">
-  <div class="wrapper">
+  <div class="wrapper" data-ng-controller="inicioCtrl">
 
     <!-- Main Header -->
     <header class="main-header">
