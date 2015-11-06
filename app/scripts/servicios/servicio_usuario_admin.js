@@ -8,8 +8,9 @@ angular.module('sApobackOfficeFrontendApp')
     }
     return auth;
 })
-.factory('ServicioUsuarioAdmin', function($http,REST_API) {
+.factory('ServicioUsuarioAdmin', function ($http,REST_API){
     var API_REST_URL = REST_API.BASE_URL;
+    var administrador = {nombre: 'nada'};
     console.log("ServicioUsuarioAdmin");
     return {
         iniciarSesion: function(usuario, contrasenia) {
@@ -18,6 +19,14 @@ angular.module('sApobackOfficeFrontendApp')
         },
         cerrarSesion: function() {
             console.log("Cerrar Sesion");
+        },
+        get: function() {
+          console.log("Obtengo administrador:" + administrador.nombre);
+            return administrador;
+        },
+        set: function(admin) {
+          console.log("Guardo administrador: " + admin.nombre);
+            administrador = admin;
         }
     }
 });

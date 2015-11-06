@@ -6,11 +6,11 @@ angular.module('sApobackOfficeFrontendApp')
 
         this.init = function () {};
         console.log("En ServicioAdministrador");
-        this.get = function(prod) {
+        this.get = function(id) {
             var deferred = $q.defer();
-            console.log("Get administrador con id:" + prod.id);
-            Administrador.get({ id: prod.id }, {}, function (prod) {
-                deferred.resolve(prod);
+            console.log("Get administrador con id:" + id);
+            Administrador.get({ id: id }, {}, function (administrador) {
+                deferred.resolve(administrador);
             }, function (error) {
                 deferred.reject(error);
             });

@@ -300,13 +300,14 @@ angular
             })
             .when('/', {
                 templateUrl : "views/principal.html",
+                controller: 'inicioCtrl',
                 access: { requiredLogin: true }
             })
             .otherwise({
                 redirectTo: '/'
             });
     })
-/*
+
  .run(function($rootScope, $location, ServicioAutenticacionAdmin) {
  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
  console.log("Verificar autorización");
@@ -316,4 +317,3 @@ angular
  }
  });
  });
-*/

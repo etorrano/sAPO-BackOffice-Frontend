@@ -2,8 +2,8 @@
  * Created by emi on 01/11/15.
  */
 angular.module('sApobackOfficeFrontendApp')
-.controller('UsuarioAdminCtrl', ['$scope', '$location', '$window', 'ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin',
-    function UsuarioAdminCtrl($scope, $location, $window, ServicioUsuarioAdmin, ServicioAutenticacionAdmin) {
+.controller('UsuarioAdminCtrl', ['$scope', '$location', '$window', 'ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin','ServicioProducto',
+    function UsuarioAdminCtrl($scope, $location, $window, ServicioUsuarioAdmin, ServicioAutenticacionAdmin, ServicioProducto) {
         console.log("Controlador UsuarioAdminCtrl");
         //Admin User Controller (login, logout)
         $scope.iniciarSesion = function iniciarSesion(usuario, contrasenia) {
@@ -15,6 +15,14 @@ angular.module('sApobackOfficeFrontendApp')
                 ServicioUsuarioAdmin.iniciarSesion(usuario, contrasenia).success(function(data) {
                     ServicioAutenticacionAdmin.conectado = true;
                     $window.sessionStorage.token = data.token;
+                    ServicioProducto.getProducto('7').then(function(producto) {
+                        ServicioUsuarioAdmin.set(producto);
+                      //  $scope.$parent.admnistrador = producto;
+                        console.log("Guardando prod: " + producto.nombre);
+                    });
+                    //var producto = ServicioProducto.getProducto('7');
+                    //ServicioUsuarioAdmin.set(producto);
+                    //ServicioUsuarioAdmin.usuario = ServicioAdministrador.get(usuario);
                     $location.path("/");
                 }).error(function(status, data) {
                     console.log(status);
