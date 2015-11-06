@@ -70,7 +70,7 @@
 
       <script src="scripts/controllers/ctrl_administrador.js"></script>
       <script src="scripts/controllers/ctrl_inicio.js"></script>
-
+    <script src="scripts/controllers/ctrl_notificacion.js"></script>
       <script src="scripts/servicios/servicio_notificacion.js"></script>
       <script src="scripts/servicios/servicio_reportes.js"></script>
 
@@ -102,7 +102,7 @@
 
   </head>
   <body ng-app="sApobackOfficeFrontendApp" class="hold-transition skin-blue sidebar-mini">
-  <div class="wrapper" data-ng-controller="inicioCtrl">
+  <div class="wrapper" ng-controller="inicioCtrl">
 
     <!-- Main Header -->
     <header class="main-header">
@@ -336,7 +336,7 @@
           </li>
           <li class="header">Notificaciones</li>
           <!-- Optionally, you can add icons to the links -->
-          <li class="treeview"><a href="#"><i class="fa fa-link"></i><span>Límites de cuenta</span></a></li>
+          <li class="treeview"><a href="#/notificaciones-cuentas-listar"><i class="fa fa-link"></i><span>Límites de cuenta</span></a></li>
           <li class="header">Reportes</li>
           <li class="treeview"><a href="#/reportes/usuariosreg"><i class="fa fa-link"></i><span>Usuarios registrados</span></a></li>
           <li class="treeview"><a href="#/reportes/fraude"><i class="fa fa-link"></i><span>Detección de fraude</span></a></li>

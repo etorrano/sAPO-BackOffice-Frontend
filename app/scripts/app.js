@@ -244,6 +244,12 @@ angular
                 access: { requiredLogin: true }
             })
 
+            .when('/notificaciones-cuentas-listar', {
+                templateUrl : "views/notificaciones/notificaciones-cuentas-listar.html",
+                controller : "CtrlListarNotificaciones",
+                access: { requiredLogin: true }
+            })
+
             .when('/reportes/usuariosreg', {
                 templateUrl: 'views/reportes/reportes-usuariosreg.html',
                 controller: 'CtrlReportesUsuariosReg',
@@ -307,7 +313,7 @@ angular
                 redirectTo: '/'
             });
     })
-
+/*
  .run(function($rootScope, $location, ServicioAutenticacionAdmin) {
  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
  console.log("Verificar autorización");
@@ -316,4 +322,4 @@ angular
  $location.path("/admin/login");
  }
  });
- });
+ });*/

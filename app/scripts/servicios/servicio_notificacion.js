@@ -2,7 +2,7 @@
  * Created by emi on 08/10/15.
  */
 angular.module('sApobackOfficeFrontendApp')
-    .service('ServicioNotificacion', ['$q', 'Notificacion', function ($q, Notificacion) {
+    .service('ServicioNotificacion', ['$q', 'Notificacion','$filter', function ($q, Notificacion, $filter) {
 
         this.init = function () {};
         console.log("En ServicioNotificacion");
@@ -18,9 +18,13 @@ angular.module('sApobackOfficeFrontendApp')
         };
 
         this.getLista = function() {
-            console.log("Obtener notificaciones(get)");
             var deferred = $q.defer();
-            Notificacion.getLista({}, {}, function (notificaciones) {
+            var fecha = new Date();
+            fecha.setMonth(fecha.getMonth()+1);
+            fecha.setFullYear(fecha.getFullYear()+1)
+           // fecha: fecha.getTime()
+            console.log("Obtener notificaciones(get) fecha" + $filter('date')(fecha, "dd/MM/yyyy"));
+            Notificacion.getLista({fecha: fecha.getTime()}, {},  function (notificaciones) {
                 console.log(notificaciones);
                 deferred.resolve(notificaciones);
             }, function (error) {
@@ -29,10 +33,10 @@ angular.module('sApobackOfficeFrontendApp')
             return deferred.promise;
         };
 
-        this.crear = function(notificacion) {
+        this.notificar = function(notificacion) {
             var deferred = $q.defer();
             console.log("En Servicios creando notificacion con datos: " + notificacion.nombre + notificacion.descripcion);
-            Notificacion.crear({}, notificacion, function (notificacion) {
+            Notificacion.crear({tipo_notificacion: notificacion.tipo, mensaje: notificacion.mensaje, usuarioid: notificacion.usuario}, notificacion, function (notificacion) {
                deferred.resolve(notificacion);
             }, function (error) {
                 deferred.reject(error);

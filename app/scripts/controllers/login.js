@@ -2,8 +2,8 @@
  * Created by emi on 01/11/15.
  */
 angular.module('sApobackOfficeFrontendApp')
-.controller('UsuarioAdminCtrl', ['$scope', '$location', '$window', 'ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin','ServicioProducto',
-    function UsuarioAdminCtrl($scope, $location, $window, ServicioUsuarioAdmin, ServicioAutenticacionAdmin, ServicioProducto) {
+.controller('UsuarioAdminCtrl', ['$scope', '$location', '$window','Admin', 'ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin','ServicioProducto',
+    function UsuarioAdminCtrl($scope, $location, $window, Admin,ServicioUsuarioAdmin, ServicioAutenticacionAdmin, ServicioProducto) {
         console.log("Controlador UsuarioAdminCtrl");
         //Admin User Controller (login, logout)
         $scope.iniciarSesion = function iniciarSesion(usuario, contrasenia) {
@@ -17,8 +17,9 @@ angular.module('sApobackOfficeFrontendApp')
                     $window.sessionStorage.token = data.token;
                     ServicioProducto.getProducto('7').then(function(producto) {
                         ServicioUsuarioAdmin.set(producto);
+                        Admin = producto;
                       //  $scope.$parent.admnistrador = producto;
-                        console.log("Guardando prod: " + producto.nombre);
+                        console.log("Guardando prod: " + Admin.nombre);
                     });
                     //var producto = ServicioProducto.getProducto('7');
                     //ServicioUsuarioAdmin.set(producto);

@@ -8,8 +8,12 @@
  * Controller of the sApobackOfficeFrontendApp
  */
 angular.module('sApobackOfficeFrontendApp')
-  .controller('inicioCtrl',['$scope', 'ServicioNotificacion','ServicioUsuarioAdmin', '$routeParams', 'ServicioAutenticacionAdmin', '$location',function($scope, ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, $routeParams, $location) {
-    $scope.$watch(ServicioAutenticacionAdmin.conectado, function (value, oldValue) {
+  .controller('inicioCtrl',['$scope', 'ServicioNotificacion','ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin', 'Admin', '$routeParams',  '$location',function($scope, ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, Admin, $routeParams, $location) {
+        ServicioNotificacion.getLista().then(function(notificaciones) {
+            $scope.notificaciones = notificaciones;
+        });
+    $scope.administrador = Admin;
+       $scope.$watch(Admin, function (value, oldValue) {
 console.log("watch " + value + oldValue);
        if(!value && oldValue) {
          console.log("Disconnect");
@@ -23,14 +27,13 @@ console.log("watch " + value + oldValue);
             $scope.notificaciones = notificaciones;
           });
 
-        $scope.administrador = ServicioUsuarioAdmin.get();
-        console.log("Admin " + $scope.administrador.nombre);
          //Do something when the user is connected
+
+
+           $scope.administrador = Admin;// ServicioUsuarioAdmin.get();
+           console.log("Admin " + $scope.administrador.nombre);
        }
 
-
-       $scope.administrador = ServicioUsuarioAdmin.get();
-       console.log("Admin " + $scope.administrador.nombre);
      }, true);
       /*(function () {
             $scope.$watch(function () {

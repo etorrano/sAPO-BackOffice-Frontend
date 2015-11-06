@@ -20,6 +20,10 @@ angular.module('sApobackOfficeFrontendApp')
         cerrarSesion: function() {
             console.log("Cerrar Sesion");
         },
+/*
+        observarAdmin: function() {
+        return defer.promise;
+        },*/
         get: function() {
           console.log("Obtengo administrador:" + administrador.nombre);
             return administrador;
@@ -29,4 +33,8 @@ angular.module('sApobackOfficeFrontendApp')
             administrador = admin;
         }
     }
-});
+})
+    .service('Admin', function () {
+        var administrador = {nombre: 'nada'};
+        return administrador;
+    });

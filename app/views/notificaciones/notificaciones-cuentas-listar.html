@@ -1,0 +1,38 @@
+<!--<ng-include src="'encabezado.html'" ng-init="name = ['productos','listar']"></ng-include>-->
+<section class="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Cuentas por expirar</h3>
+<!--                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>-->
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table ng-table="tableParams" class="table no-margin">
+                            <tr ng-repeat="notificacion in $data">
+                                <td data-title="'Nombre de Usuario'">
+                                    <span >{{notificacion.usuario}}</span>
+                                </td>
+                                <td data-title="'Tipo de cuenta'">
+                                    <span >{{notificacion.alias_cuenta}}</span>
+                                </td>
+
+                                <td data-title="'Fecha de expiración'" >
+                                    <span >{{notificacion.expira | date:'yyyy-MM-dd'}} </span>
+                                </td>
+                                <td data-title="'Acciones'">
+                                    <a ng-click="actualizar(notificacion.usuario)" class="btn btn-small btn-danger">Notificar</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</section>
