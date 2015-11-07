@@ -3,7 +3,6 @@
  */
 angular.module('sApobackOfficeFrontendApp')
     .service('ServicioNotificacion', ['$q', 'Notificacion','$filter', function ($q, Notificacion, $filter) {
-
         this.init = function () {};
         console.log("En ServicioNotificacion");
         this.get = function(prod) {
@@ -21,10 +20,10 @@ angular.module('sApobackOfficeFrontendApp')
             var deferred = $q.defer();
             var fecha = new Date();
             fecha.setMonth(fecha.getMonth()+1);
-            fecha.setFullYear(fecha.getFullYear()+1)
+            //fecha.setFullYear(fecha.getFullYear()+1);
            // fecha: fecha.getTime()
             console.log("Obtener notificaciones(get) fecha" + $filter('date')(fecha, "dd/MM/yyyy"));
-            Notificacion.getLista({fecha: fecha.getTime()}, {},  function (notificaciones) {
+            Notificacion.getLista({}, {}, function (notificaciones) {
                 console.log(notificaciones);
                 deferred.resolve(notificaciones);
             }, function (error) {
@@ -35,8 +34,8 @@ angular.module('sApobackOfficeFrontendApp')
 
         this.notificar = function(notificacion) {
             var deferred = $q.defer();
-            console.log("En Servicios creando notificacion con datos: " + notificacion.usuario + notificacion.mensaje + notificacion.tipo);
-            Notificacion.crear({tipo_notificacion: notificacion.tipo, mensaje: notificacion.mensaje, usuarioid: notificacion.usuario}, notificacion, function (notificacion) {
+            console.log("En Servicios creando notificacion con datos: " + notificacion.usuarioid + notificacion.mensaje + notificacion.tipo_notificacion);
+            Notificacion.crear({}, notificacion, function (notificacion) {
                deferred.resolve(notificacion);
             }, function (error) {
                 deferred.reject(error);

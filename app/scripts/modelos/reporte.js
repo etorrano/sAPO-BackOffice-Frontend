@@ -4,15 +4,20 @@
 'use strict';
 
 angular.module('sApobackOfficeFrontendApp')
-    .factory('Notificacion', ['$http', '$resource', 'REST_API', function($http, $resource, REST_API) {
+    .factory('Administrador', ['$http', '$resource', 'REST_API', function($http, $resource, REST_API) {
         var API_REST_URL = REST_API.BASE_URL;
-        var objeto = 'cuentas/vencimiento';
-        console.log("En modelo notificacion: ");
+        var objeto = 'recursos';
+        console.log("En modelo Producto");
         return $resource(API_REST_URL + ':recurso/:modulo/:submodulo/:id', {}, {
-            crear   : { method: 'POST', params: { recurso: 'notificaciones', modulo: 'limitecuenta'}},
+
+            //ABM genérico
+            crear   : { method: 'POST', params: { recurso: objeto, modulo: 'create'}},
             get    : { method: 'GET', params: { recurso: objeto ,id: '@id'},  isArray: false },
             getLista    : { method: 'GET', params: { recurso: objeto },  isArray: true },
             actualizar   : { method: 'PUT', params: { recurso: objeto,id: '@id'}},
-            eliminar   : { method: 'DELETE', params: { recurso: objeto,id: '@id'}}
+            eliminar   : { method: 'DELETE', params: { recurso: objeto,id: '@id'}},
+
+            //Reportes
+            obtenerRegistrados : { method: 'GET', params: { recurso: objeto ,id: '@id'},  isArray: false }
         })
     }]);

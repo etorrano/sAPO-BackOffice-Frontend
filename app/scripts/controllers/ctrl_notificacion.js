@@ -2,7 +2,6 @@
  * Created by emi on 06/10/15.
  */
 angular.module('sApobackOfficeFrontendApp')
-
 .controller('CtrlListarNotificacion', ['$scope', 'ServicioNotificacion', '$routeParams', '$location',function($scope, ServicioNotificacion, $routeParams, $location) {
     console.log("En CtrlListarNotificaciones");
     ServicioNotificacion.get({id: $routeParams.id}).then(function(notificacion) {
@@ -14,39 +13,96 @@ angular.module('sApobackOfficeFrontendApp')
 
 .controller('CtrlListarNotificaciones', ['$scope', 'ServicioNotificacion', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioNotificacion, $routeParams, $location,  $filter, ngTableParams) {
         console.log("En CtrlListarNotificaciones");
-        /*
+
         ServicioNotificacion.getLista().then(function(notificaciones) {
-        $scope.notificaciones = notificaciones;
-         });*/
-        ServicioNotificacion.getLista().then(function(results)
-        {
-            /* angular.forEach(results, function(producto) {
-             productos = results;
-             });*/
+            $scope.notificaciones = notificaciones;
             $scope.tableParams = new ngTableParams(
                 {
                     page: 1,          // primera página a mostrar
-                    count: 5          // registros por página
+                    count: 2          // registros por página
                 },
                 {
-                    total: results.length, // resultados en total
+                    dataset: $scope.notificaciones,
+                    total: $scope.notificaciones.length, // resultados en total
                     getData: function($defer, params)
                     {
-                        $defer.resolve(results.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                        $defer.resolve($scope.notificaciones.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                     }
                 }
             );
-        });
+         });
+      //  ServicioNotificacion.getLista().then(function(results)
+       // {
+            /* angular.forEach(results, function(producto) {
+             productos = results;
+             });*/
 
-        $scope.notificar = function (usuario) {
-            console.log("Creando notificacion para: " + usuario);
-            var notificacion = {
-                usuarioid: usuario,
-                mensaje:'Su cuenta está próxima a expirar en la fecha:',
+     //   });
+     /*
+        this.eliminar = function(category) {
+            smartConfirm.create('Delete Category','Warning: This action cannot be undone', 'times', function() {
+                if (category) {
+                    for (var i in $scope.categories) {
+                        if ($scope.categories[i]._id === category._id) {
+                            $scope.categories.splice(i, 1);
+                        }
+                    }
+                    category.$remove();
+
+                    if ($state.current.name.search('categories.all categories') === 0) {
+                        $scope.tableParams.reload();
+                    }else{
+                        $state.go('categories.all categories');
+                    }
+                } else {
+                    $scope.category.$remove(function(response) {
+                        $state.go('categories.all categories');
+                    });
+                }
+            });
+        };
+        */
+        /*
+        var resetTableParams = function(){
+            return {
+                total: $scope.notificaciones.length,
+                getData: function($defer, params) {
+                    var filteredData = params.filter() ? $filter('filter')(data,    params.filter()) : $scope.notificaciones;
+                    var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : filteredData;
+
+                    params.total(orderedData.length);
+                    $defer.resolve($scope.data = orderedData.slice((params.page() -1) * params.count(), params.page() * params.count()));
+                }
+            }
+        }*/
+        $scope.notificar = function (notif) {
+            console.log("Creando notificacion para: " + notif.usuario);
+            var notificacionusuario = {
+                usuarioid: notif.usuario,
+                mensaje:'Su cuenta está próxima a expirar en la fecha:' + $filter('date')(notif.expira, "dd/MM/yyyy"),
                 tipo_notificacion: 1
             };
-            ServicioNotificacion.notificar(notificacion);
-            $location.path('/notificaciones-cuentas-listar');
+            //ServicioNotificacion.notificar(notificacionusuario);
+
+            var index = $scope.notificaciones.indexOf(notif);
+            $scope.notificaciones.splice(index, 1);
+          /*  $scope.tableParams = new ngTableParams(
+                {
+                    page: 1,          // primera página a mostrar
+                    count: 2          // registros por página
+                },
+                {
+                    dataset: $scope.notificaciones,
+                    total: $scope.notificaciones.length, // resultados en total
+                    getData: function($defer, params)
+                    {
+                        $defer.resolve($scope.notificaciones.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                    }
+                }
+            );*/
+            $scope.tableParams.reload();
+            //notif.$remove();
+           // $location.path('/notificaciones-cuentas-listar');
         };
        // +  $filter('date')($scope.notificacion.expira, "dd/MM/yyyy")
 }])

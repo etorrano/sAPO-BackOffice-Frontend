@@ -8,14 +8,14 @@
  * Controller of the sApobackOfficeFrontendApp
  */
 angular.module('sApobackOfficeFrontendApp')
-  .controller('inicioCtrl',['$scope', 'ServicioNotificacion','ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin', 'Admin', '$routeParams',  '$location',function($scope, ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, Admin, $routeParams, $location) {
+  .controller('inicioCtrl',['$scope', 'ServicioAdministrador','ServicioNotificacion','ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin', 'Admin', '$routeParams',  '$location',function($scope, ServicioAdministrador,ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, Admin, $routeParams, $location) {
         ServicioNotificacion.getLista().then(function(notificaciones) {
             $scope.notificaciones = notificaciones;
         });
-    $scope.administrador = Admin;
-       $scope.$watch(Admin, function (value, oldValue) {
-console.log("watch " + value + oldValue);
-       if(!value && oldValue) {
+   /* $scope.administrador = Admin;
+       $scope.$watch(Admin.nombre, function (value) {
+console.log("watch " + value);
+       if(!value) {
          console.log("Disconnect");
          $location.path('/login');
        }
@@ -35,12 +35,20 @@ console.log("watch " + value + oldValue);
        }
 
      }, true);
-      /*(function () {
-            $scope.$watch(function () {
-                return ServicioUsuarioAdmin.administrador;
-            }, function () {
-                    $scope.students = newVal;
+    (function () {
+    $scope.$watch(function () {
+    return ServicioUsuarioAdmin.administrador;
+    }, function () {
+    $scope.students = newVal;
 
-            });
-        }());*/
+    });
+    }());
+     */
+
+        ServicioAdministrador.get('leo').then(function(producto) {
+            ServicioUsuarioAdmin.set(producto);
+            Admin = producto;
+            //  $scope.$parent.admnistrador = producto;
+            console.log("Guardando prod: " + Admin.nombre);
+        });
   }]);

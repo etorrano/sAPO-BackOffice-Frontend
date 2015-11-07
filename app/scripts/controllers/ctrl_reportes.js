@@ -3,87 +3,90 @@
  */
 angular.module('sApobackOfficeFrontendApp')
 
-.controller('prodCtrl', ['productos',  function (almacenes) {
-
-    this.init = function() {
-        this.phones = almacenes;
-    };
-
-    this.init();
-}])
-
-.controller('CtrlListarProducto', ['$scope', 'ServicioProducto', '$routeParams', '$location',function($scope, ServicioProducto, $routeParams, $location) {
-    console.log("En CtrlListarProductos");
-    ServicioProducto.getProducto({id: $routeParams.id}).then(function(producto) {
-        $scope.phone = producto;
+.controller('CtrlListarAdministrador', ['$scope', 'ServicioAdministrador', '$routeParams', '$location',function($scope, ServicioAdministrador, $routeParams, $location) {
+    console.log("En CtrlListarAdministradores");
+    ServicioAdministrador.get({id: $routeParams.id}).then(function(administrador) {
+        $scope.administrador = administrador;
 
     });
 
 }])
 
-.controller('CtrlListarProductos', ['$scope', 'ServicioProducto', '$routeParams', '$location',function($scope, ServicioProducto, $routeParams, $location) {
-        console.log("En CtrlListarProductos");
-        $scope.actualizarProducto = function (userId) {
-            console.log("Redireccionando a CtrlActProd para actualizar producto con id: " + userId);
-            $location.path('/productos-actualizar/' + userId);
+.controller('CtrlListarAdministradores', ['$scope', 'ServicioAdministrador', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioAdministrador, $routeParams, $location,  $filter, ngTableParams) {
+        console.log("En CtrlListarAdministradores");
+        $scope.actualizar = function (userId) {
+            console.log("Redireccionando a CtrlActAdmin para actualizar administrador con id: " + userId);
+            $location.path('/administradores-actualizar/' + userId);
 
-            ServicioProducto.getProductos().then(function(productos) {
-                $scope.phones = productos;
+            ServicioAdministrador.getLista().then(function(administradores) {
+                $scope.administradores = administradores;
             });
         };
-        ServicioProducto.getProductos().then(function(productos) {
-        $scope.phones = productos;
-         });
-        $scope.crearProducto = function () {
-            console.log("Redireccionando a CtrlActProd para crear producto");
-            $location.path('/productos-crear');
-        };
+        /*
+        ServicioAdministrador.getLista().then(function(administradores) {
+        $scope.administradores = administradores;
+         });*/
+        ServicioAdministrador.getLista().then(function(results)
+        {
+            /* angular.forEach(results, function(producto) {
+             productos = results;
+             });*/
+            $scope.tableParams = new ngTableParams(
+                {
+                    page: 1,          // primera página a mostrar
+                    count: 5          // registros por página
+                },
+                {
+                    total: results.length, // resultados en total
+                    getData: function($defer, params)
+                    {
+                        $defer.resolve(results.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                    }
+                }
+            );
+        });
 
-        $scope.eliminarProducto = function (userId) {
-            console.log("Borrando producto con id: " + userId);
-            ServicioProducto.eliminarProducto(userId);
-            $location.path('/productos-listar');
-            /*ServicioProducto.getProductos().then(function(productos) {
-                $scope.phones = productos;
-            });*/
-
+        $scope.eliminar = function (userId) {
+            console.log("Borrando administrador con id: " + userId);
+            ServicioAdministrador.eliminar(userId);
+            $location.path('/administradores-listar');
         };
 
 }])
 /*
-.controller('CtrlActProd', ['$scope', 'ServicioProducto', function($scope, ServicioProducto) {
-    ServicioProducto.actualizarProducto($scope.producto.id);
-    console.log("En CtrlActProd actualizando producto con id: " + $scope.producto.id);
+.controller('CtrlActAdmin', ['$scope', 'ServicioAdministrador', function($scope, ServicioAdministrador) {
+    ServicioAdministrador.actualizar($scope.administrador.id);
+    console.log("En CtrlActAdmin actualizando administrador con id: " + $scope.administrador.id);
 
 }])
 */
-.controller('CtrlActProd', ['$scope', 'ServicioProducto', '$routeParams', '$location',function($scope, ServicioProducto, $routeParams, $location) {
-        console.log("En CtrlActProd con id: " + $routeParams.id);
+.controller('CtrlActAdmin', ['$scope', 'ServicioAdministrador', '$routeParams', '$location',function($scope, ServicioAdministrador, $routeParams, $location) {
+        console.log("En CtrlActAdmin con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
-        $scope.actualizarProducto = function (productos) {
-           console.log("En CtrlActProd actualizando producto con id: " + $scope.productos.id + $scope.productos.nombre + $scope.productos.descripcion);
-           ServicioProducto.actualizarProducto($scope.productos);
-           $location.path('/productos-listar');
+        $scope.actualizar = function (administradores) {
+           console.log("En CtrlActAdmin actualizando administrador con id: " + $scope.administradores.id + $scope.administradores.nombre + $scope.administradores.descripcion);
+           ServicioAdministrador.actualizar($scope.administradores);
+           $location.path('/administradores-listar');
         };
         // ng-click 'cancel':
         $scope.cancel = function () {
-            $location.path('/productos-listar');
+            $location.path('/administradores-listar');
         };
 
 
-        ServicioProducto.getProducto({id: $routeParams.id}).then(function(productos) {
-            $scope.productos = productos;
+        ServicioAdministrador.get({id: $routeParams.id}).then(function(administradores) {
+            $scope.administradores = administradores;
 
         });
     }])
 
-.controller('CtrlCrearProd', ['$scope', 'ServicioProducto', '$routeParams', '$location',
-    function ($scope, ServicioProducto, $routeParams, $location) {
+.controller('CtrlCrearAdmin', ['$scope', 'ServicioAdministrador', '$routeParams', '$location',
+    function ($scope, ServicioAdministrador, $routeParams, $location) {
         // ng-click 'crear nuevo usuario':
-        $scope.crearProducto = function (productos) {
-            //$scope.productos.id = 101;
-            console.log("En CtrlCrearProd creando producto con id: " + $scope.productos.nombre + $scope.productos.descripcion);
-            ServicioProducto.crearProducto($scope.productos);
-            $location.path('/productos-listar');
+        $scope.crear = function (administradores) {
+            //$scope.administradores.id = 101;
+            console.log("En CtrlCrearAdmin creando administrador con id: " + $scope.administradores.nombre + $scope.administradores.descripcion);
+            ServicioAdministrador.crear($scope.administradores);
+            $location.path('/administradores-listar');
         };
     }]);

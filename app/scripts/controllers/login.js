@@ -15,7 +15,8 @@ angular.module('sApobackOfficeFrontendApp')
                 ServicioUsuarioAdmin.iniciarSesion(usuario, contrasenia).success(function(data) {
                     ServicioAutenticacionAdmin.conectado = true;
                     $window.sessionStorage.token = data.token;
-                    ServicioProducto.getProducto('7').then(function(producto) {
+                   // ServicioProducto.getProducto('7').then(function(producto) {
+                    ServicioAdministrador.get('leo').then(function(producto) {
                         ServicioUsuarioAdmin.set(producto);
                         Admin = producto;
                       //  $scope.$parent.admnistrador = producto;

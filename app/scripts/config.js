@@ -16,24 +16,24 @@ angular.module('sApobackOfficeFrontendApp')
         console.log("HttpInterceptor");
         return {
             request: function (config) {
-                console.log("Request");
+               // console.log("Request");
                 config.headers['Ocp-Apim-Subscription-Key'] = REST_API.OCP_KEY;
                 /*config.withCredentials = true;*/
                 config.contentType = 'application/json; charset=utf-8';
-                console.log("token");
+               // console.log("token");
                 if ($window.sessionStorage.token) {
                     config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
                 }
                 return config;
             },
             requestError: function(rejection) {
-                console.log("ReqError");
+               // console.log("ReqError");
                 return $q.reject(rejection);
             },
 
             /* Set Authentication.autenticado to true if 200 received */
             response: function (response) {
-                console.log("Response");
+                //console.log("Response");
                 if (response != null && response.status == 200 && $window.sessionStorage.token && !ServicioAutenticacionAdmin.autenticado) {
                     ServicioAutenticacionAdmin.autenticado = true;
                 }
@@ -42,7 +42,7 @@ angular.module('sApobackOfficeFrontendApp')
 
             /* Revoke client authentication if 401 is received */
             responseError: function(rejection) {
-                console.log("RespError");
+                //console.log("RespError");
                 if (rejection != null && rejection.status === 401 && ($window.sessionStorage.token || ServicioAutenticacionAdmin.autenticado)) {
                     delete $window.sessionStorage.token;
                     ServicioAutenticacionAdmin.autenticado = false;
