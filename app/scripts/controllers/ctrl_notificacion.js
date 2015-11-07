@@ -14,14 +14,6 @@ angular.module('sApobackOfficeFrontendApp')
 
 .controller('CtrlListarNotificaciones', ['$scope', 'ServicioNotificacion', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioNotificacion, $routeParams, $location,  $filter, ngTableParams) {
         console.log("En CtrlListarNotificaciones");
-        $scope.actualizar = function (userId) {
-            console.log("Redireccionando a CtrlActAdmin para actualizar notificacion con id: " + userId);
-            $location.path('/notificaciones-cuentas-actualizar/' + userId);
-
-            ServicioNotificacion.getLista().then(function(notificaciones) {
-                $scope.notificaciones = notificaciones;
-            });
-        };
         /*
         ServicioNotificacion.getLista().then(function(notificaciones) {
         $scope.notificaciones = notificaciones;
@@ -48,15 +40,15 @@ angular.module('sApobackOfficeFrontendApp')
 
         $scope.notificar = function (usuario) {
             console.log("Creando notificacion para: " + usuario);
-            notificacion = {
+            var notificacion = {
                 usuarioid: usuario,
-                mensaje:"Su cuenta está próxima a expirar en la fecha: " +  $filter('date')($scope.notificacion.expira, "dd/MM/yyyy"),
+                mensaje:'Su cuenta está próxima a expirar en la fecha:',
                 tipo_notificacion: 1
             };
-            ServicioNotificacion.notificar(userId);
+            ServicioNotificacion.notificar(notificacion);
             $location.path('/notificaciones-cuentas-listar');
         };
-
+       // +  $filter('date')($scope.notificacion.expira, "dd/MM/yyyy")
 }])
 /*
 .controller('CtrlActAdmin', ['$scope', 'ServicioNotificacion', function($scope, ServicioNotificacion) {

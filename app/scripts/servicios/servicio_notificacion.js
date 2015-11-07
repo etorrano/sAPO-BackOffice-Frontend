@@ -35,7 +35,7 @@ angular.module('sApobackOfficeFrontendApp')
 
         this.notificar = function(notificacion) {
             var deferred = $q.defer();
-            console.log("En Servicios creando notificacion con datos: " + notificacion.nombre + notificacion.descripcion);
+            console.log("En Servicios creando notificacion con datos: " + notificacion.usuario + notificacion.mensaje + notificacion.tipo);
             Notificacion.crear({tipo_notificacion: notificacion.tipo, mensaje: notificacion.mensaje, usuarioid: notificacion.usuario}, notificacion, function (notificacion) {
                deferred.resolve(notificacion);
             }, function (error) {
