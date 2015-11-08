@@ -3,25 +3,25 @@
  */
 angular.module('sApobackOfficeFrontendApp')
 
-.controller('tempCtrl', ['templates',  function (almacenes) {
+    .controller('tempCtrl', ['templates',  function (almacenes) {
 
-    this.init = function() {
-        this.phones = almacenes;
-    };
+        this.init = function() {
+            this.phones = almacenes;
+        };
 
-    this.init();
-}])
+        this.init();
+    }])
 
-.controller('CtrlListarTemplate', ['$scope', 'ServicioTemplate', '$routeParams', '$location',function($scope, ServicioTemplate, $routeParams, $location) {
-    console.log("En CtrlListarTemplates");
-    ServicioTemplate.getTemplate({id: $routeParams.id}).then(function(template) {
-        $scope.phone = template;
+    .controller('CtrlListarTemplate', ['$scope', 'ServicioTemplate', '$routeParams', '$location',function($scope, ServicioTemplate, $routeParams, $location) {
+        console.log("En CtrlListarTemplates");
+        ServicioTemplate.getTemplate({id: $routeParams.id}).then(function(template) {
+            $scope.phone = template;
 
-    });
+        });
 
-}])
+    }])
 
-.controller('CtrlListarTemplates', ['$scope', 'ServicioTemplate', '$routeParams', '$location',function($scope, ServicioTemplate, $routeParams, $location) {
+    .controller('CtrlListarTemplates', ['$scope', 'ServicioTemplate', '$routeParams', '$location',function($scope, ServicioTemplate, $routeParams, $location) {
         console.log("En CtrlListarTemplates");
         $scope.actualizarTemplate = function (userId) {
             console.log("Redireccionando a CtrlActProd para actualizar template con id: " + userId);
@@ -33,8 +33,8 @@ angular.module('sApobackOfficeFrontendApp')
             });
         };
         ServicioTemplate.getTemplates().then(function(templates) {
-        $scope.phones = templates;
-         });
+            $scope.phones = templates;
+        });
         $scope.crearTemplate = function () {
             console.log("Redireccionando a CtrlActProd para crear template");
             $location.path('/templates-crear');
@@ -45,27 +45,28 @@ angular.module('sApobackOfficeFrontendApp')
             ServicioTemplate.eliminarTemplate(userId);
             $location.path('/');
             /*ServicioTemplate.getTemplates().then(function(templates) {
-                $scope.phones = templates;
-            });*/
+             $scope.phones = templates;
+             });*/
 
         };
 
-}])
-/*
-.controller('CtrlActProd', ['$scope', 'ServicioTemplate', function($scope, ServicioTemplate) {
-    ServicioTemplate.actualizarTemplate($scope.template.id);
-    console.log("En CtrlActProd actualizando template con id: " + $scope.template.id);
+    }])
+    /*
+     .controller('CtrlActProd', ['$scope', 'ServicioTemplate', function($scope, ServicioTemplate) {
+     ServicioTemplate.actualizarTemplate($scope.template.id);
+     console.log("En CtrlActProd actualizando template con id: " + $scope.template.id);
 
-}])
-*/
-.controller('CtrlActTemp', ['$scope', 'ServicioTemplate', '$routeParams', '$location',function($scope, ServicioTemplate, $routeParams, $location) {
+     }])
+     */
+    /*
+    .controller('CtrlActTemp', ['$scope', 'ServicioTemplate', '$routeParams', '$location',function($scope, ServicioTemplate, $routeParams, $location) {
         console.log("En CtrlActTemp con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
         $scope.actualizarTemplate = function (templates) {
-           console.log("En CtrlActProd actualizando template con id: " + $scope.templates + $scope.templates.nombre + $scope.templates.descripcion);
+            console.log("En CtrlActProd actualizando template con id: " + $scope.templates + $scope.templates.nombre + $scope.templates.descripcion);
             $scope.templates.categorias = [];
             ServicioTemplate.actualizarTemplate($scope.templates);
-           $location.path('/templates-listar');
+            $location.path('/templates-listar');
         };
         // ng-click 'cancel':
         $scope.cancel = function () {
@@ -77,69 +78,73 @@ angular.module('sApobackOfficeFrontendApp')
             $scope.templates = templates;
 
         });
-    }])
+    }])*/
+    .controller('CtrlActTemp', ['$scope', 'ServicioTemplate', '$routeParams', '$location', '$filter', 'ngTableParams', 'ServicioCategoria',
+        function ($scope, ServicioTemplate, $routeParams, $location, $filter, ngTableParams, ServicioCategoria) {
+            // ng-click 'crear nuevo usuario':
 
-.controller('CtrlCrearTemp', ['$scope', 'ServicioTemplate', '$routeParams', '$location', '$filter', 'ngTableParams', 'ServicioCategoria',
-    function ($scope, ServicioTemplate, $routeParams, $location, $filter, ngTableParams, ServicioCategoria) {
-        // ng-click 'crear nuevo usuario':
+            // var categorias = [];
+            ServicioTemplate.getTemplate({id: $routeParams.id}).then(function(templates) {
+                $scope.template = template;
+            });
 
-        var categorias = [];
-        ServicioCategoria.getCategorias().then(function(results)
-        {
-            categorias = results;
-            /* angular.forEach(results, function(categoria) {
-             categorias = results;
-             });*/
-            $scope.tableParams = new ngTableParams(
-                {
-                    page: 1,          // primera página a mostrar
-                    count: 5          // registros por página
-                },
-                {
-                    total: results.length, // resultados en total
-                    getData: function($defer, params)
+            ServicioCategoria.getCategorias().then(function(results)
+            {
+                $scope.categorias = results;
+                /* angular.forEach(results, function(categoria) {
+                 categorias = results;
+                 });*/
+                $scope.tableParams = new ngTableParams(
                     {
-                        $defer.resolve(results.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                        page: 1,          // primera página a mostrar
+                        count: 5          // registros por página
+                    },
+                    {
+                        data: $scope.categorias
+                        /* total: results.length, // resultados en total
+                         getData: function($defer, params)
+                         {
+                         $defer.resolve(results.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                         }*/
                     }
-                }
-            );
-        });
-
-        $scope.checkboxes = { 'checked': false, items: {} };
-
-        // watch for check all checkbox
-        $scope.$watch('checkboxes.checked', function(value) {
-            angular.forEach($scope.orderedData, function(item) {
-                if (angular.isDefined(item.id)) {
-                    $scope.checkboxes.items[item.id] = value;
-                }
+                );
             });
-        });
 
-        // watch for data checkboxes
-        $scope.$watch('checkboxes.items', function(values) {
-            if (!$scope.categoria) {
-                return;
-            }
-            var checked = 0, unchecked = 0,
-                total = $scope.categoria.length;
-            angular.forEach($scope.categoria, function(item) {
-                checked   +=  ($scope.checkboxes.items[item.id]) || 0;
-                unchecked += (!$scope.checkboxes.items[item.id]) || 0;
+            $scope.checkboxes = { 'checked': false, items: {} };
+
+            // watch for check all checkbox
+            $scope.$watch('checkboxes.checked', function(value) {
+                angular.forEach($scope.categorias, function(item) {
+                    if (angular.isDefined(item.id)) {
+                        $scope.checkboxes.items[item.id] = value;
+                    }
+                });
             });
-            if ((unchecked == 0) || (checked == 0)) {
-                $scope.checkboxes.checked = (checked == total);
-            }
-            // grayed checkbox
-            angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
-        }, true);
-        /*
-         $scope.seleccionar = function () {
-         $scope.seleccionados = $filter('filter')($scope.categorias, {checked: true});
-         console.log("seleccionado "+ $scope.seleccionados);
-         }*/
-        $scope.continuar = function()
-        {
+
+            // watch for data checkboxes
+            $scope.$watch('checkboxes.items', function(values) {
+                if (!$scope.categoria) {
+                    return;
+                }
+                var checked = 0, unchecked = 0,
+                    total = $scope.categoria.length;
+                angular.forEach($scope.categoria, function(item) {
+                    checked   +=  ($scope.checkboxes.items[item.id]) || 0;
+                    unchecked += (!$scope.checkboxes.items[item.id]) || 0;
+                });
+                if ((unchecked == 0) || (checked == 0)) {
+                    $scope.checkboxes.checked = (checked == total);
+                }
+                // grayed checkbox
+                angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
+            }, true);
+            /*
+             $scope.seleccionar = function () {
+             $scope.seleccionados = $filter('filter')($scope.categorias, {checked: true});
+             console.log("seleccionado "+ $scope.seleccionados);
+             }*/
+            $scope.continuar = function()
+            {
                 //$scope.templates.id = 101;
                 console.log("En CtrlCrearProd creando template con id: " + $scope.template.nombre + $scope.template.descripcion);
                 $scope.template.categorias=[];
@@ -155,14 +160,102 @@ angular.module('sApobackOfficeFrontendApp')
                 ServicioTemplate.crearTemplate($scope.template);
                 $location.path('/templates-listar');
 
-            //$scope.cats=cats;
-            /* var cats=[];
-             angular.forEach($scope.checkboxes.items, function(item) {
+                //$scope.cats=cats;
+                /* var cats=[];
+                 angular.forEach($scope.checkboxes.items, function(item) {
 
-             console.log("En listar item " + item);
-             console.log("En listar id item " + $scope.checkboxes.items.indexOf(item));
-             cats.push($scope.categorias[$scope.checkboxes.indexOf(item)]);
-             });*/
-            // console.log(cats);
-        };
-    }]);
+                 console.log("En listar item " + item);
+                 console.log("En listar id item " + $scope.checkboxes.items.indexOf(item));
+                 cats.push($scope.categorias[$scope.checkboxes.indexOf(item)]);
+                 });*/
+                // console.log(cats);
+            };
+
+            .controller('CtrlCrearTemp', ['$scope', 'ServicioTemplate', '$routeParams', '$location', '$filter', 'ngTableParams', 'ServicioCategoria',
+                function ($scope, ServicioTemplate, $routeParams, $location, $filter, ngTableParams, ServicioCategoria) {
+                    // ng-click 'crear nuevo usuario':
+
+                    // var categorias = [];
+                    ServicioCategoria.getCategorias().then(function(results)
+                    {
+                        $scope.categorias = results;
+                        /* angular.forEach(results, function(categoria) {
+                         categorias = results;
+                         });*/
+                        $scope.tableParams = new ngTableParams(
+                            {
+                                page: 1,          // primera página a mostrar
+                                count: 5          // registros por página
+                            },
+                            {
+                                data: $scope.categorias
+                                /* total: results.length, // resultados en total
+                                 getData: function($defer, params)
+                                 {
+                                 $defer.resolve(results.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                                 }*/
+                            }
+                        );
+                    });
+
+                    $scope.checkboxes = { 'checked': false, items: {} };
+
+                    // watch for check all checkbox
+                    $scope.$watch('checkboxes.checked', function(value) {
+                        angular.forEach($scope.categorias, function(item) {
+                            if (angular.isDefined(item.id)) {
+                                $scope.checkboxes.items[item.id] = value;
+                            }
+                        });
+                    });
+
+                    // watch for data checkboxes
+                    $scope.$watch('checkboxes.items', function(values) {
+                        if (!$scope.categoria) {
+                            return;
+                        }
+                        var checked = 0, unchecked = 0,
+                            total = $scope.categoria.length;
+                        angular.forEach($scope.categoria, function(item) {
+                            checked   +=  ($scope.checkboxes.items[item.id]) || 0;
+                            unchecked += (!$scope.checkboxes.items[item.id]) || 0;
+                        });
+                        if ((unchecked == 0) || (checked == 0)) {
+                            $scope.checkboxes.checked = (checked == total);
+                        }
+                        // grayed checkbox
+                        angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
+                    }, true);
+                    /*
+                     $scope.seleccionar = function () {
+                     $scope.seleccionados = $filter('filter')($scope.categorias, {checked: true});
+                     console.log("seleccionado "+ $scope.seleccionados);
+                     }*/
+                    $scope.continuar = function()
+                    {
+                        //$scope.templates.id = 101;
+                        console.log("En CtrlCrearProd creando template con id: " + $scope.template.nombre + $scope.template.descripcion);
+                        $scope.template.categorias=[];
+                        $scope.template.id = null;
+                        // loop through all checkboxes
+                        angular.forEach(categorias, function(item, key) {
+                            console.log("Verificar categorias seleccionadas");
+                            if($scope.checkboxes.items[item.id]) {
+                                console.log("seleccionado "+ item.id + item);
+                                $scope.template.categorias.push(item); // push checked items to array
+                            }
+                        });
+                        ServicioTemplate.crearTemplate($scope.template);
+                        $location.path('/templates-listar');
+
+                        //$scope.cats=cats;
+                        /* var cats=[];
+                         angular.forEach($scope.checkboxes.items, function(item) {
+
+                         console.log("En listar item " + item);
+                         console.log("En listar id item " + $scope.checkboxes.items.indexOf(item));
+                         cats.push($scope.categorias[$scope.checkboxes.indexOf(item)]);
+                         });*/
+                        // console.log(cats);
+                    };
+                }]);
