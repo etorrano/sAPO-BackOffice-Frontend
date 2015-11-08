@@ -219,7 +219,9 @@ angular
                 access: { requiredLogin: true }
             })
 
-            .when('/templates-actualizar/:id', {templateUrl: 'views/templates/templates-actualizar.html', controller: 'CtrlActTemp',
+            .when('/templates-actualizar/:id', {
+                templateUrl: 'views/templates/templates-actualizar.html',
+                controller: 'CtrlActTemp',
                 access: { requiredLogin: true }})
 
             /*  .when('/phones/:phoneId', {
