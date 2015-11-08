@@ -250,9 +250,9 @@ angular
                 access: { requiredLogin: true }
             })
 
-            .when('/reportes/usuariosreg', {
-                templateUrl: 'views/reportes/reportes-usuariosreg.html',
-                controller: 'CtrlReportesUsuariosReg',
+            .when('/reportes/reportes-registrados', {
+                templateUrl: '../views/reportes/reportes-registrados.html',
+                controller: 'CtrlListarReportesRegistrados',
                 access: { requiredLogin: true }
             })
 

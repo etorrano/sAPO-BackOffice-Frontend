@@ -3,90 +3,101 @@
  */
 angular.module('sApobackOfficeFrontendApp')
 
-.controller('CtrlListarAdministrador', ['$scope', 'ServicioAdministrador', '$routeParams', '$location',function($scope, ServicioAdministrador, $routeParams, $location) {
-    console.log("En CtrlListarAdministradores");
-    ServicioAdministrador.get({id: $routeParams.id}).then(function(administrador) {
-        $scope.administrador = administrador;
+.controller('CtrlListarReporte', ['$scope', 'ServicioReporte', '$routeParams', '$location',function($scope, ServicioReporte, $routeParams, $location) {
+    console.log("En CtrlListarReportes");
+    ServicioReporte.get({id: $routeParams.id}).then(function(reporte) {
+        $scope.reporte = reporte;
 
     });
 
 }])
 
-.controller('CtrlListarAdministradores', ['$scope', 'ServicioAdministrador', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioAdministrador, $routeParams, $location,  $filter, ngTableParams) {
-        console.log("En CtrlListarAdministradores");
-        $scope.actualizar = function (userId) {
-            console.log("Redireccionando a CtrlActAdmin para actualizar administrador con id: " + userId);
-            $location.path('/administradores-actualizar/' + userId);
-
-            ServicioAdministrador.getLista().then(function(administradores) {
-                $scope.administradores = administradores;
-            });
-        };
-        /*
-        ServicioAdministrador.getLista().then(function(administradores) {
-        $scope.administradores = administradores;
-         });*/
-        ServicioAdministrador.getLista().then(function(results)
-        {
-            /* angular.forEach(results, function(producto) {
-             productos = results;
-             });*/
+.controller('CtrlListarReportesRegistrados', ['$scope', 'ServicioReporte', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioReporte, $routeParams, $location,  $filter, ngTableParams) {
+        console.log("En CtrlListarReportes");
+        
+        ServicioReporte.obtenerRegistrados().then(function(registrados) {
+            $scope.usuarios = registrados;
             $scope.tableParams = new ngTableParams(
                 {
                     page: 1,          // primera página a mostrar
-                    count: 5          // registros por página
+                    count: 10          // registros por página
                 },
                 {
-                    total: results.length, // resultados en total
+                    dataset: $scope.usuarios,
+                    total: $scope.usuarios.length, // resultados en total
                     getData: function($defer, params)
                     {
-                        $defer.resolve(results.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                        $defer.resolve($scope.usuarios.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                     }
                 }
             );
         });
+        $scope.notificar = function (notif) {
+            console.log("Creando reporte para: " + notif.usuario);
+            var reporteusuario = {
+                usuarioid: notif.usuario,
+                mensaje:'Su cuenta está próxima a expirar en la fecha:' + $filter('date')(notif.expira, "dd/MM/yyyy"),
+                tipo_reporte: 1
+            };
+            //ServicioReporte.notificar(reporteusuario);
 
-        $scope.eliminar = function (userId) {
-            console.log("Borrando administrador con id: " + userId);
-            ServicioAdministrador.eliminar(userId);
-            $location.path('/administradores-listar');
+            var index = $scope.reportes.indexOf(notif);
+            $scope.reportes.splice(index, 1);
+            /*  $scope.tableParams = new ngTableParams(
+             {
+             page: 1,          // primera página a mostrar
+             count: 2          // registros por página
+             },
+             {
+             dataset: $scope.reportes,
+             total: $scope.reportes.length, // resultados en total
+             getData: function($defer, params)
+             {
+             $defer.resolve($scope.reportes.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+             }
+             }
+             );*/
+            $scope.tableParams.reload();
+            //notif.$remove();
+            // $location.path('/reportes-cuentas-listar');
         };
+        // +  $filter('date')($scope.reporte.expira, "dd/MM/yyyy")
 
 }])
 /*
-.controller('CtrlActAdmin', ['$scope', 'ServicioAdministrador', function($scope, ServicioAdministrador) {
-    ServicioAdministrador.actualizar($scope.administrador.id);
-    console.log("En CtrlActAdmin actualizando administrador con id: " + $scope.administrador.id);
+.controller('CtrlActAdmin', ['$scope', 'ServicioReporte', function($scope, ServicioReporte) {
+    ServicioReporte.actualizar($scope.reporte.id);
+    console.log("En CtrlActAdmin actualizando reporte con id: " + $scope.reporte.id);
 
 }])
 */
-.controller('CtrlActAdmin', ['$scope', 'ServicioAdministrador', '$routeParams', '$location',function($scope, ServicioAdministrador, $routeParams, $location) {
+.controller('CtrlActAdmin', ['$scope', 'ServicioReporte', '$routeParams', '$location',function($scope, ServicioReporte, $routeParams, $location) {
         console.log("En CtrlActAdmin con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
-        $scope.actualizar = function (administradores) {
-           console.log("En CtrlActAdmin actualizando administrador con id: " + $scope.administradores.id + $scope.administradores.nombre + $scope.administradores.descripcion);
-           ServicioAdministrador.actualizar($scope.administradores);
-           $location.path('/administradores-listar');
+        $scope.actualizar = function (reportes) {
+           console.log("En CtrlActAdmin actualizando reporte con id: " + $scope.reportes.id + $scope.reportes.nombre + $scope.reportes.descripcion);
+           ServicioReporte.actualizar($scope.reportes);
+           $location.path('/reportes-listar');
         };
         // ng-click 'cancel':
         $scope.cancel = function () {
-            $location.path('/administradores-listar');
+            $location.path('/reportes-listar');
         };
 
 
-        ServicioAdministrador.get({id: $routeParams.id}).then(function(administradores) {
-            $scope.administradores = administradores;
+        ServicioReporte.get({id: $routeParams.id}).then(function(reportes) {
+            $scope.reportes = reportes;
 
         });
     }])
 
-.controller('CtrlCrearAdmin', ['$scope', 'ServicioAdministrador', '$routeParams', '$location',
-    function ($scope, ServicioAdministrador, $routeParams, $location) {
+.controller('CtrlCrearAdmin', ['$scope', 'ServicioReporte', '$routeParams', '$location',
+    function ($scope, ServicioReporte, $routeParams, $location) {
         // ng-click 'crear nuevo usuario':
-        $scope.crear = function (administradores) {
-            //$scope.administradores.id = 101;
-            console.log("En CtrlCrearAdmin creando administrador con id: " + $scope.administradores.nombre + $scope.administradores.descripcion);
-            ServicioAdministrador.crear($scope.administradores);
-            $location.path('/administradores-listar');
+        $scope.crear = function (reportes) {
+            //$scope.reportes.id = 101;
+            console.log("En CtrlCrearAdmin creando reporte con id: " + $scope.reportes.nombre + $scope.reportes.descripcion);
+            ServicioReporte.crear($scope.reportes);
+            $location.path('/reportes-listar');
         };
     }]);

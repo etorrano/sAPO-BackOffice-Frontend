@@ -8,9 +8,55 @@
  * Controller of the sApobackOfficeFrontendApp
  */
 angular.module('sApobackOfficeFrontendApp')
-  .controller('inicioCtrl',['$scope', 'ServicioAdministrador','ServicioNotificacion','ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin', 'Admin', '$routeParams',  '$location',function($scope, ServicioAdministrador,ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, Admin, $routeParams, $location) {
+  .controller('inicioCtrl',['$scope', 'ServicioReporte', 'ServicioAdministrador','ServicioNotificacion','ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin', 'Admin', '$routeParams',  '$location' ,'$filter', 'NgTableParams',function($scope, ServicioReporte, ServicioAdministrador,ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, Admin, $routeParams, $location,$filter, NgTableParams) {
         ServicioNotificacion.getLista().then(function(notificaciones) {
             $scope.notificaciones = notificaciones;
+        });
+
+        ServicioReporte.movimientos().then(function(movimientos) {
+            $scope.movimientos = movimientos;
+           // $scope.tableParams = new NgTableParams({}, { dataset: $scope.movimientos});
+            $scope.tableParams = new NgTableParams(
+                {
+                    page: 1,          // primera página a mostrar
+                    count: 10          // registros por página
+                },
+                {
+                    data: $scope.movimientos
+                   /* total: $scope.movimientos.length, // resultados en total
+                    getData: function($defer, params)
+                    {
+                        var ordenado;
+
+                        if(params.sorting().date === 'asc'){
+
+                            data.sort(function (a, b) {
+                                var dateA = new Date(a.date), dateB = new Date(b.date);
+                                return dateA - dateB; //sort by date descending
+                            });
+                            ordenado = data;
+
+                        } else if(params.sorting().date === 'desc') {
+
+                            data.sort(function (a, b) {
+                                var dateA = new Date(a.date), dateB = new Date(b.date);
+                                return dateB - dateA; //sort by date descending
+                            });
+                            ordenado = data;
+
+                        } else if(!params.sorting().date){
+
+                            if (params.filter().term) {
+                                ordenado = params.filter() ? $filter('filter')(data, params.filter().term) : data;
+                            } else {
+                                ordenado = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
+                            }
+
+                        }
+                       $defer.resolve($scope.movimientos.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                    }*/
+                }
+            );
         });
    /* $scope.administrador = Admin;
        $scope.$watch(Admin.nombre, function (value) {

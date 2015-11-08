@@ -23,7 +23,7 @@ angular.module('sApobackOfficeFrontendApp')
             //fecha.setFullYear(fecha.getFullYear()+1);
            // fecha: fecha.getTime()
             console.log("Obtener notificaciones(get) fecha" + $filter('date')(fecha, "dd/MM/yyyy"));
-            Notificacion.getLista({}, {}, function (notificaciones) {
+            Notificacion.getLista({fecha: fecha.getTime()}, {}, function (notificaciones) {
                 console.log(notificaciones);
                 deferred.resolve(notificaciones);
             }, function (error) {

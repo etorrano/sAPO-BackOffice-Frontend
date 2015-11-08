@@ -1,8 +1,8 @@
 <section class="content-header">
-<!--    <h1>
-        Page Header
-        <small>Optional description</small>
-    </h1>-->
+    <!--    <h1>
+            Page Header
+            <small>Optional description</small>
+        </h1>-->
     <!-- Info boxes -->
     <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -48,10 +48,10 @@
     </div><!-- /.row -->
 
 
-<!--        <ol class="breadcrumb">
-            <li><a  ><i class="fa fa-dashboard"></i> Level</a></li>
-            <li class="active">Here</li>
-        </ol>-->
+    <!--        <ol class="breadcrumb">
+                <li><a  ><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>-->
 </section>
 
 <!-- Main content -->
@@ -225,83 +225,41 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="table-responsive">
-                        <table class="table no-margin">
-                            <thead>
-                            <tr>
-                                <th>Usuario</th>
-                                <th>Nombre de producto</th>
-                                <th>Movimiento</th>
-                                <th>Fecha</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                <td>Call of Duty IV</td>
-                                <td><span class="label label-success">Shipped</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                        <table ng-table="tableParams" class="table no-margin table-bordered table-striped" show-filter="true">
+                            <tr ng-repeat="movimiento in $data">
+                                <td data-title="'Almacen'" filter="{ almacen_nombre: 'text'}" sortable="'almacen_nombre'">
+                                    <span >{{movimiento.almacen_nombre}}</span>
+                                </td>
+
+                                <td data-title="'Nombre de producto'" filter="{ producto_nombre: 'text'}" sortable="'producto_nombre'">
+                                    <span >{{movimiento.producto_nombre}} </span>
+                                </td>
+                                <td data-title="'Movimiento'" filter="{ class: 'text'}">
+                                    <span ng-if="movimiento.stock == 0" class="label label-danger">Eliminar</span>
+                                    <span ng-if="movimiento.diferencia == 0" class="label label-primary">Modificar</span>
+                                    <span ng-if="movimiento.stock == movimiento.diferencia" class="label label-info">Nuevo</span>
+                                    <span ng-if="(movimiento.stock != movimiento.diferencia) && movimiento.diferencia > 0" class="label label-success">Compra</span>
+                                    <span ng-if="movimiento.stock != 0 && movimiento.diferencia < 0" class="label label-warning">Consumo</span>
+                                    <span >{{movimiento.id}}</span>
+                                </td>
+                                <td data-title="'Fecha'" filter="{ fecha: 'date'}" sortable="'fecha'">
+                                    <span >{{movimiento.fecha  | date:'yyyy-MM-dd'}}</span>
+                                </td>
+                                <td data-title="'Stock'" filter="{stock: 'number'}" sortable="'stock'">
+                                    <span >{{movimiento.stock}}</span>
                                 </td>
                             </tr>
-                            <tr>
-                                <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                <td>Samsung Smart TV</td>
-                                <td><span class="label label-warning">Pending</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                <td>iPhone 6 Plus</td>
-                                <td><span class="label label-danger">Delivered</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                <td>Samsung Smart TV</td>
-                                <td><span class="label label-info">Processing</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                <td>Samsung Smart TV</td>
-                                <td><span class="label label-warning">Pending</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                <td>iPhone 6 Plus</td>
-                                <td><span class="label label-danger">Delivered</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                <td>Call of Duty IV</td>
-                                <td><span class="label label-success">Shipped</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                </td>
-                            </tr>
-                            </tbody>
                         </table>
                     </div>
                     <!-- /.table-responsive -->
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    <a  class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-                    <a  class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
-                </div>
-                <!-- /.box-footer -->
+                <!--
+               <div class="box-footer clearfix">
+                   <a  class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+                   <a  class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+               </div>
+               /.box-footer -->
             </div>
             <!-- /.box -->
         </div>

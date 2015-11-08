@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('sApobackOfficeFrontendApp')
-    .factory('Administrador', ['$http', '$resource', 'REST_API', function($http, $resource, REST_API) {
+    .factory('Reporte', ['$http', '$resource', 'REST_API', function($http, $resource, REST_API) {
         var API_REST_URL = REST_API.BASE_URL;
         var objeto = 'recursos';
         console.log("En modelo Producto");
@@ -18,6 +18,7 @@ angular.module('sApobackOfficeFrontendApp')
             eliminar   : { method: 'DELETE', params: { recurso: objeto,id: '@id'}},
 
             //Reportes
-            obtenerRegistrados : { method: 'GET', params: { recurso: objeto ,id: '@id'},  isArray: false }
+            movimientos : { method: 'GET', params: { recurso: 'reportes',modulo: 'movimientos', submodulo: 'stock'},  isArray: true },
+            obtenerRegistrados    : { method: 'GET', params: { recurso: 'usuarios'},  isArray: true }
         })
     }]);
