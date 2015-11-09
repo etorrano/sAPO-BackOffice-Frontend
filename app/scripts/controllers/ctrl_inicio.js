@@ -58,7 +58,8 @@ angular.module('sApobackOfficeFrontendApp')
                 }
             );
         });
-   /* $scope.administrador = Admin;
+    $scope.administrador = Admin;
+    console.log("administrador " + $scope.administrador.nombre);
        $scope.$watch(Admin.nombre, function (value) {
 console.log("watch " + value);
        if(!value) {
@@ -89,7 +90,7 @@ console.log("watch " + value);
 
     });
     }());
-     */
+
 
         ServicioAdministrador.get('leo').then(function(producto) {
             ServicioUsuarioAdmin.set(producto);

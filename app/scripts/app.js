@@ -315,8 +315,8 @@ angular
                 redirectTo: '/'
             });
     })
-/*
- .run(function($rootScope, $location, ServicioAutenticacionAdmin) {
+
+ .run(function($rootScope, $location,$route, ServicioAutenticacionAdmin) {
  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
  console.log("Verificar autorización");
  if (nextRoute.access.requiredLogin && !ServicioAutenticacionAdmin.conectado) {
@@ -324,4 +324,4 @@ angular
  $location.path("/admin/login");
  }
  });
- });*/
+ });
