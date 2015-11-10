@@ -41,8 +41,33 @@ angular.module('sApobackOfficeFrontendApp')
             return deferred.promise;
         };
 
+
+        this.obtenerTopGenericos = function(cantidad) {
+            console.log("Obtener obtenerTopGenericos(get)");
+            var deferred = $q.defer();
+            Reporte.obtenerTopGenericos({productos: cantidad}, {}, function (reportes) {
+                console.log(reportes);
+                deferred.resolve(reportes);
+            }, function (error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        };
+
+        this.obtenerReportes = function() {
+            console.log("Obtener obtenerReportes(get)");
+            var deferred = $q.defer();
+            Reporte.obtenerReportes({}, {}, function (reportes) {
+                console.log(reportes);
+                deferred.resolve(reportes);
+            }, function (error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        };
+
         this.movimientos = function() {
-            console.log("Obtener reportes(get)");
+            console.log("Obtener movimientos(get)");
             var deferred = $q.defer();
             Reporte.movimientos({}, {}, function (reportes) {
                 console.log(reportes);

@@ -19,6 +19,8 @@ angular.module('sApobackOfficeFrontendApp')
 
             //Reportes
             movimientos : { method: 'GET', params: { recurso: 'reportes',modulo: 'movimientos', submodulo: 'stock'},  isArray: true },
-            obtenerRegistrados    : { method: 'GET', params: { recurso: 'usuarios'},  isArray: true }
+            obtenerRegistrados    : { method: 'GET', params: { recurso: 'usuarios'},  isArray: true },
+            obtenerReportes    : { method: 'GET', params: { recurso: 'reportes', modulo: 'global'},  isArray: false },
+            obtenerTopGenericos    : { method: 'GET', params: { recurso: 'reportes', modulo: 'global'},  isArray: true }
         })
     }]);
