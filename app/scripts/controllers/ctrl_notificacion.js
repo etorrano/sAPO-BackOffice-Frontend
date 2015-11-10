@@ -13,8 +13,11 @@ angular.module('sApobackOfficeFrontendApp')
 
 .controller('CtrlListarNotificaciones', ['$scope', 'ServicioNotificacion', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioNotificacion, $routeParams, $location,  $filter, ngTableParams) {
         console.log("En CtrlListarNotificaciones");
-
-        ServicioNotificacion.getLista().then(function(notificaciones) {
+        var fecha = new Date();
+        fecha.setMonth(fecha.getMonth()+1);
+        //fecha.setFullYear(fecha.getFullYear()+1);
+        // fecha: fecha.getTime()
+        ServicioNotificacion.getLista(fecha.getTime()).then(function(notificaciones) {
             $scope.notificaciones = notificaciones;
             $scope.tableParams = new ngTableParams(
                 {

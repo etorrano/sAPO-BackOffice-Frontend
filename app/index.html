@@ -14,6 +14,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css" />
+    <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/AdminLTE.css" />
     <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
@@ -22,18 +23,21 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/demo.css">
     <link rel="stylesheet" href="styles/bootstrap.css">
+    <!-- endbuild -->
     <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="bower_components/AdminLTE/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
-    <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/AdminLTE.css" />
     <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/skins/skin-blue.min.css">
     <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css">
-    <!-- endbuild -->
-
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
+    <script src="http://code.highcharts.com/highcharts.src.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <!-- REQUIRED JS SCRIPTS -->
 
     <!-- build:js(.) scripts/vendor.js -->
@@ -50,7 +54,7 @@
     <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
     <script src="bower_components/AdminLTE/dist/js/app.js"></script>
     <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -99,6 +103,9 @@
 
 
 
+<!--    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>-->
 
 
 </head>
@@ -457,8 +464,5 @@
     ga('create', 'UA-XXXXX-X');
     ga('send', 'pageview');
 </script>
-
-<!-- build:js(.) scripts/vendor.js -->
-<!-- bower:js -->
 </body>
 </html>
