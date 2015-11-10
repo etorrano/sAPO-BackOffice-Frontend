@@ -9,8 +9,8 @@
             <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Productos Genéricos</span>
-                    <span class="info-box-number">90<small>%</small></span>
+                    <span class="info-box-text">Producto Genérico más utilizado</span>
+                    <span class="product-title">Samsung TV </span>
                 </div><!-- /.info-box-content -->
             </div><!-- /.info-box -->
         </div><!-- /.col -->
@@ -109,20 +109,6 @@
                                     </span>
                             </div>
                         </li>
-                        <!-- /.item -->
-                        <li class="item">
-                            <div class="product-img">
-                                <img src="dist/img/default-50x50.gif" alt="Product Image">
-                            </div>
-                            <div class="product-info">
-                                <a href="javascript::;" class="product-title">PlayStation 4
-                                    <span class="label label-success pull-right">$399</span></a>
-                                    <span class="product-description">
-                                      PlayStation 4 500GB Console (PS4)
-                                    </span>
-                            </div>
-                        </li>
-                        <!-- /.item -->
                     </ul>
                 </div>
                 <!-- /.box-body -->
@@ -133,84 +119,43 @@
             </div>
             <!-- /.box -->
         </div>
-        <div class="col-md-4">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Productos a promover</h3>
+        <!--
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <ul class="products-list product-list-in-box">
-                        <li class="item">
-                            <div class="product-img">
-                                <img src="dist/img/default-50x50.gif" alt="Product Image">
-                            </div>
-                            <div class="product-info">
-                                <a href="javascript::;" class="product-title">Samsung TV
-                                    <span class="label label-warning pull-right">$1800</span></a>
-                                    <span class="product-description">
-                                      Samsung 32" 1080p 60Hz LED Smart HDTV.
-                                    </span>
-                            </div>
-                        </li>
-                        <!-- /.item -->
-                        <li class="item">
-                            <div class="product-img">
-                                <img src="dist/img/default-50x50.gif" alt="Product Image">
-                            </div>
-                            <div class="product-info">
-                                <a href="javascript::;" class="product-title">Bicycle
-                                    <span class="label label-info pull-right">$700</span></a>
-                                    <span class="product-description">
-                                      26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                                    </span>
-                            </div>
-                        </li>
-                        <!-- /.item -->
-                        <li class="item">
-                            <div class="product-img">
-                                <img src="dist/img/default-50x50.gif" alt="Product Image">
-                            </div>
-                            <div class="product-info">
-                                <a href="javascript::;" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
-                                    <span class="product-description">
-                                      Xbox One Console Bundle with Halo Master Chief Collection.
-                                    </span>
-                            </div>
-                        </li>
-                        <!-- /.item -->
-                        <li class="item">
-                            <div class="product-img">
-                                <img src="dist/img/default-50x50.gif" alt="Product Image">
-                            </div>
-                            <div class="product-info">
-                                <a href="javascript::;" class="product-title">PlayStation 4
-                                    <span class="label label-success pull-right">$399</span></a>
-                                    <span class="product-description">
-                                      PlayStation 4 500GB Console (PS4)
-                                    </span>
-                            </div>
-                        </li>
-                        <!-- /.item -->
-                    </ul>
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer text-center">
-                    <a class="uppercase">View All Products</a>
-                </div>
-                <!-- /.box-footer -->
-            </div>
-            <!-- /.box -->
         </div>
+        <div class="row">n-->
+            <div ng-hide="notificaciones.length === 0" class="col-md-8">
+                <div  class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cuentas por expirar</h3>
+                        <!--                    <div class="box-tools pull-right">
+                                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                            </div>-->
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table ng-table="notiftableParams" class="table no-margin">
+                                <tr ng-repeat="notificacion in $data">
+                                    <td data-title="'Nombre de Usuario'">
+                                        <span >{{notificacion.usuario}}</span>
+                                    </td>
+                                    <td data-title="'Tipo de cuenta'">
+                                        <span >{{notificacion.alias_cuenta}}</span>
+                                    </td>
 
-    </div>
-    <div class="row">
+                                    <td data-title="'Fecha de expiración'" >
+                                        <span >{{notificacion.expira | date:'yyyy-MM-dd'}} </span>
+                                    </td>
+                                    <td data-title="'Acciones'">
+                                        <a ng-click="notificar(notificacion)" class="btn btn-small btn-danger">Notificar</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!-- /.col -->
         <div class="col-md-8">
             <div class="box box-info">
                 <div class="box-header with-border">

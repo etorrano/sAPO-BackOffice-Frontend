@@ -9,9 +9,36 @@
  */
 angular.module('sApobackOfficeFrontendApp')
   .controller('inicioCtrl',['$scope', 'ServicioReporte', 'ServicioAdministrador','ServicioNotificacion','ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin', 'Admin', '$routeParams',  '$location' ,'$filter', 'NgTableParams',function($scope, ServicioReporte, ServicioAdministrador,ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, Admin, $routeParams, $location,$filter, NgTableParams) {
-        ServicioNotificacion.getLista().then(function(notificaciones) {
-            $scope.notificaciones = notificaciones;
-        });
+
+
+            ServicioNotificacion.getLista().then(function(notificaciones) {
+                $scope.notificaciones = notificaciones;
+                $scope.notiftableParams = new NgTableParams(
+                    {
+                        page: 1,          // primera página a mostrar
+                        count:5          // registros por página
+                    },
+                    {
+                        data: $scope.notificaciones
+                        /*total: $scope.notificaciones.length, // resultados en total
+                        getData: function($defer, params)
+                        {
+                            $defer.resolve($scope.notificaciones.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                        }*/
+                    }
+                );
+            });
+            $scope.notificar = function (notif) {
+                console.log("Creando notificacion para: " + notif.usuario);
+                var notificacionusuario = {
+                    usuarioid: notif.usuario,
+                    mensaje:'Su cuenta está próxima a expirar en la fecha:' + $filter('date')(notif.expira, "dd/MM/yyyy"),
+                    tipo_notificacion: 1
+                };
+                var index = $scope.notificaciones.indexOf(notif);
+                $scope.notificaciones.splice(index, 1);
+                $scope.notiftableParams.reload();
+            };
 
         ServicioReporte.movimientos().then(function(movimientos) {
             $scope.movimientos = movimientos;
@@ -19,7 +46,7 @@ angular.module('sApobackOfficeFrontendApp')
             $scope.tableParams = new NgTableParams(
                 {
                     page: 1,          // primera página a mostrar
-                    count: 10          // registros por página
+                    count: 5          // registros por página
                 },
                 {
                     data: $scope.movimientos

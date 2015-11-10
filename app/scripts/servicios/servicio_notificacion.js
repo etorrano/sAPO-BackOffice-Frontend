@@ -16,14 +16,10 @@ angular.module('sApobackOfficeFrontendApp')
             return deferred.promise;
         };
 
-        this.getLista = function() {
+        this.getLista = function(fecha) {
             var deferred = $q.defer();
-            var fecha = new Date();
-            fecha.setMonth(fecha.getMonth()+1);
-            //fecha.setFullYear(fecha.getFullYear()+1);
-           // fecha: fecha.getTime()
             console.log("Obtener notificaciones(get) fecha" + $filter('date')(fecha, "dd/MM/yyyy"));
-            Notificacion.getLista({fecha: fecha.getTime()}, {}, function (notificaciones) {
+            Notificacion.getLista({fecha: fecha}, {}, function (notificaciones) {
                 console.log(notificaciones);
                 deferred.resolve(notificaciones);
             }, function (error) {
