@@ -5,24 +5,22 @@
         </h1>-->
     <!-- Info boxes -->
     <div class="row">
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Producto Genérico más utilizado</span>
-                    <span class="product-title">Samsung TV </span>
-                </div><!-- /.info-box-content -->
-            </div><!-- /.info-box -->
-        </div><!-- /.col -->
-        <!--        <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">Likes</span>
-                            <span class="info-box-number">41,410</span>
-                        </div>&lt;!&ndash; /.info-box-content &ndash;&gt;
-                    </div>&lt;!&ndash; /.info-box &ndash;&gt;
-                </div>&lt;!&ndash; /.col &ndash;&gt;-->
+      <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua info-box">
+            <div class="icon">
+                      <i class="fa fa-shopping-cart"></i>
+                  </div>
+          <div class="info-box-content">
+            <span class="info-box-text">Producto genérico más utilizado:</span>
+            <span class="product-title">{{productoMasUtilizado.nombre}}</span>
+            <h3>{{productoMasUtilizado.cantidad_tiendas}}</h3>
+            <h6>Tiendas lo incluyen</h6>
+          </div>
+          <a href="#" class="small-box-footer">
+            Ver más <i class="fa fa-arrow-circle-right"></i>
+          </a>
+        </div>
+      </div>
 
         <!-- fix for small devices only -->
         <div class="clearfix visible-sm-block"></div>
@@ -32,7 +30,13 @@
                 <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Cantidad de cuentas Premium</span>
-                    <span class="info-box-number">760</span>
+                    <span class="info-box-number">{{cantPremium}}</span>
+                    <div class="progress">
+                      <div class="progress-bar" style="width: {{proporcionPremium}}%"></div>
+                    </div>
+                        <span class="progress-description">
+                          Proporción: {{(proporcionPremium| number:2)*1}}%
+                        </span>
                 </div><!-- /.info-box-content -->
             </div><!-- /.info-box -->
         </div><!-- /.col -->

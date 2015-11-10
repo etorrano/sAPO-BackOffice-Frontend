@@ -316,7 +316,7 @@ angular
                 redirectTo: '/'
             });
     })
-
+/*
  .run(function($rootScope, $location,$route, ServicioAutenticacionAdmin) {
  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
  console.log("Verificar autorización");
@@ -325,4 +325,4 @@ angular
  $location.path("/admin/login");
  }
  });
- });
+ });*/

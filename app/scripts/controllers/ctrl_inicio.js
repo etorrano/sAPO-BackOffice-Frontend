@@ -84,7 +84,17 @@ angular.module('sApobackOfficeFrontendApp')
                     }*/
                 }
             );
+
         });
+        ServicioReporte.obtenerReportes().then(function(reportes) {
+          $scope.cantPremium = reportes.usuarios_premium;
+          $scope.proporcionPremium = (reportes.usuarios_premium*100)/(reportes.usuarios_registrados);
+          $scope.cantCatGenericas = reportes.categorias_genericas;
+          $scope.cantProdGenericos = reportes.productos_genericos;
+          $scope.productoMasUtilizado = reportes.productos[0];
+        });
+
+        /*
     $scope.administrador = Admin;
     console.log("administrador " + $scope.administrador.nombre);
        $scope.$watch(Admin.nombre, function (value) {
@@ -124,5 +134,5 @@ console.log("watch " + value);
             Admin = producto;
             //  $scope.$parent.admnistrador = producto;
             console.log("Guardando prod: " + Admin.nombre);
-        });
+        });*/
   }]);
