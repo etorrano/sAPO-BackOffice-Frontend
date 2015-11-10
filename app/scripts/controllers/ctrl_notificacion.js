@@ -14,8 +14,8 @@ angular.module('sApobackOfficeFrontendApp')
 .controller('CtrlListarNotificaciones', ['$scope', 'ServicioNotificacion', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioNotificacion, $routeParams, $location,  $filter, ngTableParams) {
         console.log("En CtrlListarNotificaciones");
         var fecha = new Date();
-        fecha.setMonth(fecha.getMonth()+1);
-        //fecha.setFullYear(fecha.getFullYear()+1);
+        //fecha.setMonth(fecha.getMonth()+1);
+        fecha.setFullYear(fecha.getFullYear()+1);
         // fecha: fecha.getTime()
         ServicioNotificacion.getLista(fecha.getTime()).then(function(notificaciones) {
             $scope.notificaciones = notificaciones;
@@ -85,37 +85,38 @@ angular.module('sApobackOfficeFrontendApp')
                 mensaje:'Su cuenta está próxima a expirar en la fecha:' + $filter('date')(notif.expira, "dd/MM/yyyy"),
                 tipo_notificacion: 1
             };
-            //ServicioNotificacion.notificar(notificacionusuario);
+            ServicioNotificacion.notificar(notificacionusuario);
 
             var index = $scope.notificaciones.indexOf(notif);
             $scope.notificaciones.splice(index, 1);
-          /*  $scope.tableParams = new ngTableParams(
-                {
-                    page: 1,          // primera página a mostrar
-                    count: 2          // registros por página
-                },
-                {
-                    dataset: $scope.notificaciones,
-                    total: $scope.notificaciones.length, // resultados en total
-                    getData: function($defer, params)
-                    {
-                        $defer.resolve($scope.notificaciones.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                    }
-                }
-            );*/
             $scope.tableParams.reload();
+
+            /*  $scope.tableParams = new ngTableParams(
+             {
+             page: 1,          // primera página a mostrar
+             count: 2          // registros por página
+             },
+             {
+             dataset: $scope.notificaciones,
+             total: $scope.notificaciones.length, // resultados en total
+             getData: function($defer, params)
+             {
+             $defer.resolve($scope.notificaciones.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+             }
+             }
+             );*/
             //notif.$remove();
            // $location.path('/notificaciones-cuentas-listar');
         };
        // +  $filter('date')($scope.notificacion.expira, "dd/MM/yyyy")
-}])
+}]);
 /*
 .controller('CtrlActAdmin', ['$scope', 'ServicioNotificacion', function($scope, ServicioNotificacion) {
     ServicioNotificacion.actualizar($scope.notificacion.id);
     console.log("En CtrlActAdmin actualizando notificacion con id: " + $scope.notificacion.id);
 
 }])
-*/
+
 .controller('CtrlActAdmin', ['$scope', 'ServicioNotificacion', '$routeParams', '$location',function($scope, ServicioNotificacion, $routeParams, $location) {
         console.log("En CtrlActAdmin con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
@@ -145,4 +146,4 @@ angular.module('sApobackOfficeFrontendApp')
             ServicioNotificacion.crear($scope.notificaciones);
             $location.path('/notificaciones-cuentas-listar');
         };
-    }]);
+    }]);*/

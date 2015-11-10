@@ -315,7 +315,7 @@ angular
             .otherwise({
                 redirectTo: '/'
             });
-    })
+    });
 /*
  .run(function($rootScope, $location,$route, ServicioAutenticacionAdmin) {
  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {

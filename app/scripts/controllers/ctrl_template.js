@@ -259,7 +259,7 @@ angular.module('sApobackOfficeFrontendApp')
                 $scope.template.categorias=[];
                 $scope.template.id = null;
                 // loop through all checkboxes
-                angular.forEach(categorias, function(item, key) {
+                angular.forEach($scope.categorias, function(item, key) {
                     console.log("Verificar categorias seleccionadas");
                     if($scope.checkboxes.items[item.id]) {
                         console.log("seleccionado "+ item.id + item);

@@ -2,53 +2,50 @@
     <!--    <h1>
             Page Header
             <small>Optional description</small>
+
+            <h6>Tiendas lo incluyen</h6>
+
+            <span class="product-title">{{productoMasUtilizado.nombre}}</span>
         </h1>-->
+
     <!-- Info boxes -->
     <div class="row">
-      <div class="col-lg-3 col-xs-6">
+      <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="small-box bg-aqua info-box">
             <div class="icon">
                       <i class="fa fa-shopping-cart"></i>
                   </div>
           <div class="info-box-content">
-            <span class="info-box-text">Producto genérico más utilizado:</span>
-            <span class="product-title">{{productoMasUtilizado.nombre}}</span>
+            <h4>Producto genérico más utilizado:{{productoMasUtilizado.nombre}}</h4>
             <h3>{{productoMasUtilizado.cantidad_tiendas}}</h3>
-            <h6>Tiendas lo incluyen</h6>
+              <h4>Tiendas lo incluyen</h4>
           </div>
           <a href="#" class="small-box-footer">
             Ver más <i class="fa fa-arrow-circle-right"></i>
           </a>
         </div>
-      </div>
-
-        <!-- fix for small devices only -->
-        <div class="clearfix visible-sm-block"></div>
-
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Cantidad de cuentas Premium</span>
-                    <span class="info-box-number">{{cantPremium}}</span>
-                    <div class="progress">
-                      <div class="progress-bar" style="width: {{proporcionPremium}}%"></div>
-                    </div>
-                        <span class="progress-description">
-                          Proporción: {{(proporcionPremium| number:2)*1}}%
-                        </span>
-                </div><!-- /.info-box-content -->
-            </div><!-- /.info-box -->
-        </div><!-- /.col -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Nuevos usuarios</span>
-                    <span class="info-box-number">2,000</span>
-                </div><!-- /.info-box-content -->
-            </div><!-- /.info-box -->
-        </div><!-- /.col -->
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="small-box bg-yellow info-box">
+            <div class="icon">
+                <i class="ion ion-ios-people-outline"></i>
+            </div>
+            <div class="info-box-content">
+                <h4>Cantidad de cuentas Premium</h4>
+                <h3>{{cantPremium}}</h3>
+                <h6></h6>
+                <div class="progress">
+                    <div class="progress-bar" style="width: {{proporcionPremium}}%"></div>
+                </div>
+                <span class="progress-description">
+                  Proporción: {{(proporcionPremium| number:2)*1}}%
+                </span>
+            </div>
+            <a href="#" class="small-box-footer">
+                Ver más <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
     </div><!-- /.row -->
 
 
@@ -63,7 +60,43 @@
 
     <div class="row">
         <div class="col-md-4">
-            <div class="box box-primary">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Promover Productos</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table ng-table="tableParamsRecomendados" class="table no-margin table-bordered table-striped" show-filter="true">
+                            <tr ng-repeat="producto in $data">
+                                <td data-title="'Nombre'" filter="{ nombre: 'text'}" sortable="'nombre'">
+                                    <span >{{producto.nombre}}</span>
+                                </td>
+
+                                <td data-title="'Descripción'" filter="{ descripcion: 'text'}" sortable="'descripcion'">
+                                    <span >{{producto.descripcion}} </span>
+                                </td>
+                                <td data-title="'Categoría'" filter="{categoria: 'number'}" sortable="'categoria'">
+                                    <span >{{producto.categoria}}</span>
+                                </td>
+                                <td data-title="'Tipo'" filter="{isgenerico: 'bool'}" sortable="'isgenerico'">
+                                    <span ng-if="!producto.isgenerico" class="label label-danger">Genérico</span>
+                                    <span ng-if="producto.isgenerico" class="label label-danger">Específico</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+            </div>
+        </div>
+            <!--<div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Productos a promover</h3>
 
@@ -73,7 +106,7 @@
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <!-- /.box-header -->
+                &lt;!&ndash; /.box-header &ndash;&gt;
                 <div class="box-body">
                     <ul class="products-list product-list-in-box">
                         <li class="item">
@@ -88,7 +121,7 @@
                                     </span>
                             </div>
                         </li>
-                        <!-- /.item -->
+                        &lt;!&ndash; /.item &ndash;&gt;
                         <li class="item">
                             <div class="product-img">
                                 <img src="dist/img/default-50x50.gif" alt="Product Image">
@@ -101,7 +134,7 @@
                                     </span>
                             </div>
                         </li>
-                        <!-- /.item -->
+                        &lt;!&ndash; /.item &ndash;&gt;
                         <li class="item">
                             <div class="product-img">
                                 <img src="dist/img/default-50x50.gif" alt="Product Image">
@@ -115,14 +148,13 @@
                         </li>
                     </ul>
                 </div>
-                <!-- /.box-body -->
+                &lt;!&ndash; /.box-body &ndash;&gt;
                 <div class="box-footer text-center">
                     <a class="uppercase">View All Products</a>
                 </div>
-                <!-- /.box-footer -->
-            </div>
+                &lt;!&ndash; /.box-footer &ndash;&gt;
+            </div>-->
             <!-- /.box -->
-        </div>
         <!--
 
         </div>

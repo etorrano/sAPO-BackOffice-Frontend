@@ -10,8 +10,12 @@
 angular.module('sApobackOfficeFrontendApp')
   .controller('inicioCtrl',['$scope', 'ServicioReporte', 'ServicioAdministrador','ServicioNotificacion','ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin', 'Admin', '$routeParams',  '$location' ,'$filter', 'NgTableParams',function($scope, ServicioReporte, ServicioAdministrador,ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, Admin, $routeParams, $location,$filter, NgTableParams) {
 
+        var fecha = new Date();
+        //fecha.setMonth(fecha.getMonth()+1);
+        fecha.setFullYear(fecha.getFullYear()+1);
+        // fecha: fecha.getTime()
 
-            ServicioNotificacion.getLista().then(function(notificaciones) {
+            ServicioNotificacion.getLista(fecha.getTime()).then(function(notificaciones) {
                 $scope.notificaciones = notificaciones;
                 $scope.notiftableParams = new NgTableParams(
                     {
@@ -35,6 +39,8 @@ angular.module('sApobackOfficeFrontendApp')
                     mensaje:'Su cuenta está próxima a expirar en la fecha:' + $filter('date')(notif.expira, "dd/MM/yyyy"),
                     tipo_notificacion: 1
                 };
+
+                ServicioNotificacion.notificar(notificacionusuario);
                 var index = $scope.notificaciones.indexOf(notif);
                 $scope.notificaciones.splice(index, 1);
                 $scope.notiftableParams.reload();
@@ -93,7 +99,31 @@ angular.module('sApobackOfficeFrontendApp')
           $scope.cantProdGenericos = reportes.productos_genericos;
           $scope.productoMasUtilizado = reportes.productos[0];
         });
-
+        ServicioReporte.obtenerRecomProductos().then(function(reportes) {
+            var idProductos = reportes.productos;
+            angular.forEach(idProductos, function(item, clave) {
+                ServicioProducto.getProducto({id: item}).then(function(producto) {
+                    $scope.productos.push(producto);
+                });
+            });
+            $scope.tableParamsRecomendados = new NgTableParams(
+                    {
+                        page: 1,          // primera página a mostrar
+                        count: 5          // registros por página
+                    },
+                    {
+                        total: $scope.productos
+                    }
+            );
+        });
+        $scope.promover = function (producto) {
+            console.log("Promoviendo prod con id: " + producto.id);
+            producto.isgenerico = true;
+            ServicioProducto.actualizarProducto(producto);
+            var index = $scope.productos.indexOf(producto);
+            $scope.productos.splice(index, 1);
+            $scope.tableParamsRecomendados.reload();
+        };
         /*
     $scope.administrador = Admin;
     console.log("administrador " + $scope.administrador.nombre);

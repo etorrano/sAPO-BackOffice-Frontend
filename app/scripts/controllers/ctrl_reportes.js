@@ -206,11 +206,13 @@ angular.module('sApobackOfficeFrontendApp')
                 promedios += crecimientoLocal;
                 $scope.crecimiento.push(crecimientoLocal);
                 sumaDatos+=item;
-                console.log("promedios " + promedios);
+                console.log("promedios sumadatos " + promedios + sumaDatos);
             }
             //proyeccion = promedios / $scope.chartConfigAreaSplineHistorico.series.data.length;
             // $scope.checkboxes.items[item.id] = item; // push checked items to array
         });
+        sumaDatos+= $scope.datos[$scope.datos.length-1];
+        console.log("promedios sumadatos " + promedios + sumaDatos);
         highchartsNG.ready(function(){
             // init chart config, see lazyload example
             //This is not a highcharts object. It just looks a little like one!
@@ -259,7 +261,7 @@ angular.module('sApobackOfficeFrontendApp')
             };
         },this);
         $scope.proyectar = function () {
-            var valor =  $scope.proyeccion.valueOf();
+            var valor =  $scope.proyeccion;
             //var cantproyecciones = $scope.cantProyecciones;
            // var arreglo = $scope.datos;//$scope.chartConfigAreaSplineHistorico.series.data;
             console.log("proyeccion " + valor);
@@ -272,12 +274,12 @@ angular.module('sApobackOfficeFrontendApp')
                 promedios += valor/ultimo;
                 var crecimiento = promedios/(tam);
                 var proyectado = sumaDatos/(tam+1);
-                console.log("proyeccion " + valor);
+                console.log("proyeccion, sumadatos, tamanio " + valor + sumaDatos + tam);
                 console.log("proyectado " + proyectado);
                 $scope.crecimiento.push(crecimiento);
                 console.log("ultimo " + ultimo + "promedios " + promedios + "proyectado " + proyectado + "ultimo elem de arreglo " + $scope.datos[$scope.datos.length-1]);
-                ultimo = valor;
-                valor = proyectado;
+                angular.extend(ultimo,valor);
+                angular.extend(valor,proyectado);
                 tam+=1;
             } /*var seriesArray = $scope.chartConfigAreaSplineProyeccion.series;
             var rndIdx = Math.floor(Math.random() * seriesArray.length);
