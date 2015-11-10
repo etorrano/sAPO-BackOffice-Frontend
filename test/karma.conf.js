@@ -34,6 +34,7 @@ module.exports = function(config) {
       'bower_components/ng-table/dist/ng-table.min.js',
       'bower_components/AdminLTE/dist/js/app.js',
       'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
+      'bower_components/highcharts-ng/dist/highcharts-ng.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
