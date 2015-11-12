@@ -3,18 +3,18 @@
  */
 angular.module('sApobackOfficeFrontendApp')
 
-.controller('CtrlListarReporte', ['$scope', 'ServicioReporte', '$routeParams', '$location',function($scope, ServicioReporte, $routeParams, $location) {
-    console.log("En CtrlListarReportes");
-    ServicioReporte.get({id: $routeParams.id}).then(function(reporte) {
-        $scope.reporte = reporte;
-
-    });
-
-}])
-
-.controller('CtrlListarReportesRegistrados', ['$scope', 'ServicioReporte', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioReporte, $routeParams, $location,  $filter, ngTableParams) {
+    .controller('CtrlListarReporte', ['$scope', 'ServicioReporte', '$routeParams', '$location',function($scope, ServicioReporte, $routeParams, $location) {
         console.log("En CtrlListarReportes");
-        
+        ServicioReporte.get({id: $routeParams.id}).then(function(reporte) {
+            $scope.reporte = reporte;
+
+        });
+
+    }])
+
+    .controller('CtrlListarReportesRegistrados', ['$scope', 'ServicioReporte', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioReporte, $routeParams, $location,  $filter, ngTableParams) {
+        console.log("En CtrlListarReportes");
+
         ServicioReporte.obtenerRegistrados().then(function(registrados) {
             $scope.usuarios = registrados;
             $scope.tableParams = new ngTableParams(
@@ -24,11 +24,11 @@ angular.module('sApobackOfficeFrontendApp')
                 },
                 {
                     data: $scope.usuarios
-                  /*  total: $scope.usuarios.length, // resultados en total
-                    getData: function($defer, params)
-                    {
-                        $defer.resolve($scope.usuarios.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                    }*/
+                    /*  total: $scope.usuarios.length, // resultados en total
+                     getData: function($defer, params)
+                     {
+                     $defer.resolve($scope.usuarios.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                     }*/
                 }
             );
         });
@@ -63,7 +63,7 @@ angular.module('sApobackOfficeFrontendApp')
         };
         // +  $filter('date')($scope.reporte.expira, "dd/MM/yyyy")
 
-}])
+    }])
 
     .controller('CtrlReportesFraude', ['$scope', 'highchartsNG', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, highchartsNG, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
         console.log("En CtrlListarReportes");
@@ -89,15 +89,15 @@ angular.module('sApobackOfficeFrontendApp')
                         type: 'areaspline'
                     }
                 },
-                 series: [{
-                 data: [10, 15, 12, 8, 7]
-                 }],
-                 title: {
-                 text: 'Hello'
-                 },
+                series: [{
+                    data: [10, 15, 12, 8, 7]
+                }],
+                title: {
+                    text: 'Hello'
+                },
 
-                 loading: false
-                 };
+                loading: false
+            };
             $scope.chartConfigBoxPlot = {
                 options: {
                     chart: {
@@ -231,17 +231,17 @@ angular.module('sApobackOfficeFrontendApp')
 
                 loading: false
             };
-           /* $q.all($scope.chartConfigAreaSplineHistorico.series.data).then(function(){
-                angular.forEach($scope.chartConfigAreaSplineHistorico.series.data, function(item, clave) {
-                    if (clave < $scope.chartConfigAreaSplineHistorico.series.data.length - 1) {
-                        console.log("historico  " +item);
-                        promedios += $scope.chartConfigAreaSplineHistorico.series.data[clave + 1] / item;
-                        console.log("promedios " + promedios);
-                    }
-                    //proyeccion = promedios / $scope.chartConfigAreaSplineHistorico.series.data.length;
-                    // $scope.checkboxes.items[item.id] = item; // push checked items to array
-                });
-            });*/
+            /* $q.all($scope.chartConfigAreaSplineHistorico.series.data).then(function(){
+             angular.forEach($scope.chartConfigAreaSplineHistorico.series.data, function(item, clave) {
+             if (clave < $scope.chartConfigAreaSplineHistorico.series.data.length - 1) {
+             console.log("historico  " +item);
+             promedios += $scope.chartConfigAreaSplineHistorico.series.data[clave + 1] / item;
+             console.log("promedios " + promedios);
+             }
+             //proyeccion = promedios / $scope.chartConfigAreaSplineHistorico.series.data.length;
+             // $scope.checkboxes.items[item.id] = item; // push checked items to array
+             });
+             });*/
 
 
             $scope.chartConfigAreaSplineCrecimiento = {
@@ -263,13 +263,14 @@ angular.module('sApobackOfficeFrontendApp')
         $scope.proyectar = function () {
             var valor =  $scope.proyeccion;
             //var cantproyecciones = $scope.cantProyecciones;
-           // var arreglo = $scope.datos;//$scope.chartConfigAreaSplineHistorico.series.data;
+            // var arreglo = $scope.datos;//$scope.chartConfigAreaSplineHistorico.series.data;
             console.log("proyeccion " + valor);
             var ultimo = $scope.datos[$scope.datos.length-1];
             var tam =$scope.datos.length;
             //$scope.datos.push($scope.proyeccion);
             for (var i = 0; i < $scope.cantProyecciones; i++) {
                 sumaDatos+=valor;
+                console.log("valor " + valor);
                 $scope.datos.push(valor);
                 promedios += valor/ultimo;
                 var crecimiento = promedios/(tam);
@@ -278,50 +279,16 @@ angular.module('sApobackOfficeFrontendApp')
                 console.log("proyectado " + proyectado);
                 $scope.crecimiento.push(crecimiento);
                 console.log("ultimo " + ultimo + "promedios " + promedios + "proyectado " + proyectado + "ultimo elem de arreglo " + $scope.datos[$scope.datos.length-1]);
-                angular.extend(ultimo,valor);
-                angular.extend(valor,proyectado);
+                angular.copy(ultimo, valor);
+                //console.log(myDest);
+                //  angular.extend(ultimo,valor);
+                angular.copy(valor, proyectado);
+                //  angular.extend(valor,proyectado);
                 tam+=1;
             } /*var seriesArray = $scope.chartConfigAreaSplineProyeccion.series;
-            var rndIdx = Math.floor(Math.random() * seriesArray.length);
-            seriesArray[rndIdx].data = seriesArray[rndIdx].data.concat([1, 10, 20]);*/
+             var rndIdx = Math.floor(Math.random() * seriesArray.length);
+             seriesArray[rndIdx].data = seriesArray[rndIdx].data.concat([1, 10, 20]);*/
 
         };
 
-    }])
-/*
-.controller('CtrlActAdmin', ['$scope', 'ServicioReporte', function($scope, ServicioReporte) {
-    ServicioReporte.actualizar($scope.reporte.id);
-    console.log("En CtrlActAdmin actualizando reporte con id: " + $scope.reporte.id);
-
-}])
-*/
-.controller('CtrlActAdmin', ['$scope', 'ServicioReporte', '$routeParams', '$location',function($scope, ServicioReporte, $routeParams, $location) {
-        console.log("En CtrlActAdmin con id: " + $routeParams.id);
-        // callback for ng-click 'updateUser':
-        $scope.actualizar = function (reportes) {
-           console.log("En CtrlActAdmin actualizando reporte con id: " + $scope.reportes.id + $scope.reportes.nombre + $scope.reportes.descripcion);
-           ServicioReporte.actualizar($scope.reportes);
-           $location.path('/reportes-listar');
-        };
-        // ng-click 'cancel':
-        $scope.cancel = function () {
-            $location.path('/reportes-listar');
-        };
-
-
-        ServicioReporte.get({id: $routeParams.id}).then(function(reportes) {
-            $scope.reportes = reportes;
-
-        });
-    }])
-
-.controller('CtrlCrearAdmin', ['$scope', 'ServicioReporte', '$routeParams', '$location',
-    function ($scope, ServicioReporte, $routeParams, $location) {
-        // ng-click 'crear nuevo usuario':
-        $scope.crear = function (reportes) {
-            //$scope.reportes.id = 101;
-            console.log("En CtrlCrearAdmin creando reporte con id: " + $scope.reportes.nombre + $scope.reportes.descripcion);
-            ServicioReporte.crear($scope.reportes);
-            $location.path('/reportes-listar');
-        };
     }]);

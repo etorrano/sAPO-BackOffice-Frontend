@@ -60,8 +60,8 @@ angular.module('sApobackOfficeFrontendApp')
         console.log("En CtrlActProd con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
         $scope.actualizarProducto = function (productos) {
-           console.log("En CtrlActProd actualizando producto con id: " + $scope.productos.id + $scope.productos.nombre + $scope.productos.descripcion);
-           ServicioProducto.actualizarProducto($scope.productos);
+           console.log("En CtrlActProd actualizando producto con id: " + $scope.producto.id + $scope.producto.nombre + $scope.producto.descripcion);
+           ServicioProducto.actualizarProducto($scope.producto);
            $location.path('/productos-listar');
         };
         // ng-click 'cancel':
@@ -79,10 +79,10 @@ angular.module('sApobackOfficeFrontendApp')
 .controller('CtrlCrearProd', ['$scope', 'ServicioProducto', '$routeParams', '$location',
     function ($scope, ServicioProducto, $routeParams, $location) {
         // ng-click 'crear nuevo usuario':
-        $scope.crearProducto = function (productos) {
+        $scope.crearProducto = function (producto) {
             //$scope.productos.id = 101;
             console.log("En CtrlCrearProd creando producto con id: " + $scope.productos.nombre + $scope.productos.descripcion);
-            ServicioProducto.crearProducto($scope.productos);
+            ServicioProducto.crearProducto($scope.producto);
             $location.path('/productos-listar');
         };
     }]);

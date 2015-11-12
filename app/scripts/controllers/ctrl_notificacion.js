@@ -11,13 +11,13 @@ angular.module('sApobackOfficeFrontendApp')
 
 }])
 
-.controller('CtrlListarNotificaciones', ['$scope', 'ServicioNotificacion', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioNotificacion, $routeParams, $location,  $filter, ngTableParams) {
+.controller('CtrlListarNotificaciones', ['$scope', '$q', 'ServicioNotificacion', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, $q, ServicioNotificacion, $routeParams, $location,  $filter, ngTableParams) {
         console.log("En CtrlListarNotificaciones");
         var fecha = new Date();
         //fecha.setMonth(fecha.getMonth()+1);
         fecha.setFullYear(fecha.getFullYear()+1);
         // fecha: fecha.getTime()
-        ServicioNotificacion.getLista(fecha.getTime()).then(function(notificaciones) {
+        ServicioNotificacion.getLista().then(function(notificaciones) {
             $scope.notificaciones = notificaciones;
             $scope.tableParams = new ngTableParams(
                 {
@@ -85,11 +85,17 @@ angular.module('sApobackOfficeFrontendApp')
                 mensaje:'Su cuenta está próxima a expirar en la fecha:' + $filter('date')(notif.expira, "dd/MM/yyyy"),
                 tipo_notificacion: 1
             };
-            ServicioNotificacion.notificar(notificacionusuario);
-
-            var index = $scope.notificaciones.indexOf(notif);
-            $scope.notificaciones.splice(index, 1);
-            $scope.tableParams.reload();
+            var deferred = $q.defer();
+            ServicioNotificacion.notificar(notificacionusuario).then(function(notificaciones) {
+                var index = $scope.notificaciones.indexOf(notif);
+                $scope.notificaciones.splice(index, 1);
+                $scope.tableParams.reload();
+                deferred.resolve(notificaciones);
+            }, function (error) {
+                console.log("Error: " + error);
+                deferred.reject(error);
+            });
+            return deferred.promise;
 
             /*  $scope.tableParams = new ngTableParams(
              {
