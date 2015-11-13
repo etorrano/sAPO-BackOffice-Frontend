@@ -195,12 +195,12 @@ angular
 
             .when('/productos-actualizar/:id', {
                 templateUrl: 'views/productos/productos-actualizar.html',
-                controller: 'CtrlActAdmin',
+                controller: 'CtrlActProd',
                 access: { requiredLogin: true }})
 
             .when('/productos-crear', {
                 templateUrl: 'views/productos/productos-crear.html',
-                controller: 'CtrlCrearAdmin',
+                controller: 'CtrlCrearProd',
                 access: { requiredLogin: true }})
 
             .when('/templates', {
