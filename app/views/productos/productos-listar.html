@@ -1,6 +1,6 @@
 <section class="content">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md col-sm col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Productos del Sistema</h3>
@@ -11,13 +11,13 @@
                                         </div>-->
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive ">
                         <table ng-table="tableParams" class="table no-margin table-bordered table-striped" show-filter="true">
                             <tr ng-repeat="producto in $data">
                                 <td data-title="'Nombre'" filter="{ nombre: 'text'}" sortable="'nombre'">
                                     <span >{{producto.nombre}}</span>
                                 </td>
-                                <td data-title="'Descripcion'" filter="{ descripcion: 'text'}" sortable="'descripcion'">>
+                                <td data-title="'Descripcion'" filter="{ descripcion: 'text'}" sortable="'descripcion'">
                                     <span >{{producto.descripcion}}</span>
                                 </td>
 

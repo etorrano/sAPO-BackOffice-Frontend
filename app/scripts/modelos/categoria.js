@@ -10,7 +10,7 @@ angular.module('sApobackOfficeFrontendApp')
         return $resource(API_REST_URL + ':recurso/:modulo/:submodulo/:id', {}, {
             crearCategoria   : { method: 'POST', params: { recurso: 'categorias', modulo: 'create'}},
             getCategoria     : { method: 'GET', params: { recurso: 'categorias' ,id: '@id'},  isArray: false },
-            getCategorias    : { method: 'GET', params: { recurso: 'categorias' },  isArray: true },
+            getCategorias    : { method: 'GET', params: { recurso: 'categorias' , generico: 'true'},  isArray: true },
             actualizarCategoria   : { method: 'PUT', params: { recurso: 'categorias',id: '@id'}},
             eliminarCategoria   : { method: 'DELETE', params: { recurso: 'categorias',id: '@id'}}
         })

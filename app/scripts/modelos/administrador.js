@@ -12,7 +12,7 @@ angular.module('sApobackOfficeFrontendApp')
             crear   : { method: 'POST', params: { recurso: objeto, modulo: 'create'}},
             get    : { method: 'GET', params: { recurso: objeto ,id: '@id'},  isArray: false },
             getLista    : { method: 'GET', params: { recurso: objeto },  isArray: true },
-            actualizar   : { method: 'PUT', params: { recurso: objeto,id: '@id'}},
+            actualizar   : { method: 'PUT', params: { recurso: objeto,id: '@username'}},
             eliminar   : { method: 'DELETE', params: { recurso: objeto,id: '@id'}}
         })
     }]);

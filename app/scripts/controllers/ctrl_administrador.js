@@ -12,7 +12,7 @@ angular.module('sApobackOfficeFrontendApp')
 
 }])
 
-.controller('CtrlListarAdministradores', ['$scope', '$q', 'ServicioAdministrador', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, $q, ServicioAdministrador, $routeParams, $location,  $filter, ngTableParams) {
+.controller('CtrlListarAdministradores', ['$scope', '$q', 'ServicioAdministrador', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, $q, ServicioAdministrador, $routeParams, $location,  $filter, NgTableParams) {
         console.log("En CtrlListarAdministradores");
         $scope.actualizar = function (userId) {
             console.log("Redireccionando a CtrlActAdmin para actualizar administrador con id: " + userId);
@@ -32,7 +32,7 @@ angular.module('sApobackOfficeFrontendApp')
              productos = results
              });*/
             $scope.administradores = administradores;
-            $scope.tableParams = new ngTableParams(
+            $scope.tableParams = new NgTableParams(
                 {
                     page: 1,          // primera página a mostrar
                     count: 5          // registros por página
@@ -65,19 +65,14 @@ angular.module('sApobackOfficeFrontendApp')
         };
 
 }])
-/*
-.controller('CtrlActAdmin', ['$scope', 'ServicioAdministrador', function($scope, ServicioAdministrador) {
-    ServicioAdministrador.actualizar($scope.administrador.id);
-    console.log("En CtrlActAdmin actualizando administrador con id: " + $scope.administrador.id);
 
-}])
-*/
 .controller('CtrlActAdmin', ['$scope', 'ServicioAdministrador', '$routeParams', '$location',function($scope, ServicioAdministrador, $routeParams, $location) {
         console.log("En CtrlActAdmin con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
-        $scope.actualizar = function (administrador) {
+        $scope.actualizar = function () {
            console.log("En CtrlActAdmin actualizando administrador : " + $scope.administrador.name + $scope.administrador.surname + $scope.administrador.username);
-           ServicioAdministrador.actualizar($scope.administrador);
+           var password = $scope.administrador.password != null;
+            ServicioAdministrador.actualizar($scope.administrador,password);
            $location.path('/administradores-listar');
         };
         // ng-click 'cancel':

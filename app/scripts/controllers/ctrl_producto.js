@@ -63,7 +63,7 @@ angular.module('sApobackOfficeFrontendApp')
 .controller('CtrlActProd', ['$scope', 'ServicioProducto', '$routeParams', '$location',function($scope, ServicioProducto, $routeParams, $location) {
         console.log("En CtrlActProd con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
-        $scope.actualizarProducto = function (productos) {
+        $scope.actualizarProducto = function () {
            console.log("En CtrlActProd actualizando producto con id: " + $scope.producto.id + $scope.producto.nombre + $scope.producto.descripcion);
            ServicioProducto.actualizarProducto($scope.producto);
            $location.path('/productos-listar');
@@ -74,8 +74,8 @@ angular.module('sApobackOfficeFrontendApp')
         };
 
 
-        ServicioProducto.getProducto({id: $routeParams.id}).then(function(productos) {
-            $scope.productos = productos;
+        ServicioProducto.getProducto($routeParams.id).then(function(producto) {
+            $scope.producto = producto;
 
         });
     }])

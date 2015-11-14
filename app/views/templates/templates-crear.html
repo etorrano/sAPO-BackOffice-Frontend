@@ -27,7 +27,7 @@
                             <div class="box-header with-border">
                                 <h4>Seleccionar Categorías</h4>
                             </div><!-- /.box-header -->
-                                <table ng-table="tableParams" class="table">
+                                <table ng-table="tableParams" class="table no-margin table-bordered table-striped" show-filter="true">
                                     <tr ng-repeat="categoria in $data">
                                         <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
                                             <input class="input-group-addon" type="checkbox" ng-model="checkboxes.items[categoria.id]" />

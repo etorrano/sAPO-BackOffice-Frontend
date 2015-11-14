@@ -21,64 +21,45 @@ angular.module('sApobackOfficeFrontendApp')
 
     }])
 
-    .controller('CtrlListarTemplates', ['$scope', 'ServicioTemplate', '$routeParams', '$location',function($scope, ServicioTemplate, $routeParams, $location) {
-        console.log("En CtrlListarTemplates");
-        $scope.actualizarTemplate = function (userId) {
-            console.log("Redireccionando a CtrlActProd para actualizar template con id: " + userId);
-            $location.path('/templates-actualizar/' + userId);
+    .controller('CtrlListarTemplates', ['$scope', 'ServicioTemplate', '$routeParams', '$location', 'NgTableParams', '$q',
+        function($scope, ServicioTemplate, $routeParams, $location, NgTableParams, $q) {
+            console.log("En CtrlListarTemplates");
+            $scope.actualizar = function (id) {
+                console.log("Redireccionando a CtrlActProd para actualizar template con id: " + id);
+                $location.path('/templates-actualizar/' + id);
+            };
 
-            ServicioTemplate.getTemplates().then(function(templates) {
-                $scope.phones = templates;
-
+            ServicioTemplate.getTemplates().then(function(templates)
+            {
+                $scope.templates = templates;
+                $scope.tableParams = new NgTableParams(
+                    {
+                        page: 1,          // primera página a mostrar
+                        count: 5          // registros por página
+                    },
+                    {
+                        data: $scope.templates
+                    }
+                );
             });
-        };
-        ServicioTemplate.getTemplates().then(function(templates) {
-            $scope.phones = templates;
-        });
-        $scope.crearTemplate = function () {
-            console.log("Redireccionando a CtrlActProd para crear template");
-            $location.path('/templates-crear');
-        };
 
-        $scope.eliminarTemplate = function (userId) {
-            console.log("Borrando template con id: " + userId);
-            ServicioTemplate.eliminarTemplate(userId);
-            $location.path('/');
-            /*ServicioTemplate.getTemplates().then(function(templates) {
-             $scope.phones = templates;
-             });*/
+            $scope.eliminar = function (template) {
+                console.log("Borrando template con id: " + template.id);
+                var deferred = $q.defer();
+                ServicioTemplate.eliminarTemplate(template.id).then(function(res) {
+                    $location.path('/templates-listar');
+                    var index = $scope.templates.indexOf(template);
+                    $scope.templates.splice(index, 1);
+                    $scope.tableParams.reload();
+                    deferred.resolve(res);
+                }, function (error) {
+                    console.log("Error: " + error);
+                    deferred.reject(error);
+                });
+                return deferred.promise;
+            };
+        }])
 
-        };
-
-    }])
-    /*
-     .controller('CtrlActProd', ['$scope', 'ServicioTemplate', function($scope, ServicioTemplate) {
-     ServicioTemplate.actualizarTemplate($scope.template.id);
-     console.log("En CtrlActProd actualizando template con id: " + $scope.template.id);
-
-     }])
-     */
-    /*
-     .controller('CtrlActTemp', ['$scope', 'ServicioTemplate', '$routeParams', '$location',function($scope, ServicioTemplate, $routeParams, $location) {
-     console.log("En CtrlActTemp con id: " + $routeParams.id);
-     // callback for ng-click 'updateUser':
-     $scope.actualizarTemplate = function (templates) {
-     console.log("En CtrlActProd actualizando template con id: " + $scope.templates + $scope.templates.nombre + $scope.templates.descripcion);
-     $scope.templates.categorias = [];
-     ServicioTemplate.actualizarTemplate($scope.templates);
-     $location.path('/templates-listar');
-     };
-     // ng-click 'cancel':
-     $scope.cancel = function () {
-     $location.path('/templates-listar');
-     };
-
-
-     ServicioTemplate.getTemplate({id: $routeParams.id}).then(function(templates) {
-     $scope.templates = templates;
-
-     });
-     }])*/
     .controller('CtrlActTemp', ['$scope','$q', 'ServicioTemplate', '$routeParams', '$location', '$filter', 'ngTableParams', 'ServicioCategoria',
         function ($scope, $q, ServicioTemplate, $routeParams, $location, $filter, ngTableParams, ServicioCategoria) {
             // ng-click 'crear nuevo usuario':
@@ -97,11 +78,11 @@ angular.module('sApobackOfficeFrontendApp')
                     {
                         $scope.categorias = results;
                         /*$q.all($scope.categorias).then(function(data){
-                            angular.forEach($scope.template.categorias, function(item, key) {
-                                console.log("seleccionado "+ item.id + item);
-                                $scope.checkboxes.items[item.id] = item; // push checked items to array
-                            });
-                        });*/
+                         angular.forEach($scope.template.categorias, function(item, key) {
+                         console.log("seleccionado "+ item.id + item);
+                         $scope.checkboxes.items[item.id] = item; // push checked items to array
+                         });
+                         });*/
 
                         $scope.tableParams = new ngTableParams(
                             {
@@ -115,9 +96,9 @@ angular.module('sApobackOfficeFrontendApp')
                     });
                 });
 
-                    //.then(function() {
+                //.then(function() {
 
-               // });
+                // });
             });
 
             $scope.checkboxes = { 'checked': false, items: {} };

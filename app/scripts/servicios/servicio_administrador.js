@@ -40,9 +40,9 @@ angular.module('sApobackOfficeFrontendApp')
             return deferred.promise;
         };
 
-        this.actualizar= function(administradores) {
+        this.actualizar= function(administradores,pass) {
             var deferred = $q.defer();
-            Administrador.actualizar({}, administradores , function (administradores) {
+            Administrador.actualizar({password: pass}, administradores , function (administradores) {
                 console.log("En Servicios actualizando administrador con id: " + administradores.id+ administradores.nombre + administradores.descripcion);
                 deferred.resolve(administradores);
             }, function (error) {

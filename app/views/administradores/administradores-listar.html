@@ -1,7 +1,7 @@
 <!--<ng-include src="'encabezado.html'" ng-init="name = ['productos','listar']"></ng-include>-->
 <section class="content">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md col-sm col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Administradores del Sistema</h3>
@@ -13,16 +13,16 @@
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <div class="table-responsive">
-                        <table ng-table="tableParams" class="table no-margin">
+                        <table ng-table="tableParams" class="table no-margin table-bordered table-striped" show-filter="true">
                             <tr ng-repeat="administrador in $data">
-                                <td data-title="'Nombre'">
+                                <td data-title="'Nombre'" filter="{ name: 'text'}" sortable="'name'">
                                     <span >{{administrador.name}}</span>
                                 </td>
-                                <td data-title="'Apellido'">
+                                <td data-title="'Apellido'" filter="{ surname: 'text'}" sortable="'surname'">
                                     <span >{{administrador.surname}}</span>
                                 </td>
 
-                                <td data-title="'Nombre de Usuario'" >
+                                <td data-title="'Nombre de Usuario'" filter="{ username: 'text'}" sortable="'username'">
                                     <span >{{administrador.username}}</span>
                                 </td>
                                 <td data-title="'Acciones'">

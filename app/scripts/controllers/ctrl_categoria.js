@@ -6,7 +6,7 @@ angular.module('sApobackOfficeFrontendApp')
 .controller('catCtrl', ['categorias',  function (almacenes) {
 
     this.init = function() {
-        this.phones = almacenes;
+        this.categorias = almacenes;
     };
 
     this.init();
@@ -14,65 +14,67 @@ angular.module('sApobackOfficeFrontendApp')
 
 .controller('CtrlListarCategoria', ['$scope', 'ServicioCategoria', '$routeParams', '$location',function($scope, ServicioCategoria, $routeParams, $location) {
     console.log("En CtrlListarCategorias");
-    ServicioCategoria.getCategoria({id: $routeParams.id}).then(function(categoria) {
-        $scope.phone = categoria;
-
+    ServicioCategoria.getCategoria($routeParams.id).then(function(categoria) {
+        $scope.categoria = categoria;
     });
 
 }])
 
-.controller('CtrlListarCategorias', ['$scope', 'ServicioCategoria', '$routeParams', '$location',function($scope, ServicioCategoria, $routeParams, $location) {
+.controller('CtrlListarCategorias', ['$scope', '$q', 'ServicioCategoria', '$routeParams', '$location','$filter', 'NgTableParams',function($scope, $q, ServicioCategoria, $routeParams, $location,$filter, NgTableParams) {
         console.log("En CtrlListarCategorias");
-        $scope.actualizarCategoria = function (userId) {
-            console.log("Redireccionando a CtrlActCat para actualizar categoria con id: " + userId);
-            $location.path('/categorias-actualizar/' + userId);
+        $scope.actualizarCategoria = function (id) {
+            console.log("Redireccionando a CtrlActCat para actualizar categoria con id: " + id);
+            $location.path('/categorias-actualizar/' + id);
+        };
 
-            ServicioCategoria.getCategorias().then(function(categorias) {
-                $scope.phones = categorias;
+        ServicioCategoria.getCategorias().then(function(categorias) 
+        {
+            $scope.categorias = categorias;
+            $scope.tableParams = new NgTableParams(
+                {
+                    page: 1,          // primera página a mostrar
+                    count: 5          // registros por página
+                },
+                {
+                    data: $scope.categorias
+                }
+            );
+        });
+
+        $scope.eliminar = function (categoria) {
+            console.log("Borrando categoria con id: " + categoria.id);
+            var deferred = $q.defer();
+            ServicioCategoria.eliminarCategoria(categoria.id).then(function(res) {
+                var index = $scope.categorias.indexOf(categoria);
+                $scope.categorias.splice(index, 1);
+                $scope.tableParams.reload();
+                $location.path('/categorias-listar');
+                deferred.resolve(res);
+            }, function (error) {
+                console.log("Error: " + error);
+                deferred.reject(error);
             });
-        };
-        ServicioCategoria.getCategorias().then(function(categorias) {
-        $scope.phones = categorias;
-         });
-        $scope.crearCategoria = function () {
-            console.log("Redireccionando a CtrlActCat para crear categoria");
-            $location.path('/user-creation');
-        };
-
-        $scope.eliminarCategoria = function (userId) {
-            console.log("Borrando categoria con id: " + userId);
-            ServicioCategoria.eliminarCategoria(userId);
-            $location.path('/');
-            /*ServicioCategoria.getCategorias().then(function(categorias) {
-                $scope.phones = categorias;
-            });*/
-
+            return deferred.promise;
         };
 
 }])
-/*
-.controller('CtrlActCat', ['$scope', 'ServicioCategoria', function($scope, ServicioCategoria) {
-    ServicioCategoria.actualizarCategoria($scope.categoria.id);
-    console.log("En CtrlActCat actualizando categoria con id: " + $scope.categoria.id);
 
-}])
-*/
 .controller('CtrlActCat', ['$scope', 'ServicioCategoria', '$routeParams', '$location',function($scope, ServicioCategoria, $routeParams, $location) {
         console.log("En CtrlActCat con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
         $scope.actualizarCategoria = function (categorias) {
-           console.log("En CtrlActCat actualizando categoria con id: " + $scope.categorias.id + $scope.categorias.nombre + $scope.categorias.descripcion);
-           ServicioCategoria.actualizarCategoria($scope.categorias);
+           console.log("En CtrlActCat actualizando categoria con id: " + $scope.categoria.id + $scope.categoria.nombre + $scope.categoria.descripcion);
+           ServicioCategoria.actualizarCategoria($scope.categoria);
            $location.path('/categorias-listar');
         };
         // ng-click 'cancel':
-        $scope.cancel = function () {
+        $scope.cancelar = function () {
             $location.path('/categorias-listar');
         };
 
 
-        ServicioCategoria.getCategoria({id: $routeParams.id}).then(function(categorias) {
-            $scope.categorias = categorias;
+        ServicioCategoria.getCategoria($routeParams.id).then(function(categoria) {
+            $scope.categoria = categoria;
 
         });
     }])
@@ -80,14 +82,10 @@ angular.module('sApobackOfficeFrontendApp')
     .controller('CtrlCrearCat', ['$scope', 'ServicioProducto', '$routeParams', '$location', '$filter', 'ngTableParams', 'ServicioCategoria',
         function ($scope, ServicioProducto, $routeParams, $location, $filter, ngTableParams, ServicioCategoria) {
             // ng-click 'crear nuevo usuario':
-
+/*
             var productos = [];
             ServicioProducto.getProductos().then(function(results)
             {
-                productos = results;
-                /* angular.forEach(results, function(producto) {
-                 productos = results;
-                 });*/
                 $scope.tableParams = new ngTableParams(
                     {
                         page: 1,          // primera página a mostrar
@@ -96,8 +94,7 @@ angular.module('sApobackOfficeFrontendApp')
                     {
                         total: results.length, // resultados en total
                         getData: function($defer, params)
-                        {
-                            $defer.resolve(results.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                        {                            $defer.resolve(results.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         }
                     }
                 );
@@ -131,19 +128,14 @@ angular.module('sApobackOfficeFrontendApp')
                 // grayed checkbox
                 angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
             }, true);
-            /*
-             $scope.seleccionar = function () {
-             $scope.seleccionados = $filter('filter')($scope.productos, {checked: true});
-             console.log("seleccionado "+ $scope.seleccionados);
-             }*/
+
+            */
             $scope.continuar = function()
             {
-                //$scope.categorias.id = 101;
-                console.log("En CtrlCrearProd creando categoria con id: " + $scope.categoria.nombre + $scope.categoria.descripcion);
-                $scope.categoria.productos=[];
-                $scope.categoria.id = null;
-
+                console.log("En CtrlCrearCat creando categoria con id: " + $scope.categoria.nombre + $scope.categoria.descripcion);
+               // $scope.categoria.productos=[];
                 $scope.categoria.isgenerico = true;
+                /*
                 // loop through all checkboxes
                 angular.forEach(productos, function(item, key) {
                     console.log("Verificar productos seleccionadas");
@@ -151,7 +143,7 @@ angular.module('sApobackOfficeFrontendApp')
                         console.log("seleccionado "+ item.id + item);
                         $scope.categoria.productos.push(item); // push checked items to array
                     }
-                });
+                });*/
                 ServicioCategoria.crearCategoria($scope.categoria);
                 $location.path('/categorias-listar');
 
