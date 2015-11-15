@@ -2,7 +2,7 @@
  * Created by emi on 08/10/15.
  */
 angular.module('sApobackOfficeFrontendApp')
-    .service('ServicioReporte', ['$q', 'Reporte', function ($q, Reporte) {
+    .service('ServicioReporte', ['$q', 'Reporte', 'ReporteNodeJS', function ($q, Reporte,ReporteNodeJS) {
 
         this.init = function () {};
         console.log("En ServicioReporte");
@@ -69,7 +69,7 @@ angular.module('sApobackOfficeFrontendApp')
         this.obtenerRecomProductos = function() {
             console.log("Obtener obtenerRecomProductos(get)");
             var deferred = $q.defer();
-            Reporte.obtenerRecomProductos({}, {}, function (reportes) {
+            ReporteNodeJS.obtenerRecomProductos({}, {}, function (reportes) {
                 console.log(reportes);
                 deferred.resolve(reportes);
             }, function (error) {
@@ -82,6 +82,30 @@ angular.module('sApobackOfficeFrontendApp')
             console.log("Obtener movimientos(get)");
             var deferred = $q.defer();
             Reporte.movimientos({}, {}, function (reportes) {
+                console.log(reportes);
+                deferred.resolve(reportes);
+            }, function (error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        };
+
+        this.obtenerRecomProductos = function() {
+            console.log("Obtener obtenerRecomProductos(get)");
+            var deferred = $q.defer();
+            ReporteNodeJS.obtenerRecomProductos({}, {}, function (reportes) {
+                console.log(reportes);
+                deferred.resolve(reportes);
+            }, function (error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        };
+
+        this.obtenerReporteMovimientos = function(dias) {
+            console.log("Obtener obtenerRecomProductos(get)");
+            var deferred = $q.defer();
+            Reporte.obtenerReporteMovimientos({}, {dias: dias}, function (reportes) {
                 console.log(reportes);
                 deferred.resolve(reportes);
             }, function (error) {

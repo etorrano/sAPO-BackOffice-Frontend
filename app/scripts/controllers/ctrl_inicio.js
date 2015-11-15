@@ -100,25 +100,37 @@ angular.module('sApobackOfficeFrontendApp')
           $scope.productoMasUtilizado = reportes.productos[0];
         });
         ServicioReporte.obtenerRecomProductos().then(function(reportes) {
-            var idProductos = reportes.productos;
+            $scope.productos = reportes.productos;
+            /*var idProductos = reportes.productos;
             angular.forEach(idProductos, function(item, clave) {
                 ServicioProducto.getProducto({id: item}).then(function(producto) {
                     $scope.productos.push(producto);
                 });
-            });
+            });*/
             $scope.tableParamsRecomendados = new NgTableParams(
                     {
                         page: 1,          // primera página a mostrar
                         count: 5          // registros por página
                     },
                     {
-                        total: $scope.productos
+                        data: $scope.productos
                     }
             );
         });
         $scope.promover = function (producto) {
             console.log("Promoviendo prod con id: " + producto.id);
             producto.isgenerico = true;
+            var deferred = $q.defer();
+            ServicioNotificacion.notificar(notificacionusuario).then(function(notificaciones) {
+                var index = $scope.notificaciones.indexOf(notif);
+                $scope.notificaciones.splice(index, 1);
+                $scope.tableParams.reload();
+                deferred.resolve(notificaciones);
+            }, function (error) {
+                console.log("Error: " + error);
+                deferred.reject(error);
+            });
+            return deferred.promise;
             ServicioProducto.actualizarProducto(producto);
             var index = $scope.productos.indexOf(producto);
             $scope.productos.splice(index, 1);

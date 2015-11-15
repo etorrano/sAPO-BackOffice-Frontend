@@ -24,18 +24,14 @@
                             </div><!-- /.box-header -->
                             <table ng-table="tableParams" class="table">
                                 <tr ng-repeat="categoria in $data">
-                                    <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'" sortable="'seleccionado'">
-                                        <input class="input-group-addon" type="checkbox" ng-model="checkboxes.items[categoria.id]" />
+                                    <td header="'ng-table/headers/checkbox.html'" width="30" style="text-align: left">
+                                        <input type="checkbox" ng-model="checkboxes.checked" />
                                     </td>
                                     <td data-title="'Nombre'" header-class="text-left" class="text-left">
                                         <span >{{categoria.nombre}}</span>
                                     </td>
                                     <td data-title="'Descripción'" header-class="text-left" width="200">
                                         <span >{{categoria.descripcion}}</span>
-                                    </td>
-
-                                    <td data-title="'Genérico'" header-class="text-left">
-                                        <span >{{categoria.isgenerico}}</span>
                                     </td>
                                 </tr>
                             </table>

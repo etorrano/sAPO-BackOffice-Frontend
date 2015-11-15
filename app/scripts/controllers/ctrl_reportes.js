@@ -65,114 +65,102 @@ angular.module('sApobackOfficeFrontendApp')
 
     }])
 
-    .controller('CtrlReportesFraude', ['$scope', 'highchartsNG', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, highchartsNG, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
+    .controller('CtrlReportesFraude', ['$scope','$q', 'highchartsNG', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, $q, highchartsNG, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
         console.log("En CtrlListarReportes");
-
-        ServicioReporte.obtenerRegistrados().then(function(registrados) {
-            $scope.usuarios = registrados;
-            $scope.tableParams = new NgTableParams(
+        var dias = 30;
+        var cantAlmacenes = 5;
+        var indiceDias = [];
+        console.log("IndicesCantAlmacenes");
+        for (var i=0; i<cantAlmacenes; i++) {
+            indiceDias.push(i);
+        }
+        ServicioReporte.obtenerReporteMovimientos(dias).then(function(reportes) {
+            console.log("Filtro reportes a cant: " + cantAlmacenes);
+            $scope.reportes = $filter('limitTo')(reportes.lista, cantAlmacenes, 0);
+            $scope.anomalias = [];
+            console.log("Obtengo anomalías");
+            angular.forEach($scope.reportes, function(item, clave) {
+                var IRC = item.q3 - item.q1;
+                limiteSuperior = item.q3+IRC*1.5;
+                limiteInferior = item.q1-IRC*1.5;
+                if(item.high>limiteSuperior)
                 {
-                    page: 1,          // primera página a mostrar
-                    count: 10          // registros por página
-                },
-                {
-                    data: $scope.usuarios
+                    $scope.anomalias.push([clave,item.high]);
+                    item.high = limiteSuperior;
                 }
-            );
-        });
-        highchartsNG.ready(function(){
-            // init chart config, see lazyload example
-            //This is not a highcharts object. It just looks a little like one!
-            $scope.chartConfigAreaSpline = {
-                options: {
-                    chart: {
-                        type: 'areaspline'
-                    }
-                },
-                series: [{
-                    data: [10, 15, 12, 8, 7]
-                }],
-                title: {
-                    text: 'Hello'
-                },
-
-                loading: false
-            };
-            $scope.chartConfigBoxPlot = {
-                options: {
-                    chart: {
-                        type: 'boxplot'
-                    }
-                },
-                title: {
-                    text: 'Highcharts Box Plot Example'
-                },
-
-                legend: {
-                    enabled: false
-                },
-
-                xAxis: {
-                    categories: ['1', '2', '3', '4', '5'],
-                    title: {
-                        text: 'Experiment No.'
-                    }
-                },
-
-                yAxis: {
-                    title: {
-                        text: 'Observations'
-                    },
-                    plotLines: [{
-                        value: 932,
-                        color: 'red',
-                        width: 1,
-                        label: {
-                            text: 'Theoretical mean: 932',
-                            align: 'center',
-                            style: {
-                                color: 'gray'
+                if(item.low<limiteInferior)
+                {
+                    $scope.anomalias.push([clave,item.low]);
+                    item.low = limiteInferior;
+                }
+            });
+            $q.all($scope.reportes).then(function(){
+                console.log("Creo boxplot");
+                highchartsNG.ready(function(){
+                    $scope.chartConfigBoxPlot = {
+                        options: {
+                            chart: {
+                                type: 'boxplot'
                             }
-                        }
-                    }]
-                },
+                        },
+                        title: {
+                            text: 'Análisis de anomalías'
+                        },
 
-                series: [{
-                    type: 'boxplot',
-                    name: 'Observations',
-                    data: [
-                        [760, 801, 848, 895, 965],
-                        [733, 853, 939, 980, 1080],
-                        [714, 762, 817, 870, 918],
-                        [724, 802, 806, 871, 950],
-                        [834, 836, 864, 882, 910]
-                    ]
-                    ,
-                    tooltip: {
-                        headerFormat: '<em>Experiment No {point.key}</em><br/>'
-                    }
-                }, {
-                    name: 'Anomalías',
-                    color: Highcharts.getOptions().colors[0],
-                    type: 'scatter',
-                    data: [ // x, y positions where 0 is the first category
-                        [0, 644],
-                        [4, 718],
-                        [4, 951],
-                        [4, 969]
-                    ],
-                    marker: {
-                        fillColor: 'white',
-                        lineWidth: 1,
-                        lineColor: Highcharts.getOptions().colors[0]
-                    },
-                    tooltip: {
-                        pointFormat: 'Observation: {point.y}'
-                    }
-                }]
-            }
-        },this);
+                        legend: {
+                            enabled: false
+                        },
 
+                        xAxis: {
+                            categories: indiceDias,
+                            title: {
+                                text: 'Dia '
+                            }
+                        },
+
+                        yAxis: {
+                            title: {
+                                text: 'Movimientos'
+                            },
+                            plotLines: [{
+                                value: reportes.mean,
+                                color: 'red',
+                                width: 1,
+                                label: {
+                                    text: 'Media de los movimientos: ' + reportes.mean,
+                                    align: 'center',
+                                    style: {
+                                        color: 'gray'
+                                    }
+                                }
+                            }]
+                        },
+
+                        series: [{
+                            type: 'boxplot',
+                            name: 'Observations',
+                            data: $scope.reportes,
+                            tooltip: {
+                                headerFormat: '<em>Experiment No </em><br/>'
+                            }
+                        }, {
+                            name: 'Anomalías',
+                            color: Highcharts.getOptions().colors[0],
+                            type: 'scatter',
+                            data: $scope.anomalias,
+                            marker: {
+                                fillColor: 'white',
+                                lineWidth: 1,
+                                lineColor: Highcharts.getOptions().colors[0]
+                            },
+                            tooltip: {
+                                pointFormat: 'Observation: {point.y}'
+                            }
+                        }]
+                    }
+                },this);
+            });
+        });
     }])
 
 

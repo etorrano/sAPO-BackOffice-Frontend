@@ -6,11 +6,11 @@ angular.module('sApobackOfficeFrontendApp')
 
         this.init = function () {};
         console.log("En ServicioCategoria");
-        this.getCategoria = function(prod) {
+        this.getCategoria = function(id) {
             var deferred = $q.defer();
-            console.log("Get categoria con id:" + prod.id);
-            Categoria.getCategoria({ id: prod.id }, {}, function (prod) {
-                deferred.resolve(prod);
+            console.log("Get categoria con id:" + id);
+            Categoria.getCategoria({ id: id }, {}, function (categoria) {
+                deferred.resolve(categoria);
             }, function (error) {
                 deferred.reject(error);
             });

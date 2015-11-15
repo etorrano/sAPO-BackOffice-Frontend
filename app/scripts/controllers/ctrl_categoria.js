@@ -62,7 +62,7 @@ angular.module('sApobackOfficeFrontendApp')
 .controller('CtrlActCat', ['$scope', 'ServicioCategoria', '$routeParams', '$location',function($scope, ServicioCategoria, $routeParams, $location) {
         console.log("En CtrlActCat con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
-        $scope.actualizarCategoria = function (categorias) {
+        $scope.actualizarCategoria = function () {
            console.log("En CtrlActCat actualizando categoria con id: " + $scope.categoria.id + $scope.categoria.nombre + $scope.categoria.descripcion);
            ServicioCategoria.actualizarCategoria($scope.categoria);
            $location.path('/categorias-listar');
@@ -128,7 +128,6 @@ angular.module('sApobackOfficeFrontendApp')
                 // grayed checkbox
                 angular.element(document.getElementById("select_all")).prop("indeterminate", (checked != 0 && unchecked != 0));
             }, true);
-
             */
             $scope.continuar = function()
             {

@@ -28,19 +28,19 @@
                                 <h4>Seleccionar Categorías</h4>
                             </div><!-- /.box-header -->
                                 <table ng-table="tableParams" class="table no-margin table-bordered table-striped" show-filter="true">
+
                                     <tr ng-repeat="categoria in $data">
-                                        <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
+<!--                                        <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
                                             <input class="input-group-addon" type="checkbox" ng-model="checkboxes.items[categoria.id]" />
+                                        </td>-->
+                                        <td header="'ng-table/headers/checkbox.html'" width="30" style="text-align: left">
+                                            <input type="checkbox" ng-model="checkboxes.checked" />
                                         </td>
-                                        <td data-title="'Nombre'" header-class="text-left" class="text-left">
+                                        <td data-title="'Nombre'" header-class="text-left" class="text-left" filter="{ nombre: 'text'}" sortable="'nombre'">
                                             <span >{{categoria.nombre}}</span>
                                         </td>
-                                        <td data-title="'Descripción'" header-class="text-left" width="200">
+                                        <td data-title="'Descripción'" header-class="text-left" width="200" filter="{ descripcion: 'text'}" sortable="'descripcion'">
                                             <span >{{categoria.descripcion}}</span>
-                                        </td>
-
-                                        <td data-title="'Genérico'" header-class="text-left">
-                                            <span >{{categoria.isgenerico}}</span>
                                         </td>
                                     </tr>
                                 </table>
@@ -50,12 +50,8 @@
                             </div>
                     </form>
                 </div><!-- /.box -->
-
-
             </div>
-
         </div>
     </div>
     <!-- Your Page Content Here -->
-
 </section><!-- /.content -->
