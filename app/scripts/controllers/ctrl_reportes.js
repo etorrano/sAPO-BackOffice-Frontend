@@ -69,27 +69,34 @@ angular.module('sApobackOfficeFrontendApp')
         console.log("En CtrlListarReportes");
         var dias = 30;
         var cantAlmacenes = 5;
-        var indiceDias = [];
-        console.log("IndicesCantAlmacenes");
+        var indiceDias = ['farmacia'];
+        /*console.log("IndicesCantAlmacenes");
         for (var i=0; i<cantAlmacenes; i++) {
-            indiceDias.push(i);
-        }
+            indiceDias.push('farmacia');
+        }*/
         ServicioReporte.obtenerReporteMovimientos(dias).then(function(reportes) {
             console.log("Filtro reportes a cant: " + cantAlmacenes);
-            $scope.reportes = $filter('limitTo')(reportes.lista, cantAlmacenes, 0);
+            //$scope.reportes = $filter('limitTo')(reportes.lista, cantAlmacenes, 0);
+            $scope.reportes =             [
+                { x: 0, low: 718, q1: 836, median: 864, q3: 882, high: 952}
+                ];
             $scope.anomalias = [];
             console.log("Obtengo anomalías");
             angular.forEach($scope.reportes, function(item, clave) {
                 var IRC = item.q3 - item.q1;
+                console.log("IRC "+ IRC);
                 limiteSuperior = item.q3+IRC*1.5;
                 limiteInferior = item.q1-IRC*1.5;
+                console.log("limsup, liminf: "+ limiteSuperior,limiteInferior);
                 if(item.high>limiteSuperior)
                 {
+                    console.log("anomaliasup "+ item.high);
                     $scope.anomalias.push([clave,item.high]);
                     item.high = limiteSuperior;
                 }
                 if(item.low<limiteInferior)
                 {
+                    console.log("anomaliainf "+ item.low);
                     $scope.anomalias.push([clave,item.low]);
                     item.low = limiteInferior;
                 }
