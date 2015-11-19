@@ -176,13 +176,15 @@ angular.module('sApobackOfficeFrontendApp')
 
     .controller('CtrlReportesGanancias', ['$scope','$q', 'highchartsNG', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, $q, highchartsNG, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
         console.log("En CtrlListarReportes");
-
+      //$scope.anios = [2010,2011,2012,2013,2014,2015];
+        $scope.anios = [2010,2011,2012,2013,2014,2015];
+        $scope.datos = [1, 4, 10];
         var promedios = 0;
         var sumaDatos = 0;
-        $scope.proyeccion = 5;
+        //$scope.proyeccion = 5;
         $scope.crecimiento = [];
         $scope.cantProyecciones = 1;
-        ServicioReporte.obtenerRegistrados().then(function(registrados) {
+      /*  ServicioReporte.obtenerRegistrados().then(function(registrados) {
             $scope.usuarios = registrados;
             $scope.tableParams = new NgTableParams(
                 {
@@ -193,8 +195,7 @@ angular.module('sApobackOfficeFrontendApp')
                     data: $scope.usuarios
                 }
             );
-        });
-        $scope.datos = [1, 4, 10];
+        });*/
         angular.forEach($scope.datos, function(item, clave) {
             if (clave < $scope.datos.length-1) {
                 console.log("clave, tamanio  " +clave +$scope.datos.length );
@@ -221,6 +222,7 @@ angular.module('sApobackOfficeFrontendApp')
                     }
                 },
                 series: [{
+                    name: 'Ganancia por año',
                     data: $scope.datos
                 }],/*
                 title: {
@@ -228,6 +230,20 @@ angular.module('sApobackOfficeFrontendApp')
                 },*/
                 title: {
                     text: 'Ganancias anuales'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Ganancias'
+                    }
+                },
+                xAxis: {
+                    title: {
+                        text: 'Años'
+                    },
+                    categories: $scope.anios
+                  //  type: 'datetime'
+                /*  min: 2000,
+                  max: 2010*/
                 },
                 loading: false
             };
@@ -251,16 +267,32 @@ angular.module('sApobackOfficeFrontendApp')
                     }
                 },
                 series: [{
+                    name: 'Crecimiento por año',
                     data: $scope.crecimiento
                 }],
                 title: {
                     text: 'Crecimiento anual'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Crecimiento'
+                    }
+                },
+                xAxis: {
+                    title: {
+                        text: 'Años'
+                    },
+                    categories: $scope.anios
+                  //  type: 'datetime'
+                /*  min: 2000,
+                  max: 2010*/
                 },
 
                 loading: false
             };
         },this);
         var proyeccion = 0;
+        var alternado = 0;
         $scope.proyectar = function () {
             var valor =  $scope.proyeccion;
             var crecimiento = 0;
@@ -269,30 +301,34 @@ angular.module('sApobackOfficeFrontendApp')
             // var arreglo = $scope.datos;//$scope.chartConfigAreaSplineHistorico.series.data;
             console.log("proyeccion " + valor);
             var ultimo = $scope.datos[$scope.datos.length-1];
-            var tam =$scope.datos.length;
+            var tam =$scope.datos.length+1;
             //$scope.datos.push($scope.proyeccion);
             $scope.datos.push(valor);
             sumaDatos+=valor;
+            promedios += valor/ultimo;
+            $scope.crecimiento.push(crecimiento);
             console.log("valor " + valor);
             for (var i = 1; i < $scope.cantProyecciones; i++) {
                 if(proyeccion == 0)
                 {
-                    proyectado = sumaDatos/(tam+1);
+                    proyectado = sumaDatos/(tam);
                     crecimiento = proyectado/ultimo;
-                    promedios += crecimiento;
                     console.log("proyeccion, sumadatos, tamanio " + valor + sumaDatos + tam);
-                    proyeccion = 1;
-                    $scope.datos.push(proyectado);
+                    if (alternado==1) proyeccion = 1;
                 }
                 else
                 {
                     console.log("promedios,tam-1 " + promedios + tam);
                     crecimiento = promedios/(tam-1);
                     proyectado = crecimiento*ultimo;
-                    $scope.datos.push(proyectado);
-                    proyeccion = 0;
+                    if (alternado==1) proyeccion = 0;
                 }
+                sumaDatos+=proyectado;
+                promedios += crecimiento;
+                $scope.datos.push(proyectado);
                 $scope.crecimiento.push(crecimiento);
+                sumaDatos-= $scope.datos[i-1];
+                promedios -= $scope.datos[i]/$scope.datos[i-1];
                 console.log("crecimiento " + crecimiento);
                 console.log("proyectado " + proyectado);
                 console.log("ultimo " + ultimo + "promedios " + promedios + "proyectado " + proyectado + "ultimo elem de arreglo " + $scope.datos[$scope.datos.length-1]);
@@ -307,7 +343,7 @@ angular.module('sApobackOfficeFrontendApp')
                 //angular.copy(proyectado, valor);//origen,destino
                // console.log("ultimo " + ultimo + "valor " + valor);
                 //  angular.extend(valor,proyectado);
-                tam+=1;
+              //  tam+=1;
             } /*var seriesArray = $scope.chartConfigAreaSplineProyeccion.series;
              var rndIdx = Math.floor(Math.random() * seriesArray.length);
              seriesArray[rndIdx].data = seriesArray[rndIdx].data.concat([1, 10, 20]);*/
