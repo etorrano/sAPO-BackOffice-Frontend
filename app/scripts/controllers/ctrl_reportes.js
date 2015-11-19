@@ -69,7 +69,7 @@ angular.module('sApobackOfficeFrontendApp')
         console.log("En CtrlListarReportes");
         var dias = 30;
         var cantAlmacenes = 5;
-        var indiceDias = ['farmacia'];
+        var indiceDias = [];
         /*console.log("IndicesCantAlmacenes");
         for (var i=0; i<cantAlmacenes; i++) {
             indiceDias.push('farmacia');
@@ -78,8 +78,8 @@ angular.module('sApobackOfficeFrontendApp')
             console.log("Filtro reportes a cant: " + cantAlmacenes);
             //$scope.reportes = $filter('limitTo')(reportes.lista, cantAlmacenes, 0);
             $scope.reportes =             [
-                { x: 0, low: 718, q1: 836, median: 864, q3: 882, high: 952}
-                ];
+                { x: 'farmacia', low: 718, q1: 836, median: 864, q3: 882, high: 952}
+              ];
             $scope.anomalias = [];
             console.log("Obtengo anomalías");
             angular.forEach($scope.reportes, function(item, clave) {
@@ -100,6 +100,9 @@ angular.module('sApobackOfficeFrontendApp')
                     $scope.anomalias.push([clave,item.low]);
                     item.low = limiteInferior;
                 }
+                indiceDias.push(item.x);
+                item.x = indiceDias.indexOf(item.x);
+                console.log("indice x "+ item.x);
             });
             $q.all($scope.reportes).then(function(){
                 console.log("Creo boxplot");
@@ -121,7 +124,7 @@ angular.module('sApobackOfficeFrontendApp')
                         xAxis: {
                             categories: indiceDias,
                             title: {
-                                text: 'Dia '
+                                text: 'Almacen '
                             }
                         },
 
@@ -145,10 +148,10 @@ angular.module('sApobackOfficeFrontendApp')
 
                         series: [{
                             type: 'boxplot',
-                            name: 'Observations',
+                            name: 'Observaciones',
                             data: $scope.reportes,
                             tooltip: {
-                                headerFormat: '<em>Experiment No </em><br/>'
+                                headerFormat: '<em>Almacen: </em><br/>'
                             }
                         }, {
                             name: 'Anomalías',
@@ -161,7 +164,7 @@ angular.module('sApobackOfficeFrontendApp')
                                 lineColor: Highcharts.getOptions().colors[0]
                             },
                             tooltip: {
-                                pointFormat: 'Observation: {point.y}'
+                                pointFormat: 'Observación: {point.y}'
                             }
                         }]
                     }
