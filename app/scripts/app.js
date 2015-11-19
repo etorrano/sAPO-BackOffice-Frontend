@@ -19,7 +19,9 @@ angular
         'ui.tree',
         'ngTable',
         'highcharts-ng',
-        'wt.responsive'
+        'wt.responsive',
+        'ui.select',
+        'ngSanitize'
     ])
     //   .value('fbURL', 'https://angular-ui-tree.firebaseio.com/demo/groups/')
     //   .factory('Groups', ['$http', '$resource', 'REST_API', function($http, $resource, REST_API) {

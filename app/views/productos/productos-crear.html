@@ -19,9 +19,18 @@
                                 <label for="InputDescripcion">Descripcion</label>
                                 <input type="text" class="form-control" id="InputDescripcion" placeholder="Ingresar descripción" ng-model="producto.descripcion">
                             </div>
+                            <td data-title="'Categoría'">
+                            </td>
                             <div class="form-group has-feedback">
-                                <label for="InputCategoria">Categoría</label>
-                                <input type="text" class="form-control" id="InputCategoria" placeholder="Ingresar Categoría" ng-model="producto.categoria">
+                                <label>Categoría</label>
+                                <ui-select ng-model="selectedItem">
+                                    <ui-select-match>
+                                        <span ng-bind="$select.selected.nombre"></span>
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item in (categorias | filter: $select.search) track by item.id">
+                                        <span ng-bind="item.nombre"></span>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div><!-- /.box-body -->
                         <div class="box-footer controls">
