@@ -177,26 +177,18 @@ angular.module('sApobackOfficeFrontendApp')
     .controller('CtrlReportesGanancias', ['$scope','$q', 'highchartsNG', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, $q, highchartsNG, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
         console.log("En CtrlListarReportes");
       //$scope.anios = [2010,2011,2012,2013,2014,2015];
-        $scope.anios = [2010,2011,2012,2013,2014,2015];
+        $scope.fechas = [2010,2011,2012,2013,2014,2015];
         $scope.datos = [1, 4, 10];
         var promedios = 0;
         var sumaDatos = 0;
         //$scope.proyeccion = 5;
         $scope.crecimiento = [];
         $scope.cantProyecciones = 1;
-      /*  ServicioReporte.obtenerRegistrados().then(function(registrados) {
-            $scope.usuarios = registrados;
-            $scope.tableParams = new NgTableParams(
-                {
-                    page: 1,          // primera página a mostrar
-                    count: 10          // registros por página
-                },
-                {
-                    data: $scope.usuarios
-                }
-            );
-        });*/
-        angular.forEach($scope.datos, function(item, clave) {
+        ServicioReporte.obtenerGanancias().then(function(ganancias) {
+            $scope.datos = ganancias.monto;
+            $scope.fechas = ganancias.fechas;
+            $scope.fechasCrec = $scope.fechas.splice(0, 1);
+            angular.forEach($scope.datos, function(item, clave) {
             if (clave < $scope.datos.length-1) {
                 console.log("clave, tamanio  " +clave +$scope.datos.length );
                 console.log("historico  " +item);
@@ -240,7 +232,7 @@ angular.module('sApobackOfficeFrontendApp')
                     title: {
                         text: 'Años'
                     },
-                    categories: $scope.anios
+                    categories: $scope.fechas
                   //  type: 'datetime'
                 /*  min: 2000,
                   max: 2010*/
@@ -280,10 +272,10 @@ angular.module('sApobackOfficeFrontendApp')
                 },
                 xAxis: {
                     title: {
-                        text: 'Años'
+                        text: 'Fecha'
                     },
-                    categories: $scope.anios
-                  //  type: 'datetime'
+                    categories: $scope.fechasCrec,
+                    type: 'datetime'
                 /*  min: 2000,
                   max: 2010*/
                 },
@@ -291,6 +283,8 @@ angular.module('sApobackOfficeFrontendApp')
                 loading: false
             };
         },this);
+        });
+        
         var proyeccion = 0;
         var alternado = 0;
         $scope.proyectar = function () {
