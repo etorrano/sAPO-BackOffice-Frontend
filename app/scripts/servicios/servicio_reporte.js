@@ -54,10 +54,10 @@ angular.module('sApobackOfficeFrontendApp')
             return deferred.promise;
         };
 
-        this.obtenerReportes = function() {
+        this.obtenerReportes = function(parametros) {
             console.log("Obtener obtenerReportes(get)");
             var deferred = $q.defer();
-            Reporte.obtenerReportes({}, {}, function (reportes) {
+            Reporte.obtenerReportes(parametros, {}, function (reportes) {
                 console.log(reportes);
                 deferred.resolve(reportes);
             }, function (error) {
@@ -78,10 +78,10 @@ angular.module('sApobackOfficeFrontendApp')
             return deferred.promise;
         };
 
-        this.obtenerRecomProductos = function(parametros) {
+        this.obtenerRecomProductos = function() {
             console.log("Obtener obtenerRecomProductos(get)");
             var deferred = $q.defer();
-            ReporteNodeJS.obtenerRecomProductos(parametros, {}, function (reportes) {
+            ReporteNodeJS.obtenerRecomProductos({}, {}, function (reportes) {
                 console.log(reportes);
                 deferred.resolve(reportes);
             }, function (error) {
