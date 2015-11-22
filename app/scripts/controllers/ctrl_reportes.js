@@ -347,7 +347,7 @@ angular.module('sApobackOfficeFrontendApp')
     }])
     .controller('CtrlReportesProdgenerico', ['$scope','$q', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, $q, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
     console.log("En CtrlListarReportes");
-        ServicioReporte.obtenerReportes().then(function(reportes) {
+        ServicioReporte.obtenerReportes({}).then(function(reportes) {
             $scope.recomendados = reportes.productos;
             $scope.tableParams = new NgTableParams(
                 {
