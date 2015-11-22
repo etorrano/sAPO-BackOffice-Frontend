@@ -43,4 +43,8 @@ angular.module('sApobackOfficeFrontendApp')
             //Reportes
             obtenerRecomProductos   : { method: 'GET', params: { recurso: 'algoritmos', modulo: 'productos'},  isArray: false }
         })
-    }]);
+    }])
+    .factory('DatosGlobales', function () {
+        var datos = {};
+        return datos;
+    });
