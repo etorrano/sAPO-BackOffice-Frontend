@@ -52,4 +52,17 @@ angular.module('sApobackOfficeFrontendApp')
                 return $q.reject(rejection);
             }
         };
-    }]);
+    }])
+
+.directive('a', function () {
+    return {
+        restrict: 'E',
+        link: function (scope, elem, attrs) {
+            if (attrs.href && attrs.href.indexOf('#') > -1) {
+                elem.on('click', function (e) {
+                    e.preventDefault();
+                });
+            }
+        }
+    };
+})

@@ -64,7 +64,8 @@ angular.module('sApobackOfficeFrontendApp')
         console.log("En CtrlActProd con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
         $scope.actualizarProducto = function () {
-           console.log("En CtrlActProd actualizando producto con id: " + $scope.producto.id + $scope.producto.nombre + $scope.producto.descripcion);
+           console.log("En CtrlActProd actualizando producto con id: " + $scope.producto.i
+            d + $scope.producto.nombre + $scope.producto.descripcion);
            ServicioProducto.actualizarProducto($scope.producto);
            $location.path('/productos-listar');
         };
@@ -82,17 +83,19 @@ angular.module('sApobackOfficeFrontendApp')
 
 .controller('CtrlCrearProd', ['$scope', 'ServicioCategoria', 'ServicioProducto', '$routeParams', '$location',
     function ($scope, ServicioCategoria, ServicioProducto, $routeParams, $location) {
+
+        $scope.categoria= {};
+       // $scope.selectedItem = {};
         ServicioCategoria.getCategorias().then(function(results) {
             $scope.categorias = results;
-            $scope.selectedItem = $scope.categorias[0];
+            $scope.categoria.seleccionada = $scope.categorias[0];
         });
         // ng-click 'crear nuevo usuario':
         $scope.crear = function () {
             $scope.producto.isgenerico = true;
-            $scope.producto.categoria = $scope.selectedItem.id;
-
-            console.log("En CtrlCrearProd creando producto con id: " + $scope.producto.nombre + $scope.producto.descripcion, $scope.selectedItem.nombre);
-            ServicioProducto.crearProducto($scope.producto);
-            $location.path('/productos-listar');
+            $scope.producto.categoria = $scope.categoria.seleccionada.id;
+            console.log("En CtrlCrearProd creando producto con id: " + $scope.producto.nombre + $scope.producto.descripcion, $scope.categoria.seleccionada.nombre);
+           // ServicioProducto.crearProducto($scope.producto);
+            //$location.path('/productos-listar');
         };
     }]);

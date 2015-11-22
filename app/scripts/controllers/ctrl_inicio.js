@@ -130,7 +130,7 @@ angular.module('sApobackOfficeFrontendApp')
             $scope.productoNuevo.nombre = producto.nombre;
             $scope.productoNuevo.categoria = $scope.selectedItem.id;
             var deferred = $q.defer();
-            crearProducto($scope.productoNuevo).then(function(res) {
+            ServicioProducto.crearProducto($scope.productoNuevo).then(function(res) {
                 var index = $scope.productos.indexOf(producto);
                 $scope.productos.splice(index, 1);
                 $scope.tableParamsRecomendados.reload();
