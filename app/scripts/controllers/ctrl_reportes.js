@@ -12,12 +12,12 @@ angular.module('sApobackOfficeFrontendApp')
 
     }])
 
-    .controller('CtrlListarReportesRegistrados', ['$scope', 'ServicioReporte', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioReporte, $routeParams, $location,  $filter, ngTableParams) {
+    .controller('CtrlListarReportesRegistrados', ['$scope', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
         console.log("En CtrlListarReportes");
 
         ServicioReporte.obtenerRegistrados().then(function(registrados) {
             $scope.usuarios = registrados;
-            $scope.tableParams = new ngTableParams(
+            $scope.tableParams = new NgTableParams(
                 {
                     page: 1,          // primera página a mostrar
                     count: 10          // registros por página
@@ -344,4 +344,19 @@ angular.module('sApobackOfficeFrontendApp')
 
         };
 
+    }])
+    .controller('CtrlReportesProdgenerico', ['$scope','$q', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, $q, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
+    console.log("En CtrlListarReportes");
+        ServicioReporte.obtenerReportes().then(function(reportes) {
+            $scope.recomendados = reportes.productos;
+            $scope.tableParams = new NgTableParams(
+                {
+                    page: 1,          // primera página a mostrar
+                    count: 10          // registros por página
+                },
+                {
+                    data: $scope.recomendados
+                }
+            );
+        });
     }]);
