@@ -1,0 +1,40 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-8 col-sm col-xs-12">
+            <div ng-hide="recomendados.length === 0" class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Productos Genéricos más utilizados</h3>
+                    <!--                    <div class="box-tools pull-right">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                        </div>-->
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table ng-table="tableParams" class="table no-margin">
+                            <tr ng-repeat="producto in $data">
+                                <td data-title="'Nombre'">
+                                    <span >{{producto.nombre}}</span>
+                                </td>
+
+                                <td data-title="'Descripción'" >
+                                    <span >{{producto.descripcion}} </span>
+                                </td>
+
+                                <td data-title="'Cantidad de almacenes que lo utilizan'">
+                                    <span >{{producto.cantidad_tiendas}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+            <div class="alert alert-warning alert-dismissible" ng-show="recomendados.length === 0">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-ban"></i>No hay usuarios registrados</h4>
+                No hay ninguna recomendación de productos para mostrar.
+            </div>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</section>
