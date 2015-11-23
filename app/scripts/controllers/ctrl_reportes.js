@@ -12,12 +12,12 @@ angular.module('sApobackOfficeFrontendApp')
 
     }])
 
-    .controller('CtrlListarReportesRegistrados', ['$scope', 'ServicioReporte', '$routeParams', '$location','$filter', 'ngTableParams', function($scope, ServicioReporte, $routeParams, $location,  $filter, ngTableParams) {
+    .controller('CtrlListarReportesRegistrados', ['$scope', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
         console.log("En CtrlListarReportes");
 
         ServicioReporte.obtenerRegistrados().then(function(registrados) {
             $scope.usuarios = registrados;
-            $scope.tableParams = new ngTableParams(
+            $scope.tableParams = new NgTableParams(
                 {
                     page: 1,          // primera página a mostrar
                     count: 10          // registros por página
@@ -67,19 +67,20 @@ angular.module('sApobackOfficeFrontendApp')
 
     .controller('CtrlReportesFraude', ['$scope','$q', 'highchartsNG', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, $q, highchartsNG, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
         console.log("En CtrlListarReportes");
-        var dias = 30;
-        var cantAlmacenes = 5;
+        var dias = 7;
+        var cantAlmacenes = 10;
         var indiceDias = [];
-        /*console.log("IndicesCantAlmacenes");
-        for (var i=0; i<cantAlmacenes; i++) {
+        console.log("IndicesCantAlmacenes");
+       /* for (var i=0; i<cantAlmacenes; i++) {
             indiceDias.push('farmacia');
         }*/
         ServicioReporte.obtenerReporteMovimientos(dias).then(function(reportes) {
             console.log("Filtro reportes a cant: " + cantAlmacenes);
-            //$scope.reportes = $filter('limitTo')(reportes.lista, cantAlmacenes, 0);
-            $scope.reportes =             [
+            $scope.reportes = $filter('limitTo')(reportes.lista, cantAlmacenes, 0);
+            console.log("cantreportes: " + $scope.reportes.length);
+           /* $scope.reportes =             [
                 { x: 'farmacia', low: 718, q1: 836, median: 864, q3: 882, high: 952}
-              ];
+              ];*/
             $scope.anomalias = [];
             console.log("Obtengo anomalías");
             angular.forEach($scope.reportes, function(item, clave) {
@@ -100,9 +101,16 @@ angular.module('sApobackOfficeFrontendApp')
                     $scope.anomalias.push([clave,item.low]);
                     item.low = limiteInferior;
                 }
-                indiceDias.push(item.x);
-                item.x = indiceDias.indexOf(item.x);
-                console.log("indice x "+ item.x);
+                indiceDias.push(item.almacen);
+                item.x = indiceDias.indexOf(item.almacen);
+                /*  console.log("indice x "+ item.x);
+                var almacen;
+                angular.copy(item.almacen,almacen);
+                indiceDias.push(item.almacen);*/
+
+                delete item.almacen;
+                item.almacen = null;
+                console.log("indice x "+ item.almacen + indiceDias.length);
             });
             $q.all($scope.reportes).then(function(){
                 console.log("Creo boxplot");
@@ -134,15 +142,16 @@ angular.module('sApobackOfficeFrontendApp')
                             },
                             plotLines: [{
                                 value: reportes.mean,
-                                color: 'red',
+                                color: 'orange',
                                 width: 1,
                                 label: {
-                                    text: 'Media de los movimientos: ' + reportes.mean,
-                                    align: 'center',
+                                    //text: 'Media de los movimientos: ' + reportes.mean,
+                                    align: 'left',
                                     style: {
                                         color: 'gray'
                                     }
-                                }
+                                },
+                                zIndex: 0
                             }]
                         },
 
@@ -151,22 +160,28 @@ angular.module('sApobackOfficeFrontendApp')
                             name: 'Observaciones',
                             data: $scope.reportes,
                             tooltip: {
-                                headerFormat: '<em>Almacen: </em><br/>'
+                                headerFormat: '<b>{point.series.name}</b><br/><em>Almacen: {point.x}</em><br/>',
+                                pointFormat:  'Mínimo: {point.low}<br/>' +
+                                'Q1: {point.q1}<br/>' +
+                                'Mediana: {point.median}<br/>' +
+                                'Q3: {point.q3}<br/>' +
+                                'Máximo: {point.high}<br/>'
                             }
                         }, {
-                            name: 'Anomalías',
+                            name: 'Anomalía',
                             color: Highcharts.getOptions().colors[0],
                             type: 'scatter',
                             data: $scope.anomalias,
                             marker: {
-                                fillColor: 'white',
+                                fillColor: 'red',
                                 lineWidth: 1,
                                 lineColor: Highcharts.getOptions().colors[0]
                             },
                             tooltip: {
-                                pointFormat: 'Observación: {point.y}'
+                                headerFormat: '<b>{point.series.name}</b><br/><em>Almacen: {point.x}</em><br/>',
+                                pointFormat: 'Cantidad de movimientos: {point.y}'
                             }
-                        }]
+                        },]
                     }
                 },this);
             });
@@ -177,26 +192,19 @@ angular.module('sApobackOfficeFrontendApp')
     .controller('CtrlReportesGanancias', ['$scope','$q', 'highchartsNG', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, $q, highchartsNG, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
         console.log("En CtrlListarReportes");
       //$scope.anios = [2010,2011,2012,2013,2014,2015];
-        $scope.anios = [2010,2011,2012,2013,2014,2015];
-        $scope.datos = [1, 4, 10];
+        //$scope.fechas = [2010,2011,2012,2013,2014,2015];
+        //$scope.datos = [1, 4, 10];
         var promedios = 0;
         var sumaDatos = 0;
         //$scope.proyeccion = 5;
         $scope.crecimiento = [];
         $scope.cantProyecciones = 1;
-      /*  ServicioReporte.obtenerRegistrados().then(function(registrados) {
-            $scope.usuarios = registrados;
-            $scope.tableParams = new NgTableParams(
-                {
-                    page: 1,          // primera página a mostrar
-                    count: 10          // registros por página
-                },
-                {
-                    data: $scope.usuarios
-                }
-            );
-        });*/
-        angular.forEach($scope.datos, function(item, clave) {
+        ServicioReporte.obtenerGanancias().then(function(ganancias) {
+            $scope.datos = ganancias.monto;
+            $scope.fechas = ganancias.fechas;//$filter('orderBy')(ganancias.fechas, "");//$filter('orderBy')(ganancias.fechas, '-date');
+            console.log("fecha0  " +$scope.fechas[0]);
+            $scope.fechasCrec = $scope.fechas.splice(0, 1);
+            angular.forEach($scope.datos, function(item, clave) {
             if (clave < $scope.datos.length-1) {
                 console.log("clave, tamanio  " +clave +$scope.datos.length );
                 console.log("historico  " +item);
@@ -222,14 +230,14 @@ angular.module('sApobackOfficeFrontendApp')
                     }
                 },
                 series: [{
-                    name: 'Ganancia por año',
+                    name: 'Ganancia por días',
                     data: $scope.datos
                 }],/*
                 title: {
                     text: 'Ganancias anuales'
                 },*/
                 title: {
-                    text: 'Ganancias anuales'
+                    text: 'Ganancias por día'
                 },
                 yAxis: {
                     title: {
@@ -238,9 +246,9 @@ angular.module('sApobackOfficeFrontendApp')
                 },
                 xAxis: {
                     title: {
-                        text: 'Años'
+                        text: 'Días'
                     },
-                    categories: $scope.anios
+                    categories: $scope.fechas
                   //  type: 'datetime'
                 /*  min: 2000,
                   max: 2010*/
@@ -267,11 +275,11 @@ angular.module('sApobackOfficeFrontendApp')
                     }
                 },
                 series: [{
-                    name: 'Crecimiento por año',
+                    name: 'Crecimiento por día',
                     data: $scope.crecimiento
                 }],
                 title: {
-                    text: 'Crecimiento anual'
+                    text: 'Crecimiento diario'
                 },
                 yAxis: {
                     title: {
@@ -280,10 +288,11 @@ angular.module('sApobackOfficeFrontendApp')
                 },
                 xAxis: {
                     title: {
-                        text: 'Años'
+                        text: 'Fecha'
                     },
-                    categories: $scope.anios
-                  //  type: 'datetime'
+                    categories: $scope.fechasCrec
+                    /*,
+                    type: 'datetime'*/
                 /*  min: 2000,
                   max: 2010*/
                 },
@@ -291,6 +300,8 @@ angular.module('sApobackOfficeFrontendApp')
                 loading: false
             };
         },this);
+        });
+        
         var proyeccion = 0;
         var alternado = 0;
         $scope.proyectar = function () {
@@ -350,4 +361,19 @@ angular.module('sApobackOfficeFrontendApp')
 
         };
 
+    }])
+    .controller('CtrlReportesProdgenerico', ['$scope','$q', 'ServicioReporte', '$routeParams', '$location','$filter', 'NgTableParams', function($scope, $q, ServicioReporte, $routeParams, $location,  $filter, NgTableParams) {
+    console.log("En CtrlListarReportes");
+        ServicioReporte.obtenerReportes({}).then(function(reportes) {
+            $scope.recomendados = reportes.productos;
+            $scope.tableParams = new NgTableParams(
+                {
+                    page: 1,          // primera página a mostrar
+                    count: 10          // registros por página
+                },
+                {
+                    data: $scope.recomendados
+                }
+            );
+        });
     }]);

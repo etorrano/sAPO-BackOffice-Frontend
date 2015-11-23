@@ -23,7 +23,8 @@ angular.module('sApobackOfficeFrontendApp')
             obtenerReportes    : { method: 'GET', params: { recurso: 'reportes', modulo: 'global'},  isArray: false },
             obtenerTopGenericos    : { method: 'GET', params: { recurso: 'reportes', modulo: 'global'},  isArray: true },
             obtenerRecomProductos   : { method: 'GET', params: { recurso: 'algoritmos', modulo: 'productos'},  isArray: true },
-            obtenerReporteMovimientos: { method: 'GET', params: { recurso: 'reportes', modulo: 'fraude', submodulo: '@dias'},  isArray: false }
+            obtenerReporteMovimientos: { method: 'GET', params: { recurso: 'reportes', modulo: 'fraude', submodulo: '@dias'},  isArray: false },
+            obtenerGanancias : { method: 'GET', params: { recurso: 'reportes', modulo: 'ganancias'},  isArray: false }
         })
     }])//function(account, credentials, successCb, errorCb)
     .factory('ReporteNodeJS', ['$http', '$resource', 'REST_API_NODEJS', function($http, $resource,REST_API_NODEJS) {
@@ -42,4 +43,8 @@ angular.module('sApobackOfficeFrontendApp')
             //Reportes
             obtenerRecomProductos   : { method: 'GET', params: { recurso: 'algoritmos', modulo: 'productos'},  isArray: false }
         })
-    }]);
+    }])
+    .factory('DatosGlobales', function () {
+        var datos = {};
+        return datos;
+    });

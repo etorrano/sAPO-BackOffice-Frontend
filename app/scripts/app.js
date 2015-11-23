@@ -19,7 +19,9 @@ angular
         'ui.tree',
         'ngTable',
         'highcharts-ng',
-        'wt.responsive'
+        'wt.responsive',
+        'ui.select',
+        'ngSanitize'
     ])
     //   .value('fbURL', 'https://angular-ui-tree.firebaseio.com/demo/groups/')
     //   .factory('Groups', ['$http', '$resource', 'REST_API', function($http, $resource, REST_API) {
@@ -309,15 +311,22 @@ angular
                 access: { requiredLogin: true }
             })
             .when('/', {
-                templateUrl : "views/principal.html",
                 controller: 'inicioCtrl',
-                access: { requiredLogin: true }
+                access: { requiredLogin: true },
+                resolve: {
+                  admin:    function(DatosGlobales){
+                return DatosGlobales.admin;
+              }/*
+                admin2: function(ServicioAutenticacionAdmin){
+              return $scope.u = ServicioAutenticacionAdmin.admin;
+            }*/
+            }
             })
             .otherwise({
                 redirectTo: '/'
             });
-    });
-/*
+    })
+
  .run(function($rootScope, $location,$route, ServicioAutenticacionAdmin) {
  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
  console.log("Verificar autorización");
@@ -326,4 +335,4 @@ angular
  $location.path("/admin/login");
  }
  });
- });*/
+ });

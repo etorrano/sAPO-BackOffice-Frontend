@@ -80,13 +80,21 @@ angular.module('sApobackOfficeFrontendApp')
         });
     }])
 
-.controller('CtrlCrearProd', ['$scope', 'ServicioProducto', '$routeParams', '$location',
-    function ($scope, ServicioProducto, $routeParams, $location) {
+.controller('CtrlCrearProd', ['$scope', 'ServicioCategoria', 'ServicioProducto', '$routeParams', '$location',
+    function ($scope, ServicioCategoria, ServicioProducto, $routeParams, $location) {
+
+        $scope.categoria= {};
+       // $scope.selectedItem = {};
+        ServicioCategoria.getCategorias().then(function(results) {
+            $scope.categorias = results;
+            $scope.categoria.seleccionada = $scope.categorias[0];
+        });
         // ng-click 'crear nuevo usuario':
         $scope.crear = function () {
             $scope.producto.isgenerico = true;
-            console.log("En CtrlCrearProd creando producto con id: " + $scope.producto.nombre + $scope.producto.descripcion);
-            ServicioProducto.crearProducto($scope.producto);
-            $location.path('/productos-listar');
+            $scope.producto.categoria = $scope.categoria.seleccionada.id;
+            console.log("En CtrlCrearProd creando producto con id: " + $scope.producto.nombre + $scope.producto.descripcion, $scope.categoria.seleccionada.nombre);
+           // ServicioProducto.crearProducto($scope.producto);
+            //$location.path('/productos-listar');
         };
     }]);

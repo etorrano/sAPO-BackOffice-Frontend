@@ -2,8 +2,8 @@
  * Created by emi on 01/11/15.
  */
 angular.module('sApobackOfficeFrontendApp')
-.controller('UsuarioAdminCtrl', ['$scope', '$location', '$window','Admin', 'ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin','ServicioProducto',
-    function UsuarioAdminCtrl($scope, $location, $window, Admin,ServicioUsuarioAdmin, ServicioAutenticacionAdmin, ServicioProducto) {
+.controller('UsuarioAdminCtrl', ['$scope', 'DatosGlobales', '$location', '$window','Admin', 'ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin','ServicioAdministrador',
+    function UsuarioAdminCtrl($scope,DatosGlobales, $location, $window, Admin,ServicioUsuarioAdmin, ServicioAutenticacionAdmin, ServicioAdministrador) {
         console.log("Controlador UsuarioAdminCtrl");
         //Admin User Controller (login, logout)
         $scope.iniciarSesion = function iniciarSesion(usuario, contrasenia) {
@@ -15,12 +15,14 @@ angular.module('sApobackOfficeFrontendApp')
                 ServicioUsuarioAdmin.iniciarSesion(usuario, contrasenia).success(function(data) {
                     ServicioAutenticacionAdmin.conectado = true;
                     $window.sessionStorage.token = data.token;
-                    ServicioProducto.getProducto('7').then(function(producto) {
-                    //ServicioAdministrador.get('leo').then(function(producto) {
+                    //ServicioProducto.getProducto('7').then(function(producto) {
+                    ServicioAdministrador.get('leo').then(function(producto) {
                         ServicioUsuarioAdmin.set(producto);
                         Admin = producto;
-                      //  $scope.$parent.admnistrador = producto;
-                      console.log("prod: " + producto.nombre);
+                        DatosGlobales.admin = producto;
+                        ServicioAutenticacionAdmin.admin = producto;
+                      //  $scope.$parent.administrador = producto;
+                      console.log("prod: " + DatosGlobales.admin);
                         console.log("Guardando prod: " + Admin.nombre);
                     });
                     //var producto = ServicioProducto.getProducto('7');

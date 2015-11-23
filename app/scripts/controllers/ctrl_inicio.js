@@ -8,13 +8,18 @@
  * Controller of the sApobackOfficeFrontendApp
  */
 angular.module('sApobackOfficeFrontendApp')
-  .controller('inicioCtrl',['$scope', 'ServicioReporte', 'ServicioAdministrador','ServicioNotificacion','ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin', 'Admin', '$routeParams',  '$location' ,'$filter', 'NgTableParams',function($scope, ServicioReporte, ServicioAdministrador,ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, Admin, $routeParams, $location,$filter, NgTableParams) {
-
+  .controller('inicioCtrl',['$scope', '$q', 'ServicioProducto','ServicioCategoria','ServicioReporte','ServicioAdministrador','ServicioNotificacion','ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin', 'Admin', '$routeParams',  '$location' ,'$filter', 'NgTableParams',function($scope,$q, ServicioProducto, ServicioCategoria,ServicioReporte, ServicioAdministrador,ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, Admin, $routeParams, $location,$filter, NgTableParams) {
+$scope.admin = admin;
+$scope.admin2 = admin2;
         var fecha = new Date();
         //fecha.setMonth(fecha.getMonth()+1);
         fecha.setFullYear(fecha.getFullYear()+1);
         // fecha: fecha.getTime()
 
+        ServicioCategoria.getCategorias().then(function(results) {
+            $scope.categorias = results;
+            $scope.selectedItem = $scope.categorias[0];
+        });
             ServicioNotificacion.getLista(fecha.getTime()).then(function(notificaciones) {
                 $scope.notificaciones = notificaciones;
                 $scope.notiftableParams = new NgTableParams(
@@ -92,7 +97,8 @@ angular.module('sApobackOfficeFrontendApp')
             );
 
         });
-        ServicioReporte.obtenerReportes().then(function(reportes) {
+        var parametros = {productos : 1};
+        ServicioReporte.obtenerReportes(parametros).then(function(reportes) {
           $scope.cantPremium = reportes.usuarios_premium;
           $scope.proporcionPremium = (reportes.usuarios_premium*100)/(reportes.usuarios_registrados);
           $scope.cantCatGenericas = reportes.categorias_genericas;
@@ -107,6 +113,7 @@ angular.module('sApobackOfficeFrontendApp')
                     $scope.productos.push(producto);
                 });
             });*/
+            $scope.descripcionOpciones =
             $scope.tableParamsRecomendados = new NgTableParams(
                     {
                         page: 1,          // primera página a mostrar
@@ -117,24 +124,24 @@ angular.module('sApobackOfficeFrontendApp')
                     }
             );
         });
+
         $scope.promover = function (producto) {
             console.log("Promoviendo prod con id: " + producto.id);
-            producto.isgenerico = true;
+            $scope.productoNuevo = {};
+            $scope.productoNuevo.isgenerico = true;
+            $scope.productoNuevo.nombre = producto.nombre;
+            $scope.productoNuevo.categoria = $scope.selectedItem.id;
             var deferred = $q.defer();
-            ServicioNotificacion.notificar(notificacionusuario).then(function(notificaciones) {
-                var index = $scope.notificaciones.indexOf(notif);
-                $scope.notificaciones.splice(index, 1);
-                $scope.tableParams.reload();
-                deferred.resolve(notificaciones);
+            ServicioProducto.crearProducto($scope.productoNuevo).then(function(res) {
+                var index = $scope.productos.indexOf(producto);
+                $scope.productos.splice(index, 1);
+                $scope.tableParamsRecomendados.reload();
+                deferred.resolve(res);
             }, function (error) {
                 console.log("Error: " + error);
                 deferred.reject(error);
             });
             return deferred.promise;
-            ServicioProducto.actualizarProducto(producto);
-            var index = $scope.productos.indexOf(producto);
-            $scope.productos.splice(index, 1);
-            $scope.tableParamsRecomendados.reload();
         };
         /*
     $scope.administrador = Admin;
