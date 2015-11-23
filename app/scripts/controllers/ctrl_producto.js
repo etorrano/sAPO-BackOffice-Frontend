@@ -64,8 +64,7 @@ angular.module('sApobackOfficeFrontendApp')
         console.log("En CtrlActProd con id: " + $routeParams.id);
         // callback for ng-click 'updateUser':
         $scope.actualizarProducto = function () {
-           console.log("En CtrlActProd actualizando producto con id: " + $scope.producto.i
-            d + $scope.producto.nombre + $scope.producto.descripcion);
+           console.log("En CtrlActProd actualizando producto con id: " + $scope.producto.id + $scope.producto.nombre + $scope.producto.descripcion);
            ServicioProducto.actualizarProducto($scope.producto);
            $location.path('/productos-listar');
         };
