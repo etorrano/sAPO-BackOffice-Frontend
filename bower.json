@@ -13,7 +13,8 @@
     "ng-table": "~0.8.3",
     "AdminLTE": "admin-lte#~2.3.2",
     "angular-ui-tree": "~2.10.0",
-    "highcharts-ng": "~0.0.11"
+    "highcharts-ng": "~0.0.11",
+    "angular-responsive-tables": "~0.1.3"
   },
   "devDependencies": {
     "angular-mocks": "^1.3.0"
