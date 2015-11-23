@@ -96,7 +96,8 @@ angular.module('sApobackOfficeFrontendApp')
             );
 
         });
-        ServicioReporte.obtenerReportes().then(function(reportes) {
+        var parametros = {productos : 1};
+        ServicioReporte.obtenerReportes(parametros).then(function(reportes) {
           $scope.cantPremium = reportes.usuarios_premium;
           $scope.proporcionPremium = (reportes.usuarios_premium*100)/(reportes.usuarios_registrados);
           $scope.cantCatGenericas = reportes.categorias_genericas;

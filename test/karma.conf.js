@@ -35,6 +35,8 @@ module.exports = function(config) {
       'bower_components/AdminLTE/dist/js/app.js',
       'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
       'bower_components/highcharts-ng/dist/highcharts-ng.js',
+      'bower_components/angular-responsive-tables/release/angular-responsive-tables.js',
+      'bower_components/ui-select/dist/select.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

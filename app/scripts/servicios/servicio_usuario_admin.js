@@ -34,7 +34,7 @@ angular.module('sApobackOfficeFrontendApp')
         }
     }
 })
-    .service('Admin', function () {
+    .factory('Admin', function () {
         var administrador = {nombre: 'nada'};
         return administrador;
     });
