@@ -86,8 +86,8 @@ angular.module('sApobackOfficeFrontendApp')
             angular.forEach($scope.reportes, function(item, clave) {
                 var IRC = item.q3 - item.q1;
                 console.log("IRC "+ IRC);
-                limiteSuperior = item.q3+IRC*1.5;
-                limiteInferior = item.q1-IRC*1.5;
+                var limiteSuperior = item.q3+IRC*1.5;
+                var limiteInferior = item.q1-IRC*1.5;
                 console.log("limsup, liminf: "+ limiteSuperior,limiteInferior);
                 if(item.high>limiteSuperior)
                 {
@@ -337,13 +337,14 @@ angular.module('sApobackOfficeFrontendApp')
             promedios += valor/ultimo;
             $scope.crecimiento.push(crecimiento);
             console.log("valor " + valor);
+            ultimo = valor;
             for (var i = 1; i < $scope.cantProyecciones; i++) {
                 console.log("proyeccion " + proyeccion);
                 if(proyeccion == 0)
                 {
                     proyectado = sumaDatos/(tam);
                     crecimiento = proyectado/ultimo;
-                    console.log("proyeccion, sumadatos, tamanio " + valor + sumaDatos + tam);
+                    console.log("proyeccion, sumadatos, tamanio " + proyectado + sumaDatos + tam);
                     if (alternado==1) proyeccion = 1;
                 }
                 else
