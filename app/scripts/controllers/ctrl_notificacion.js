@@ -17,7 +17,7 @@ angular.module('sApobackOfficeFrontendApp')
         fecha.setMonth(fecha.getMonth()+5);
         //fecha.setFullYear(fecha.getFullYear()+1);
         // fecha: fecha.getTime()
-        ServicioNotificacion.getLista(fecha: fecha.getTime()).then(function(notificaciones) {
+        ServicioNotificacion.getLista(fecha.getTime()).then(function(notificaciones) {
             $scope.notificaciones = notificaciones;
             $scope.tableParams = new ngTableParams(
                 {
@@ -116,40 +116,3 @@ angular.module('sApobackOfficeFrontendApp')
         };
        // +  $filter('date')($scope.notificacion.expira, "dd/MM/yyyy")
 }]);
-/*
-.controller('CtrlActAdmin', ['$scope', 'ServicioNotificacion', function($scope, ServicioNotificacion) {
-    ServicioNotificacion.actualizar($scope.notificacion.id);
-    console.log("En CtrlActAdmin actualizando notificacion con id: " + $scope.notificacion.id);
-
-}])
-
-.controller('CtrlActAdmin', ['$scope', 'ServicioNotificacion', '$routeParams', '$location',function($scope, ServicioNotificacion, $routeParams, $location) {
-        console.log("En CtrlActAdmin con id: " + $routeParams.id);
-        // callback for ng-click 'updateUser':
-        $scope.actualizar = function (notificaciones) {
-           console.log("En CtrlActAdmin actualizando notificacion con id: " + $scope.notificaciones.id + $scope.notificaciones.nombre + $scope.notificaciones.descripcion);
-           ServicioNotificacion.actualizar($scope.notificaciones);
-           $location.path('/notificaciones-cuentas-listar');
-        };
-        // ng-click 'cancel':
-        $scope.cancel = function () {
-            $location.path('/notificaciones-cuentas-listar');
-        };
-
-
-        ServicioNotificacion.get({id: $routeParams.id}).then(function(notificaciones) {
-            $scope.notificaciones = notificaciones;
-
-        });
-    }])
-
-.controller('CtrlCrearAdmin', ['$scope', 'ServicioNotificacion', '$routeParams', '$location',
-    function ($scope, ServicioNotificacion, $routeParams, $location) {
-        // ng-click 'crear nuevo usuario':
-        $scope.crear = function (notificaciones) {
-            //$scope.notificaciones.id = 101;
-            console.log("En CtrlCrearAdmin creando notificacion con id: " + $scope.notificaciones.nombre + $scope.notificaciones.descripcion);
-            ServicioNotificacion.crear($scope.notificaciones);
-            $location.path('/notificaciones-cuentas-listar');
-        };
-    }]);*/

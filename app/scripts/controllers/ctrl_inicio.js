@@ -10,7 +10,9 @@
 angular.module('sApobackOfficeFrontendApp')
   .controller('inicioCtrl',['$scope', '$q', 'ServicioProducto','ServicioCategoria','ServicioReporte','ServicioAdministrador','ServicioNotificacion','ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin', 'Admin', '$routeParams',  '$location' ,'$filter', 'NgTableParams',function($scope,$q, ServicioProducto, ServicioCategoria,ServicioReporte, ServicioAdministrador,ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, Admin, $routeParams, $location,$filter, NgTableParams) {
 /*$scope.admin = admin;
-$scope.admin2 = admin2;*/
+$scope.admin2 = admin2;
+$q.all($scope.checkboxes.items).then(function(data){
+*/
         var conectado = ServicioAutenticacionAdmin.conectado;
         console.log("conectado: " + conectado);
         $scope.$parent.conectado = conectado;
