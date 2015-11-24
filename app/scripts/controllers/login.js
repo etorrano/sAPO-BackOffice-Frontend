@@ -20,10 +20,10 @@ angular.module('sApobackOfficeFrontendApp')
                         ServicioUsuarioAdmin.set(producto);
                         Admin = producto;
                         DatosGlobales.admin = producto;
-                        ServicioAutenticacionAdmin.admin = producto;
+                       // ServicioAutenticacionAdmin.admin = producto;
                       //  $scope.$parent.administrador = producto;
-                      console.log("prod: " + DatosGlobales.admin);
-                        console.log("Guardando prod: " + Admin.nombre);
+                    //  console.log("prod: " + DatosGlobales.admin);
+                     //   console.log("Guardando prod: " + Admin.nombre);
                     });
                     //var producto = ServicioProducto.getProducto('7');
                     //ServicioUsuarioAdmin.set(producto);

@@ -1,65 +1,65 @@
 <!--<ng-include src="'encabezado.html'" ng-init="name = ['productos','listar']"></ng-include>-->
-<section class="content">
-    <div class="row">
-        <div class="col-md-8">
-            <div ng-hide="notificaciones.length === 0" class="box box-info">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Cuentas por expirar</h3>
-<!--                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>-->
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                    <div class="table-responsive">
-                        <table ng-table="tableParams" class="table no-margin">
-                            <tr ng-repeat="notificacion in $data">
-                                <td data-title="'Nombre de Usuario'">
-                                    <span >{{notificacion.usuario}}</span>
-                                </td>
-                                <td data-title="'Tipo de cuenta'">
-                                    <span >{{notificacion.alias_cuenta}}</span>
-                                </td>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-8">
+                <div ng-hide="notificaciones.length === 0" class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cuentas por expirar</h3>
+                        <!--                    <div class="box-tools pull-right">
+                                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                            </div>-->
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table ng-table="tableParams" class="table no-margin">
+                                <tr ng-repeat="notificacion in $data">
+                                    <td data-title="'Nombre de Usuario'">
+                                        <span >{{notificacion.usuario}}</span>
+                                    </td>
+                                    <td data-title="'Tipo de cuenta'">
+                                        <span >{{notificacion.alias_cuenta}}</span>
+                                    </td>
 
-                                <td data-title="'Fecha de expiración'" >
-                                    <span >{{notificacion.expira | date:'yyyy-MM-dd'}} </span>
-                                </td>
-                                <td data-title="'Acciones'">
-                                    <a ng-click="notificar(notificacion)" class="btn btn-small btn-danger">Notificar</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-           <!-- <div class="alert alert-danger" ng-show="notificaciones.length === 0">
-                Please enter your name!
-            </div>-->
-            <div class="alert alert-warning alert-dismissible" ng-show="notificaciones.length === 0">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h4><i class="icon fa fa-ban"></i>No hay cuentas para notificar</h4>
-                No hay ninguna cuenta de usuario que esté por expirar.
-            </div>
-            <div class="example-modal" ng-show="notificaciones.length === 0">
-                <div class="modal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Modal Default</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>One fine body&hellip;</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-            </div><!-- /.example-modal -->
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-</section>
+                                    <td data-title="'Fecha de expiración'" >
+                                        <span >{{notificacion.expira | date:'yyyy-MM-dd'}} </span>
+                                    </td>
+                                    <td data-title="'Acciones'">
+                                        <a ng-click="notificar(notificacion)" class="btn btn-small btn-danger">Notificar</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+                <!-- <div class="alert alert-danger" ng-show="notificaciones.length === 0">
+                     Please enter your name!
+                 </div>-->
+                <div class="alert alert-warning alert-dismissible" ng-show="notificaciones.length === 0">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i>No hay cuentas para notificar</h4>
+                    No hay ninguna cuenta de usuario que esté por expirar.
+                </div>
+                <div class="example-modal" ng-show="notificaciones.length === 0">
+                    <div class="modal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Modal Default</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>One fine body&hellip;</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                </div><!-- /.example-modal -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </section>

@@ -78,9 +78,9 @@ angular.module('sApobackOfficeFrontendApp')
             console.log("Filtro reportes a cant: " + cantAlmacenes);
             $scope.reportes = $filter('limitTo')(reportes.lista, cantAlmacenes, 0);
             console.log("cantreportes: " + $scope.reportes.length);
-           /* $scope.reportes =             [
-                { x: 'farmacia', low: 718, q1: 836, median: 864, q3: 882, high: 952}
-              ];*/
+            /*$scope.reportes = [
+                { x: 50, low: 718, q1: 836, median: 864, q3: 882, high: 952}
+            ];*/
             $scope.anomalias = [];
             console.log("Obtengo anomalías");
             angular.forEach($scope.reportes, function(item, clave) {
@@ -181,7 +181,7 @@ angular.module('sApobackOfficeFrontendApp')
                                 headerFormat: '<b>{point.series.name}</b><br/><em>Almacen: {point.x}</em><br/>',
                                 pointFormat: 'Cantidad de movimientos: {point.y}'
                             }
-                        },]
+                        }]
                     }
                 },this);
             });
@@ -199,11 +199,18 @@ angular.module('sApobackOfficeFrontendApp')
         //$scope.proyeccion = 5;
         $scope.crecimiento = [];
         $scope.cantProyecciones = 1;
+        $scope.tiposProyeccion = [
+            {id: 0, nombre: 'Ganancia'},
+            {id: 1, nombre: 'Crecimiento'},
+            {id: 2, nombre: 'Intercalado'}
+        ];
+        $scope.tipoProyeccion = $scope.tiposProyeccion[0];
         ServicioReporte.obtenerGanancias().then(function(ganancias) {
             $scope.datos = ganancias.monto;
             $scope.fechas = ganancias.fechas;//$filter('orderBy')(ganancias.fechas, "");//$filter('orderBy')(ganancias.fechas, '-date');
             console.log("fecha0  " +$scope.fechas[0]);
-            $scope.fechasCrec = $scope.fechas.splice(0, 1);
+            $scope.fechasCrec = angular.copy($scope.fechas);
+            $scope.fechasCrec.splice(0, 1);
             angular.forEach($scope.datos, function(item, clave) {
             if (clave < $scope.datos.length-1) {
                 console.log("clave, tamanio  " +clave +$scope.datos.length );
@@ -230,7 +237,7 @@ angular.module('sApobackOfficeFrontendApp')
                     }
                 },
                 series: [{
-                    name: 'Ganancia por días',
+                    name: 'Ganancia por día',
                     data: $scope.datos
                 }],/*
                 title: {
@@ -246,7 +253,7 @@ angular.module('sApobackOfficeFrontendApp')
                 },
                 xAxis: {
                     title: {
-                        text: 'Días'
+                        text: 'Fecha'
                     },
                     categories: $scope.fechas
                   //  type: 'datetime'
@@ -291,8 +298,8 @@ angular.module('sApobackOfficeFrontendApp')
                         text: 'Fecha'
                     },
                     categories: $scope.fechasCrec
-                    /*,
-                    type: 'datetime'*/
+                    ,
+                    type: 'datetime'
                 /*  min: 2000,
                   max: 2010*/
                 },
@@ -301,9 +308,14 @@ angular.module('sApobackOfficeFrontendApp')
             };
         },this);
         });
-        
-        var proyeccion = 0;
+
+       // $scope.tipoProyeccion = 0;
+        var proyeccion = $scope.tipoProyeccion.id;
         var alternado = 0;
+        if(proyeccion == 2)
+        {
+            alternado = 1;
+        }
         $scope.proyectar = function () {
             var valor =  $scope.proyeccion;
             var crecimiento = 0;
@@ -315,11 +327,18 @@ angular.module('sApobackOfficeFrontendApp')
             var tam =$scope.datos.length+1;
             //$scope.datos.push($scope.proyeccion);
             $scope.datos.push(valor);
+            var nuevaFecha = new Date($scope.fechas[$scope.fechas.length-1]);
+            console.log("fecha " + nuevaFecha);
+            nuevaFecha.setDate(nuevaFecha.getDate()+2);
+            var fecha = $filter('date')(nuevaFecha, 'yyyy-MM-dd');
+            $scope.fechas.push(fecha);
+            $scope.fechasCrec.push(angular.copy(fecha));
             sumaDatos+=valor;
             promedios += valor/ultimo;
             $scope.crecimiento.push(crecimiento);
             console.log("valor " + valor);
             for (var i = 1; i < $scope.cantProyecciones; i++) {
+                console.log("proyeccion " + proyeccion);
                 if(proyeccion == 0)
                 {
                     proyectado = sumaDatos/(tam);
@@ -338,6 +357,11 @@ angular.module('sApobackOfficeFrontendApp')
                 promedios += crecimiento;
                 $scope.datos.push(proyectado);
                 $scope.crecimiento.push(crecimiento);
+                var nuevaFecha = new Date($scope.fechas[$scope.fechas.length-1]);
+                nuevaFecha.setDate(nuevaFecha.getDate()+2);
+                var fecha = $filter('date')(nuevaFecha, 'yyyy-MM-dd');
+                $scope.fechas.push(fecha);
+                $scope.fechasCrec.push(angular.copy(fecha));
                 sumaDatos-= $scope.datos[i-1];
                 promedios -= $scope.datos[i]/$scope.datos[i-1];
                 console.log("crecimiento " + crecimiento);
@@ -354,7 +378,7 @@ angular.module('sApobackOfficeFrontendApp')
                 //angular.copy(proyectado, valor);//origen,destino
                // console.log("ultimo " + ultimo + "valor " + valor);
                 //  angular.extend(valor,proyectado);
-              //  tam+=1;
+               //tam+=1;
             } /*var seriesArray = $scope.chartConfigAreaSplineProyeccion.series;
              var rndIdx = Math.floor(Math.random() * seriesArray.length);
              seriesArray[rndIdx].data = seriesArray[rndIdx].data.concat([1, 10, 20]);*/

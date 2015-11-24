@@ -1,34 +1,35 @@
-<section class="content">
-    <div class="row">
-        <div class="col-md col-sm col-xs-12">
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Categorías del Sistema</h3>
-                    <!--                    <div class="box-tools pull-right">
-                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                                        </div>-->
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                    <div class="table-responsive ">
-                        <table ng-table="tableParams" class="table no-margin table-bordered table-striped" show-filter="true">
-                            <tr ng-repeat="categoria in $data">
-                                <td data-title="'Nombre'" filter="{ nombre: 'text'}" sortable="'nombre'">
-                                    <span >{{categoria.nombre}}</span>
-                                </td>
-                                <td data-title="'Descripcion'" filter="{ descripcion: 'text'}" sortable="'descripcion'">
-                                    <span >{{categoria.descripcion}}</span>
-                                </td>
-                                <td data-title="'Acciones'">
-                                    <a ng-click="actualizarCategoria(categoria.id)" class="btn btn-small btn-warning">Modificar</a>
-                                    <a ng-click="eliminar(categoria)" class="btn btn-small btn-danger">Eliminar</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-</section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md col-sm col-xs-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Categorías del Sistema</h3>
+                        <!--                    <div class="box-tools pull-right">
+                                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                            </div>-->
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive ">
+                            <table ng-table="tableParams" class="table no-margin table-bordered table-striped" show-filter="true">
+                                <tr ng-repeat="categoria in $data">
+                                    <td data-title="'Nombre'" filter="{ nombre: 'text'}" sortable="'nombre'">
+                                        <span >{{categoria.nombre}}</span>
+                                    </td>
+                                    <td data-title="'Descripcion'" filter="{ descripcion: 'text'}" sortable="'descripcion'">
+                                        <span >{{categoria.descripcion}}</span>
+                                    </td>
+                                    <td data-title="'Acciones'">
+                                        <a ng-click="actualizarCategoria(categoria.id)" class="btn btn-small btn-warning">Modificar</a>
+                                        <a ng-click="eliminar(categoria)" class="btn btn-small btn-danger">Eliminar</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </section>

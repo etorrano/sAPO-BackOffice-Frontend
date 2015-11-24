@@ -18,33 +18,29 @@
     <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
     <link rel="stylesheet" href="bower_components/angular-responsive-tables/release/angular-responsive-tables.css" />
     <link rel="stylesheet" href="bower_components/ui-select/dist/select.css" />
-    <link rel="stylesheet" href="bower_components/select2/select2.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/estilos.css">
-    <link rel="stylesheet" href="styles/estilos.min.css">
+
     <!-- endbuild -->
 
-    <link rel="stylesheet" href="styles/adminlte/skins/_all-skins.min.css">
 
-    <link rel="stylesheet" href="styles/adminlte/bootstrap/bootstrap.min.css">
-
-    <link rel="stylesheet" href="styles/adminlte/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="styles/adminlte/AdminLTE.min.css">
-    <link rel="stylesheet" href="styles/adminlte/skins/skin-blue.min.css">
-
-    <link rel="stylesheet" href="styles/ng-table.css">
-    <link rel="stylesheet" href="styles/adminlte/plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="styles/AdminLTE/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/AdminLTE/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="styles/AdminLTE/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="styles/AdminLTE/dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="styles/AdminLTE/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="styles/ng-table/dist/ng-table.css">
+    <link rel="stylesheet" href="styles/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
-    <script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
-    <script src="http://code.highcharts.com/highcharts.src.js"></script>
+    <script src="https://code.highcharts.com/adapters/standalone-framework.js"></script>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <!-- REQUIRED JS SCRIPTS -->
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -63,8 +59,6 @@
     <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
     <script src="bower_components/angular-responsive-tables/release/angular-responsive-tables.js"></script>
     <script src="bower_components/ui-select/dist/select.js"></script>
-    <script src="bower_components/select2/select2.js"></script>
-    <script src="bower_components/angular-ui-select3/src/select3.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -121,16 +115,26 @@
 
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/bootstrap.css">
+   <link rel="stylesheet" href="styles/estilos.css">
+    <link rel="stylesheet" href="styles/estilos.min.css">
+    <link rel="stylesheet" href="styles/adminlte/skins/_all-skins.min.css">
 
+    <link rel="stylesheet" href="styles/adminlte/bootstrap/bootstrap.min.css">
+
+    <link rel="stylesheet" href="styles/adminlte/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="styles/adminlte/AdminLTE.min.css">
+    <link rel="stylesheet" href="styles/adminlte/skins/skin-blue.min.css">
+
+    <link rel="stylesheet" href="styles/ng-table.css">
     -->
 
 
 </head>
-<body ng-app="sApobackOfficeFrontendApp" class="hold-transition skin-blue sidebar-mini">
+<body ng-app="sApobackOfficeFrontendApp" ng-class="conectado ? 'hold-transition skin-blue sidebar-mini' : 'hold-transition login-page'">
 <div class="wrapper" >
 
     <!-- Main Header ng-controller="inicioCtrl"-->
-    <header class="main-header">
+    <header ng-show="conectado" class="main-header">
 
         <!-- Logo -->
         <a href="index.html" class="logo">
@@ -226,8 +230,8 @@
                 <li class="header">Reportes</li>
                 <li class="treeview"><a ng-href="#/reportes/reportes-registrados"><i class="fa fa-line-chart"></i><span>Usuarios registrados</span></a></li>
                 <li class="treeview"><a ng-href="#/reportes/fraude"><i class="fa fa-pie-chart"></i><span>Detección de fraude</span></a></li>
-                <li class="treeview"><a ng-href="#/reportes/ganancias" ><i class="fa fa-bar-chart"></i><span>Histórico de ganancias - Proyecciones</span></a></li>
-                <li class="treeview"><a ng-href="#/reportes/prodgenerico"><i class="fa fa-area-chart"></i><span>Producto genérico más utilizado</span></a></li>
+                <li class="treeview"><a ng-href="#/reportes/ganancias" ><i class="fa fa-bar-chart"></i><span>Histórico de ganancias</span></a></li>
+                <li class="treeview"><a ng-href="#/reportes/prodgenerico"><i class="fa fa-area-chart"></i><span>Producto más utilizado</span></a></li>
                 <!--
               <li class="active"><a  ><i class="fa fa-link"></i> <span>Link</span></a></li>
               <li><a  ><i class="fa fa-link"></i> <span>Another Link</span></a></li>
@@ -250,17 +254,19 @@
         <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <!-- Content Wrapper. Contains page content
+    -->
         <!-- Content Header (Page header) -->
+    <div ng-class="conectado ? 'content-wrapper' : 'login-box'">
         <div ng-view></div>
         <div class="container">
         </div>
-    </div><!-- /.content-wrapper -->
+    </div>
+    <!-- /.content-wrapper </div>-->
 
     <!-- Main Footer -->
 
-    <footer class="main-footer">
+    <footer ng-show="conectado" class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
             TSI2 - Grupo 08
@@ -330,7 +336,6 @@
     </aside><!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
 </div><!-- ./wrapper -->
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 <script>

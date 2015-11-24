@@ -94,7 +94,7 @@ angular.module('sApobackOfficeFrontendApp')
             $scope.producto.isgenerico = true;
             $scope.producto.categoria = $scope.categoria.seleccionada.id;
             console.log("En CtrlCrearProd creando producto con id: " + $scope.producto.nombre + $scope.producto.descripcion, $scope.categoria.seleccionada.nombre);
-           // ServicioProducto.crearProducto($scope.producto);
-            //$location.path('/productos-listar');
+            ServicioProducto.crearProducto($scope.producto);
+            $location.path('/productos-listar');
         };
     }]);

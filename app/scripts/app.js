@@ -311,28 +311,42 @@ angular
                 access: { requiredLogin: true }
             })
             .when('/', {
+                templateUrl: 'views/principal.html',
                 controller: 'inicioCtrl',
-                access: { requiredLogin: true },
-                resolve: {
-                  admin:    function(DatosGlobales){
-                return DatosGlobales.admin;
-              }/*
-                admin2: function(ServicioAutenticacionAdmin){
-              return $scope.u = ServicioAutenticacionAdmin.admin;
-            }*/
-            }
+                access: { requiredLogin: true }
+                /*resolve: {
+                  /!*  admin:    function(DatosGlobales){
+                        if(DatosGlobales.admin != null)
+                        {
+                            return DatosGlobales.admin;
+                        }
+                        else
+                        return 'hola'
+                    },*!/
+                    "conectado":    function(ServicioAutenticacionAdmin){
+                        console.log("Verificar autorización conectado");
+                        console.log("Verificar autorización conectado"+ServicioAutenticacionAdmin.conectado);
+                        return ServicioAutenticacionAdmin.conectado;
+                    }
+
+                    /!*
+                     admin2: function(ServicioAutenticacionAdmin){
+                     return $scope.u = ServicioAutenticacionAdmin.admin;
+                     }*!/
+                }*/
             })
             .otherwise({
                 redirectTo: '/'
             });
     })
 
- .run(function($rootScope, $location,$route, ServicioAutenticacionAdmin) {
- $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
- console.log("Verificar autorización");
- if (nextRoute.access.requiredLogin && !ServicioAutenticacionAdmin.conectado) {
- console.log("Usuario no conectado");
- $location.path("/admin/login");
- }
- });
- });
+    .run(function($rootScope, $location,$route, ServicioAutenticacionAdmin) {
+        $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+            console.log("Verificar autorización");
+            if (nextRoute.access.requiredLogin && !ServicioAutenticacionAdmin.conectado) {
+                console.log("Usuario no conectado");
+               // ServicioAutenticacionAdmin.conectado = true;
+                $location.path("/admin/login");
+            }
+        });
+    });

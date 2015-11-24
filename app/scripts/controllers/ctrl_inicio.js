@@ -9,16 +9,24 @@
  */
 angular.module('sApobackOfficeFrontendApp')
   .controller('inicioCtrl',['$scope', '$q', 'ServicioProducto','ServicioCategoria','ServicioReporte','ServicioAdministrador','ServicioNotificacion','ServicioUsuarioAdmin', 'ServicioAutenticacionAdmin', 'Admin', '$routeParams',  '$location' ,'$filter', 'NgTableParams',function($scope,$q, ServicioProducto, ServicioCategoria,ServicioReporte, ServicioAdministrador,ServicioNotificacion, ServicioUsuarioAdmin,ServicioAutenticacionAdmin, Admin, $routeParams, $location,$filter, NgTableParams) {
-$scope.admin = admin;
-$scope.admin2 = admin2;
+/*$scope.admin = admin;
+$scope.admin2 = admin2;*/
+        var conectado = ServicioAutenticacionAdmin.conectado;
+        console.log("conectado: " + conectado);
+        $scope.$parent.conectado = conectado;
+        $scope.productoNuevo = {};
+        $scope.conectado = conectado;
+     //   console.log("admin: " + $scope.admin);
+      //  console.log("admin2: " + $scope.admin2);
         var fecha = new Date();
-        //fecha.setMonth(fecha.getMonth()+1);
-        fecha.setFullYear(fecha.getFullYear()+1);
+        fecha.setMonth(fecha.getMonth()+1);
+        //fecha.setFullYear(fecha.getFullYear()+1);
         // fecha: fecha.getTime()
+        $scope.categoria= {};
 
         ServicioCategoria.getCategorias().then(function(results) {
             $scope.categorias = results;
-            $scope.selectedItem = $scope.categorias[0];
+            $scope.categoria.seleccionada = $scope.categorias[0];
         });
             ServicioNotificacion.getLista(fecha.getTime()).then(function(notificaciones) {
                 $scope.notificaciones = notificaciones;
@@ -124,13 +132,12 @@ $scope.admin2 = admin2;
                     }
             );
         });
-
         $scope.promover = function (producto) {
-            console.log("Promoviendo prod con id: " + producto.id);
-            $scope.productoNuevo = {};
+            //console.log("Promoviendo prod con id: " + producto.id);
+            //$scope.productoNuevo = {};
             $scope.productoNuevo.isgenerico = true;
             $scope.productoNuevo.nombre = producto.nombre;
-            $scope.productoNuevo.categoria = $scope.selectedItem.id;
+            $scope.productoNuevo.categoria = $scope.categoria.seleccionada.id;
             var deferred = $q.defer();
             ServicioProducto.crearProducto($scope.productoNuevo).then(function(res) {
                 var index = $scope.productos.indexOf(producto);
