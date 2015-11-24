@@ -16,10 +16,13 @@ angular.module('sApobackOfficeFrontendApp')
                     ServicioAutenticacionAdmin.conectado = true;
                     $window.sessionStorage.token = data.token;
                     //ServicioProducto.getProducto('7').then(function(producto) {
-                    ServicioAdministrador.get('leo').then(function(producto) {
-                        ServicioUsuarioAdmin.set(producto);
-                        Admin = producto;
-                        DatosGlobales.admin = producto;
+                    ServicioAdministrador.get(usuario).then(function(usuario) {
+                        ServicioUsuarioAdmin.set(usuario);
+                        Admin.nombre = usuario.name;
+                        Admin.apellido = usuario.surname;
+                        Admin.usuario = usuario.username;
+                        $scope.admin = Admin;
+                        //DatosGlobales.admin = producto;
                        // ServicioAutenticacionAdmin.admin = producto;
                       //  $scope.$parent.administrador = producto;
                     //  console.log("prod: " + DatosGlobales.admin);
@@ -39,9 +42,12 @@ angular.module('sApobackOfficeFrontendApp')
         $scope.cerrarSesion = function cerrarSesion() {
             console.log("cerrarSesion");
             if (ServicioAutenticacionAdmin.conectado) {
+              console.log("desconectar");
                 ServicioAutenticacionAdmin.conectado = false;
+                $scope.$parent.conectado = false;
                 delete $window.sessionStorage.token;
-                $location.path("/");
+                console.log("conectado: " + ServicioAutenticacionAdmin.conectado);
+                $location.path("/admin/login");
             }
         }
     }

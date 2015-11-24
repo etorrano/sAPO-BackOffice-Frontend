@@ -251,13 +251,13 @@ angular
             })
 
             .when('/notificaciones-cuentas-listar', {
-                templateUrl : "views/notificaciones/notificaciones-cuentas-listar.html",
+                templateUrl : 'views/notificaciones/notificaciones-cuentas-listar.html',
                 controller : "CtrlListarNotificaciones",
                 access: { requiredLogin: true }
             })
 
             .when('/reportes/reportes-registrados', {
-                templateUrl: '../views/reportes/reportes-registrados.html',
+                templateUrl: 'views/reportes/reportes-registrados.html',
                 controller: 'CtrlListarReportesRegistrados',
                 access: { requiredLogin: true }
             })

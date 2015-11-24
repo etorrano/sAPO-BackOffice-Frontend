@@ -16,13 +16,24 @@ $scope.admin2 = admin2;*/
         $scope.$parent.conectado = conectado;
         $scope.productoNuevo = {};
         $scope.conectado = conectado;
-     //   console.log("admin: " + $scope.admin);
-      //  console.log("admin2: " + $scope.admin2);
+        $scope.admin = Admin;
+        $scope.$parent.admin = $scope.admin;
+        $scope.admin2 = ServicioUsuarioAdmin.get();
+        console.log("admin: " + $scope.admin.nombre);
+        console.log("admin2: " + $scope.admin2.nombre);
         var fecha = new Date();
-        fecha.setMonth(fecha.getMonth()+1);
+        fecha.setMonth(fecha.getMonth()+5);
         //fecha.setFullYear(fecha.getFullYear()+1);
         // fecha: fecha.getTime()
         $scope.categoria= {};
+        $scope.cerrarSesion = function cerrarSesion() {
+            console.log("cerrarSesion");
+            if (ServicioAutenticacionAdmin.conectado) {
+                ServicioAutenticacionAdmin.conectado = false;
+                delete $window.sessionStorage.token;
+                $location.path("/");
+            }
+        }
 
         ServicioCategoria.getCategorias().then(function(results) {
             $scope.categorias = results;

@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
     <link rel="stylesheet" href="bower_components/angular-responsive-tables/release/angular-responsive-tables.css" />
     <link rel="stylesheet" href="bower_components/ui-select/dist/select.css" />
+    <link rel="stylesheet" href="bower_components/select2/select2.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -59,6 +60,8 @@
     <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
     <script src="bower_components/angular-responsive-tables/release/angular-responsive-tables.js"></script>
     <script src="bower_components/ui-select/dist/select.js"></script>
+    <script src="bower_components/select2/select2.js"></script>
+    <script src="bower_components/angular-ui-select3/src/select3.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -150,7 +153,35 @@
             <a   class="sidebar-toggle" data-toggle="offcanvas" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
+            <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- Messages: style can be found in dropdown.less-->
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <span class="hidden-xs">{{admin.usuario}}</span>
+                </a>
+                <ul class="text-left dropdown-menu" style="width: 100px;">
+                  <!-- User image -->
+                  <li class="user-header" style="height: 100px;">
+                    <p>
+                      Nombre: {{admin.nombre}}
+                    </p>
 
+                    <p>
+                      Apellido: {{admin.apellido}}
+                    </p>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-right">
+                      <a ng-controller='UsuarioAdminCtrl' ng-click="cerrarSesion()" class="btn btn-default btn-flat">Cerrar Sesión</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
