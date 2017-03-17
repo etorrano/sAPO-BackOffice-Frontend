@@ -1,11 +1,13 @@
 # sAPO-BackOffice-Frontend
 
+Aplicación web desarrollada con el lenguaje AngularJS para el curso Taller de Sistemas de Informacin 2 del año 2015 de la Facultad de Ingeniería de Uruguay.
+
 Éste proyecto fue generado con [yo angular generator](https://github.com/yeoman/generator-angular)
 versión 0.12.1.
 
 ## Instalar dependencias
 
-### npm, nodejs, nodejs-dev(no recuerdo si es necesario) 
+### npm, nodejs, nodejs-dev
 ```
 sudo apt-get install npm nodejs-legacy nodejs-dev
 ```
@@ -68,3 +70,8 @@ gem install compass --pre
 ## Verificación
 
 Con `grunt test` ejecuta los test unitarios con karma.
+
+## Licencia
+
+La aplicación se distribuye como Software Libre bajo los términos de la licencia GPL versión 3 o superior.
+
