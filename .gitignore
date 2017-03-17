@@ -1,0 +1,33 @@
+.DS_STORE
+
+/dist/
+node_modules
+bower_components
+angular.io/dist
+
+# Include when developing application packages.
+pubspec.lock
+.c9
+.idea/
+.settings/
+*.swo
+modules/.settings
+.vscode
+modules/.vscode
+
+# Don't check in secret files
+*secret.js
+
+# Ignore npm debug log
+npm-debug.log
+
+# build-analytics
+.build-analytics
+
+# rollup-test output
+/modules/rollup-test/dist/
+
+# angular.io
+/angular.io/node_modules/
+/angular.io/dist/
+
