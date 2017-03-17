@@ -1,6 +1,7 @@
 # sAPO-BackOffice-Frontend
 
 Aplicación web desarrollada con el lenguaje AngularJS para el curso Taller de Sistemas de Información 2 del año 2015 de la Facultad de Ingeniería de Uruguay.
+La misma se comunica con su respectivo backend,[sapoREST](https://github.com/etorrano/sapoREST) (desarrollado en JavaEE), mediante el protocolo REST.
 
 ![Alt text](/demo/backDashboardMovimientos.png?raw=true)
 
