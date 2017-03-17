@@ -2,6 +2,10 @@
 
 Aplicación web desarrollada con el lenguaje AngularJS para el curso Taller de Sistemas de Información 2 del año 2015 de la Facultad de Ingeniería de Uruguay.
 
+![Alt text](/demo/backDashboardMovimientos.png?raw=true)
+
+Se pueden ver más ejemplos de las funcionalidades de la aplicación en la carpeta [demo](https://github.com/etorrano/sAPO-BackOffice-Frontend/tree/master/demo)
+
 Éste proyecto fue generado con [yo angular generator](https://github.com/yeoman/generator-angular)
 versión 0.12.1.
 
