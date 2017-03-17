@@ -4,6 +4,9 @@
 node_modules
 bower_components
 angular.io/dist
+.tmp/*
+.tmp
+.sass-cache
 
 # Include when developing application packages.
 pubspec.lock
