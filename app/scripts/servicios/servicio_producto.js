@@ -5,11 +5,12 @@ angular.module('sApobackOfficeFrontendApp')
     .service('ServicioProducto', ['$q', 'Producto', function ($q, Producto) {
 
         this.init = function () {};
-
+        console.log("En ServicioProducto");
         this.getProducto = function(id) {
             var deferred = $q.defer();
-            Producto.getProducto({ id: id }, {}, function (producto) {
-                deferred.resolve(producto);
+            console.log("Get producto con id:" + id);
+            Producto.getProducto({ id: id }, {}, function (prod) {
+                deferred.resolve(prod);
             }, function (error) {
                 deferred.reject(error);
             });
@@ -28,20 +29,22 @@ angular.module('sApobackOfficeFrontendApp')
             return deferred.promise;
         };
 
-        this.crearProducto = function(id) {
+        this.crearProducto = function(producto) {
             var deferred = $q.defer();
-            Producto.getProducto({ id: id }, {}, function (producto) {
-                deferred.resolve(producto);
+            console.log("En Servicios creando producto con datos: " + producto.nombre + producto.descripcion);
+            Producto.crearProducto({}, producto, function (producto) {
+               deferred.resolve(producto);
             }, function (error) {
                 deferred.reject(error);
             });
             return deferred.promise;
         };
 
-        this.actualizarProducto = function(id) {
+        this.actualizarProducto = function(productos) {
             var deferred = $q.defer();
-            Producto.getProducto({ id: id }, {}, function (producto) {
-                deferred.resolve(producto);
+            Producto.actualizarProducto({}, productos , function (productos) {
+                console.log("En Servicios actualizando producto con id: " + productos.id+ productos.nombre + productos.descripcion);
+                deferred.resolve(productos);
             }, function (error) {
                 deferred.reject(error);
             });
@@ -50,8 +53,8 @@ angular.module('sApobackOfficeFrontendApp')
 
         this.eliminarProducto = function(id) {
             var deferred = $q.defer();
-            Producto.getProducto({ id: id }, {}, function (producto) {
-                deferred.resolve(producto);
+            Producto.eliminarProducto({ id: id }, {}, function (id) {
+                deferred.resolve(id);
             }, function (error) {
                 deferred.reject(error);
             });

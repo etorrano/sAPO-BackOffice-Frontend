@@ -31,6 +31,14 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-touch/angular-touch.js',
+      'bower_components/ng-table/dist/ng-table.min.js',
+      'bower_components/AdminLTE/dist/js/app.js',
+      'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
+      'bower_components/highcharts-ng/dist/highcharts-ng.js',
+      'bower_components/angular-responsive-tables/release/angular-responsive-tables.js',
+      'bower_components/ui-select/dist/select.js',
+      'bower_components/select2/select2.js',
+      'bower_components/angular-ui-select3/src/select3.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
@@ -71,7 +79,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_INFO
 
     // Uncomment the following lines if you are using grunt's server to run the tests
     // proxies: {

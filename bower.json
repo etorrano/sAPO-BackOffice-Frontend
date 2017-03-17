@@ -8,8 +8,15 @@
     "angular-cookies": "^1.3.0",
     "angular-resource": "^1.3.0",
     "angular-route": "^1.3.0",
-    "angular-sanitize": "^1.3.0",
-    "angular-touch": "^1.3.0"
+    "angular-sanitize": "~1.4.7",
+    "angular-touch": "^1.3.0",
+    "ng-table": "~0.8.3",
+    "AdminLTE": "admin-lte#~2.3.2",
+    "angular-ui-tree": "~2.10.0",
+    "highcharts-ng": "~0.0.11",
+    "angular-responsive-tables": "~0.1.3",
+    "ui-select": "angular-ui-select#~0.13.2",
+    "angular-ui-select3": "ui-select#*"
   },
   "devDependencies": {
     "angular-mocks": "^1.3.0"
