@@ -1,6 +1,6 @@
 # sAPO-BackOffice-Frontend
 
-Aplicación web desarrollada con el lenguaje AngularJS para el curso Taller de Sistemas de Informacin 2 del año 2015 de la Facultad de Ingeniería de Uruguay.
+Aplicación web desarrollada con el lenguaje AngularJS para el curso Taller de Sistemas de Información 2 del año 2015 de la Facultad de Ingeniería de Uruguay.
 
 Éste proyecto fue generado con [yo angular generator](https://github.com/yeoman/generator-angular)
 versión 0.12.1.
