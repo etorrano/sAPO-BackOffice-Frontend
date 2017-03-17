@@ -1,7 +1,7 @@
 # sAPO-BackOffice-Frontend
 
 Aplicación web desarrollada con el lenguaje AngularJS para el curso Taller de Sistemas de Información 2 del año 2015 de la Facultad de Ingeniería de Uruguay.
-La misma se comunica con su respectivo backend,[sapoREST](https://github.com/etorrano/sapoREST) (desarrollado en JavaEE), mediante el protocolo REST.
+La misma se comunica con su respectivo backend, [sapoREST](https://github.com/etorrano/sapoREST) (desarrollado en JavaEE), mediante el protocolo REST.
 
 ![Alt text](/demo/backDashboardMovimientos.png?raw=true)
 
@@ -9,6 +9,11 @@ Se pueden ver más ejemplos de las funcionalidades de la aplicación en la carpe
 
 Éste proyecto fue generado con [yo angular generator](https://github.com/yeoman/generator-angular)
 versión 0.12.1.
+
+## Descripción del problema a resolver en el curso
+
+El proyecto consitía en realizar una plataforma genérica de sistemas de inventarios, que pueda ser instanciada desde la nube, para servir a múltiples instituciones que deseen hacer uso de la misma. La idea general es que se puedan administrar almacenes virtuales, con eventualmente páginas (URLS) distintas para que cada usuario pueda mostrar sus productos y administrarlos. Un ejemplo de almacen virtual puede ser un supermercado en el cual existen distintos productos con distintas categorías a las cuales pueden pertenecer, entre otros (Por más información, consultar la [letra](https://github.com/etorrano/sAPO-BackOffice-Frontend/tree/master/demo/letra.pdf) del problema).
+Para ésto se desarrolló un módulo de Front Office y otra de Back Office. La presente aplicación corresponde al frontend del Back Office mientras que [TSI2-AngularFront](https://github.com/etorrano/TSI2-AngularFront) corresponde al frontend del Front Office y [sapoAndroid](https://github.com/etorrano/SAPo-Android) a su versión móvil. Por último se disponde del backend [sapoREST](https://github.com/etorrano/sapoREST) para los tres módulos.
 
 ## Instalar dependencias
 
